@@ -1,0 +1,7 @@
+export {default as Login} from './Login'
+export {default as Register} from './Register'
+export {default as Home} from './Home'
+export {default as Admin} from './Admin'
+export {default as Staff} from './Staff'
+export {default as Service} from './Service'
+export {default as Booking} from './Booking'
