@@ -16,25 +16,20 @@ const BarberCard = () => {
           </div>
           <div class="w-full text-center mt-20">
             <div class="flex justify-center lg:pt-4 pt-8 pb-0">
-              <div class="p-3 text-center">
+              <div class="p-3 text-center w-[50%]">
                 <span class="text-xl font-bold block uppercase tracking-wide text-slate-700">
                   2 năm
                 </span>
                 <span class="text-sm text-slate-400">Kinh nghiệm</span>
               </div>
-              <div class="p-3 text-center">
+              <div class="p-3 text-center w-[50%]">
                 <span class="text-xl font-bold block uppercase tracking-wide text-slate-700">
                   4.7
                 </span>
                 <span class="text-sm text-slate-400">Số sao trung bình</span>
               </div>
 
-              <div class="p-3 text-center">
-                <span class="text-xl font-bold block uppercase tracking-wide text-slate-700">
-                  123
-                </span>
-                <span class="text-sm text-slate-400">Số khách</span>
-              </div>
+              
             </div>
           </div>
         </div>

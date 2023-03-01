@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const UserNavbar = ({user,setUser}) => {
  
   return (
-    <nav class="fixed right-0 left-0 z-50">
+    <nav class="fixed right-0 left-0 top-0 z-50 ">
       <div class=" ">
         <div class="antialiased bg-gray-100 border">
           <div class="w-full text-gray-700 bg-white ">

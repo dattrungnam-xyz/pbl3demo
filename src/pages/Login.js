@@ -5,14 +5,25 @@ import { SubNavbar } from "../components";
 
 const Login = () => {
   const [showPassWord, setShowPassWord] = useState(false);
+  const [account,setAccount] = useState({
+    username: "",
+    password:""
+  })
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(account)
   };
+  const handleChange =(e) => {
+    setAccount({
+      ...account,
+      [e.target.name] : e.target.value
+    })
+  }
   return (
     <>
       <SubNavbar login={false} />
-      <div className="bg-gray-10 flex items-center justify-center">
-        <div class="flex justify-center h-[100vh] w-[800px] items-center">
+      <div className="bg-gray-10 flex mt-[62px] items-center justify-center">
+        <div class="flex justify-center h-full mt-4 w-[800px] items-center">
           <form
             className="w-full md:w-1/2 flex flex-col items-center"
             onSubmit={handleSubmit}
@@ -30,6 +41,8 @@ const Login = () => {
                 type="text"
                 name="username"
                 id="username"
+                value={account.username}
+                onChange={handleChange}
                 class="w-full py-3 pl-8 mt-2 pr-10 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>
@@ -43,6 +56,8 @@ const Login = () => {
                   type="text"
                   name="password"
                   id="password"
+                  value={account.password}
+                  onChange={handleChange}
                   class="w-full py-3 pl-8 mt-2 pr-10 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
                 />
               ) : (
@@ -50,6 +65,8 @@ const Login = () => {
                   type="password"
                   name="password"
                   id="password"
+                  value={account.password}
+                  onChange={handleChange}
                   class="w-full py-3 pl-8 mt-2 pr-10 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
                 />
               )}
@@ -57,7 +74,7 @@ const Login = () => {
                 onClick={() => {
                   setShowPassWord(!showPassWord);
                 }}
-                class="absolute right-0 top-[50%]  mr-[8px] cursor-pointer opacity-80"
+                class="absolute right-0 top-[50%] translate-y-[3px] mr-[8px] cursor-pointer opacity-80"
               >
                 {showPassWord ? (
                   <box-icon id="show" name="show"></box-icon>
