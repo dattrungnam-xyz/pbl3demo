@@ -5,7 +5,7 @@ import { UserNavbar } from "../components";
 
 const RenderService = ({ title, description, left,image }) => {
   return (
-    <section id="coffee__story" class="w-full">
+    <section  class="w-full">
       <div class="flex mx-auto  w-full min-h-[400px]">
         {left ? (
           <>
@@ -56,7 +56,7 @@ const Service = () => {
   return (
     <>
       <UserNavbar />
-      <div className="w-full mt-[63px]">
+      <div className="w-full mt-[60px]">
         <RenderService image="https://images.pexels.com/photos/897262/pexels-photo-897262.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
         <RenderService image="https://images.pexels.com/photos/2035308/pexels-photo-2035308.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" left />
         <RenderService  image="https://images.pexels.com/photos/668196/pexels-photo-668196.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"/>

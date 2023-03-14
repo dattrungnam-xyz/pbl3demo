@@ -1,7 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
-const Hero = ({user}) => {
+
+const Hero = () => {
+  const user = useSelector((state)=> state.auth.login.currentUser)
   return (
     <section
       class="h-[100vh] bg-cover bg-hero"

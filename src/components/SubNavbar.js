@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const SubNavbar = ({ login }) => {
   return (
-    <nav className="fixed top-0 right-0 left-0 flex w-full h-[60px] bg-slate-200 px-4 justify-between border shadow">
+    <nav className="fixed top-0 right-0 left-0 flex w-full h-[60px] bg-slate-200 px-4 justify-between border shadow z-10">
       <Link to={"/"} className="flex items-center justify-center gap-2 cursor-pointer ">
         <box-icon name="left-arrow-circle"></box-icon>
         <p className="text-base">Trang chủ</p>

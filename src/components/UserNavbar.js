@@ -1,17 +1,18 @@
-import React from "react";
+import React,{useState} from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const UserNavbar = ({user,setUser}) => {
- 
+const UserNavbar = () => {
+  const user = useSelector((state) => state.auth.login.currentUser);
+  const [showOptionUser, setShowOptionUser] = useState(false);
+
+
   return (
     <nav class="fixed right-0 left-0 top-0 z-50 ">
-      <div class=" ">
-        <div class="antialiased bg-gray-100 border">
+      <div class="w-full ">
+        <div class="w-full antialiased bg-gray-100 border">
           <div class="w-full text-gray-700 bg-white ">
-            <div
-             
-              class="flex flex-col max-w-screen-xl px-2 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8"
-            >
+            <div class="flex flex-col w-full px-2 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
               <div class="flex flex-row items-center justify-between px-2 py-4">
                 <Link
                   to={"/"}
@@ -62,16 +63,35 @@ const UserNavbar = ({user,setUser}) => {
                   Đặt lịch
                 </Link>
                 {user ? (
-                  <> <div className=" ml-4 flex justify-center items-center " >
-                    <img className="rounded-full border w-[30px] h-[30px]" src="https://khoinguonsangtao.vn/wp-content/uploads/2022/07/avatar-cute-2.jpg" alt=" "/>
-                    <p>
-                      Nguyễn Văn A
-                    </p>
-                    <div  className="ml-2">
+                  <>
+                    
+                    <div className=" relative group p-1 ml-4 flex justify-center  items-center  cursor-pointer hover:bg-gray-200 rounded">
+                      <img
+                        className="rounded-full border w-[30px] h-[30px]"
+                        src="https://khoinguonsangtao.vn/wp-content/uploads/2022/07/avatar-cute-2.jpg"
+                        alt=" "
+                      />
+                      <p>Nguyễn Văn A</p>
+                      <div className="ml-2">
+                        <box-icon
+                          color="#374151"
+                          size="xs"
+                          type="solid"
+                          name="down-arrow"
+                        ></box-icon>
+                      </div>
+                      
 
-                    <box-icon color="#374151" size='xs' type='solid' name='down-arrow'></box-icon>
+                      <div className="absolute top-[100%] left-0  bg-white border border-gray-300 group-hover:block">
+                        <div className="p-2 hover:bg-gray-200 w-[120%]">Chỉnh sửa thông tin</div>
+                        <div className="p-2 hover:bg-gray-200 w-[120%]">Đánh giá dịch vụ</div>
+                        <div className="p-2 hover:bg-gray-200 w-[120%]">Đăng xuất</div>
+                        <div className="p-2 hover:bg-gray-200 w-[120%]">Đăng xuất</div>
+                      
+                      </div>
+                      
                     </div>
-                  </div></>
+                  </>
                 ) : (
                   <>
                     <Link className="ml-4 lg:min-w-[120px]" to={"/Register"}>

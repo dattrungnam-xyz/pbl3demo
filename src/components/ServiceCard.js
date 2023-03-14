@@ -1,6 +1,6 @@
 import React from "react";
 
-const DvuCard = () => {
+const ServiceCard = ({image}) => {
   return (
     // <div className="bg-gray-900 min-w-[300px]">
     <div class=" bg-transparent flex flex-col justify-center items-center min-w-[300px] ">
@@ -22,11 +22,15 @@ const DvuCard = () => {
             </div>
           </div>
        */}
-      <img
+      {image?<img
         class="block w-64 h-64 object-cover rounded-full border-sky-300 border-8 cursor-pointer hover:opacity-90"
-        src="https://i.pinimg.com/564x/b9/80/0b/b9800be5ddc78f6280406f2bc118f328.jpg"
+        src={image}
         alt=""
-      />
+        />: <img
+        class="block w-64 h-64 object-cover rounded-full border-sky-300 border-8 cursor-pointer hover:opacity-90"
+        src={'https://i.pinimg.com/564x/83/bc/8b/83bc8b88cf6bc4b4e04d153a418cde62.jpg'}
+        alt=""
+        />}
       <p className="mt-6 px-6 text-zinc-200 text-justify">
         Cắt tóc chuyên nghiệp với giá 80.000 VND Tại Liem Barber Shop, các bạn
         sẽ được tư vấn tạo kiểu tóc phù hợp với.
@@ -39,4 +43,4 @@ const DvuCard = () => {
   );
 };
 
-export default DvuCard;
+export default ServiceCard;

@@ -3,16 +3,16 @@ import React from "react";
 import { UserNavbar } from "../components";
 const StaffCard = () => {
   return (
-    <div className="flex gap-12 w-[70%] h-[100%] p-14 items-center justify-between bg-red-400 rounded">
-      <div className="bg-yellow-900 border rounded-full">
+    <div className="flex gap-12 w-[70%] h-[100%] p-14 items-center justify-between rounded bg-gradient-to-r from-[#010c2a] to-[#090708]">
+      <div className=" border rounded-full">
         <img
           src="https://i.pinimg.com/736x/98/5a/8a/985a8a9969b2c905306125a5f9d937df.jpg"
           alt=""
           className="w-[300px] h-[300px] object-cover rounded-full"
         />
       </div>
-      <div className=" flex flex-col flex-1 bg-gray-900 items-center justify-center ">
-        <p className="font-bold text-2xl">Nguyễn Quốc Đạt</p>
+      <div className=" flex flex-col flex-1 items-center justify-center text-white ">
+        <p className="font-bold text-2xl ">Nguyễn Quốc Đạt</p>
         <p className="py-2 text-lg">0369394745</p>
         <p className="py-2 text-lg">2 Năm kinh nghiệm</p>
         <p className="py-2 text-lg">Sao trung bình</p>
@@ -29,13 +29,13 @@ const StaffCard = () => {
 };
 const ListStaffCard = () => {
   return (
-    <div className="w-[30%] h-[100%] bg-yellow-400 border rounded overflow-y-auto">
-      <div className=" w-full h-14 flex border-b items-center justify-center">
+    <div className="w-[30%] h-[100%]  border rounded overflow-y-auto">
+      <div className=" w-full h-14 flex border-b items-center justify-center bg-gradient-to-r from-[#010c2a] to-[#090708] text-white">
         <p>Danh sách nhân viên</p>
       </div>
       <div className=" h-[calc(100%-56px)] overflow-y-auto ">
         <div className="grid grid-cols-1 gap-2 px-4 py-4 w-full ">
-          <div className="flex w-full h-16 p-2 gap-4 bg-red-400 items-center rounded-xl cursor-pointer">
+          <div className="flex w-full h-16 p-2 gap-4  items-center rounded-xl cursor-pointer">
             <img
               className="w-[46px] h-[46px] rounded-full"
               src="https://i.pinimg.com/736x/98/5a/8a/985a8a9969b2c905306125a5f9d937df.jpg"
@@ -52,7 +52,7 @@ const Staff = () => {
   return (
     <>
       <UserNavbar />
-      <section className="flex flex-row gap-4 px-8 h-[100vh] bg-slate-500 pt-[80px] pb-5">
+      <section className="flex flex-row gap-4 px-8 h-[100vh]  pt-[80px] pb-5">
         <StaffCard />
         <ListStaffCard />
       </section>

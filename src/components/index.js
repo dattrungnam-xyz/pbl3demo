@@ -4,7 +4,7 @@ import {Carousel} from './user'
 export {default as UserNavbar} from './UserNavbar'
 export {default as Hero} from './Hero'
 export {default as BarberCard} from './BarberCard'
-export {default as DvuCard} from './DvuCard'
+export {default as ServiceCard} from './ServiceCard'
 export {default as SubNavbar} from './SubNavbar'
 
 
