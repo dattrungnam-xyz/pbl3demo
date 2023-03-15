@@ -71,7 +71,7 @@ const UserNavbar = () => {
                         src="https://khoinguonsangtao.vn/wp-content/uploads/2022/07/avatar-cute-2.jpg"
                         alt=" "
                       />
-                      <p>Nguyễn Văn A</p>
+                      <p className="text-gray-900">Nguyễn Văn A</p>
                       <div className="ml-2">
                         <box-icon
                           color="#374151"
@@ -82,12 +82,11 @@ const UserNavbar = () => {
                       </div>
                       
 
-                      <div className="absolute top-[100%] left-0  bg-white border border-gray-300 group-hover:block">
-                        <div className="p-2 hover:bg-gray-200 w-[120%]">Chỉnh sửa thông tin</div>
-                        <div className="p-2 hover:bg-gray-200 w-[120%]">Đánh giá dịch vụ</div>
-                        <div className="p-2 hover:bg-gray-200 w-[120%]">Đăng xuất</div>
-                        <div className="p-2 hover:bg-gray-200 w-[120%]">Đăng xuất</div>
-                      
+                      <div className="absolute w-[220px] top-[100%] right-0 hidden translate-y-[4px]  bg-white border border-gray-300 group-hover:block before:block before:absolute before:w-[103%] before:h-[6px] before:translate-y-[-6px] before:translate-x-[-2px] before:bg-transparent rounded">
+                        <div className="py-2 px-4 hover:bg-gray-200 text-gray-900 ">Chỉnh sửa thông tin</div>
+                        <div className="py-2 px-4 hover:bg-gray-200 text-gray-900">Lịch đặt của tôi</div>
+                        <div className="py-2 px-4 hover:bg-gray-200 text-gray-900">Đánh giá dịch vụ</div>
+                        <div className="py-2 px-4 hover:bg-gray-200 text-gray-900">Đăng xuất</div>
                       </div>
                       
                     </div>

@@ -1,5 +1,5 @@
 import {AdminNavbar, AdminSidebar, AdminContent} from './admin'
-import {Carousel} from './user'
+import {Carousel,EditProfile} from './user'
 
 export {default as UserNavbar} from './UserNavbar'
 export {default as Hero} from './Hero'
@@ -8,4 +8,4 @@ export {default as ServiceCard} from './ServiceCard'
 export {default as SubNavbar} from './SubNavbar'
 
 
-export {AdminNavbar, AdminSidebar, AdminContent,Carousel}
+export {AdminNavbar, AdminSidebar, AdminContent,Carousel,EditProfile}

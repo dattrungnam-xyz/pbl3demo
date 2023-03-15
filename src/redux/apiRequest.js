@@ -1,6 +1,7 @@
 // import axios from 'axios'
 import { loginFailed, loginStart, loginSuccess } from './authSlice'
 
+
 export const loginUser = async (user, dispatch, navigate) => {
     dispatch(loginStart());
     try {
