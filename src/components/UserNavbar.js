@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import { Link } from "react-router-dom";
+
 import { useSelector } from "react-redux";
 
 const UserNavbar = () => {
@@ -68,10 +69,10 @@ const UserNavbar = () => {
                     <div className=" relative group p-1 ml-4 flex justify-center  items-center  cursor-pointer hover:bg-gray-200 rounded">
                       <img
                         className="rounded-full border w-[30px] h-[30px]"
-                        src="https://khoinguonsangtao.vn/wp-content/uploads/2022/07/avatar-cute-2.jpg"
+                        src={user.avatar}
                         alt=" "
                       />
-                      <p className="text-gray-900">Nguyễn Văn A</p>
+                      <p className="text-gray-900 ml-2">{user.name}</p>
                       <div className="ml-2">
                         <box-icon
                           color="#374151"

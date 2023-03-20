@@ -31,10 +31,13 @@ const ServiceCard = ({image}) => {
         src={'https://i.pinimg.com/564x/83/bc/8b/83bc8b88cf6bc4b4e04d153a418cde62.jpg'}
         alt=""
         />}
-      <p className="mt-6 px-6 text-zinc-200 text-justify">
-        Cắt tóc chuyên nghiệp với giá 80.000 VND Tại Liem Barber Shop, các bạn
-        sẽ được tư vấn tạo kiểu tóc phù hợp với.
+      <p className="mt-6 px-6 text-zinc-200 text-justify text-xl uppercase">
+        Cắt tóc 
       </p>
+      <p className="mt-4 px-6 text-zinc-200 text-justify">
+        Trải nghiệm dịch vụ cắt tóc chuyên nghiệp chỉ với 120.000 VND.
+      </p>
+
       <p className="mt-4 text-lg text-white underline cursor-pointer">
         Xem chi tiết.
       </p>

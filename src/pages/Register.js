@@ -1,26 +1,61 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import { SubNavbar } from "../components";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [showPassWord, setShowPassWord] = useState(false);
-  const [account,setAccount] = useState({
+  const [registerError, setRegisterError] = useState("");
+  const [account, setAccount] = useState({
     username: "",
-    password:"",
-    name:"",
-    phone:"",
-  })
-  const handleSubmit = (e) => {
+    password: "",
+    name: "",
+    phone: "",
+    type: "user",
+  });
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(account)
+    try {
+      await fetch("http://localhost:8080/v1/auth/register", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(account),
+      })
+        .then(
+          (res) => res.json()
+          // if (res.status === 400) {
+          //   setRegisterError(true);
+          // }
+          // if (res.status === 201) {
+          //   setRegisterError(false);
+          //   navigate("/Login");
+
+          // }
+        )
+        .then((res) => {
+          if (res.error !== "") {
+            setRegisterError(res.error)
+          }
+          else{
+            setRegisterError("")
+            navigate("/Login");
+          }
+        });
+      // .then((res) => dispatch(registerSuccess()))
+    } catch (error) {
+      console.log(error);
+    }
   };
-  const handleChange =(e) => {
+  const handleChange = (e) => {
     setAccount({
       ...account,
-      [e.target.name] : e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <>
       <SubNavbar login={true} />
@@ -34,10 +69,11 @@ const Register = () => {
               Đăng kí
             </h1>
 
-            <div class="w-3/4 mb-4">
+            <div class="w-3/4 mb-3">
               <label className="ml-4 " for="username">
                 Tên đăng nhập
               </label>
+
               <input
                 type="text"
                 name="username"
@@ -48,7 +84,7 @@ const Register = () => {
               />
             </div>
 
-            <div class="w-3/4 mb-4 relative">
+            <div class="w-3/4 mb-3 relative">
               <label className="ml-4 " for="password">
                 Mật khẩu
               </label>
@@ -85,7 +121,7 @@ const Register = () => {
               </div>
             </div>
 
-            <div class="w-3/4 mb-4">
+            <div class="w-3/4 mb-3">
               <label className="ml-4 " for="name">
                 Họ tên
               </label>
@@ -94,11 +130,11 @@ const Register = () => {
                 name="name"
                 id="name"
                 value={account.name}
-                  onChange={handleChange}
+                onChange={handleChange}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>
-            <div class="w-3/4 mb-4">
+            <div class="w-3/4 mb-3">
               <label className="ml-4 " for="phone">
                 Số điện thoại
               </label>
@@ -107,12 +143,12 @@ const Register = () => {
                 name="phone"
                 id="phone"
                 value={account.phone}
-                  onChange={handleChange}
+                onChange={handleChange}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>
-
-            <div class="w-3/4 mt-6">
+                {registerError ? <p className="w-3/4 text-left text-sm text-[red]">{registerError}. Vui lòng nhập lại</p> : <></>}
+            <div class="w-3/4 mt-3">
               <button
                 type="submit"
                 class=" py-2 bg-[#194284] w-full rounded-2xl text-blue-50 text-[20px] font-semibold hover:opacity-75"

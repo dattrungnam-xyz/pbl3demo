@@ -5,8 +5,8 @@ const AdminNavbar = ({login}) => {
     
   return (
     <div class="">
-      <div class="antialiased bg-gray-100 dark-mode:bg-gray-900 border">
-        <div class="w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800">
+      <div class="antialiased bg-gray-100  border">
+        <div class="w-full text-gray-700 bg-white ">
           <div
             x-data="{ open: true }"
             class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8"
@@ -15,7 +15,7 @@ const AdminNavbar = ({login}) => {
               <Link
                 to="/Admin"
                 href="#"
-                class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"
+                class="text-lg font-semibold tracking-widest text-gray-800 uppercase rounded-lg  focus:outline-none focus:shadow-outline"
               >
                 Barbershop
               </Link>
@@ -39,11 +39,11 @@ const AdminNavbar = ({login}) => {
             </div>
             <nav class="flex-col flex-grow hidden pb-4 md:pb-0 md:flex md:justify-end md:flex-row">
               {login ? <Link to={"/Logout"}>
-              <button class="w-full h-full block ml-4 uppercase shadow bg-neutral-800 hover:bg-neutral-700 focus:shadow-outline focus:outline-none text-white text-xs py-2 px-6 rounded">
+              <button class="w-full h-full block ml-4 uppercase shadow bg-gray-600 hover:bg-gray-500 focus:shadow-outline focus:outline-none text-white text-xs py-2 px-6 rounded">
                 Đăng xuất
               </button>
               </Link> : <Link to={"/Login"}>
-              <button class="w-full h-full block ml-4 uppercase shadow bg-neutral-800 hover:bg-neutral-700 focus:shadow-outline focus:outline-none text-white text-xs py-2 px-6 rounded">
+              <button class="w-full h-full block ml-4 uppercase shadow bg-gray-600 hover:bg-gray-500 focus:shadow-outline focus:outline-none text-white text-xs py-2 px-6 rounded">
                 Đăng nhập
               </button>
               </Link>}

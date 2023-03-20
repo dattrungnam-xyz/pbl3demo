@@ -9,6 +9,7 @@ const authSlice = createSlice({
       error: false,
       isLogin: false
     },
+    
   },
   reducers: {
     loginStart: (state) => {
@@ -24,8 +25,10 @@ const authSlice = createSlice({
       state.login.isFetching = false;
       state.login.error = true;
     },
+   
+
   },
 });
 
-export const { loginStart, loginSuccess, loginFailed } = authSlice.actions;
+export const { loginStart, loginSuccess, loginFailed,registerStart, registerSuccess, registerFailed } = authSlice.actions;
 export default authSlice.reducer;

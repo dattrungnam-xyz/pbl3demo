@@ -17,7 +17,7 @@ const Home = () => {
         <div class="w-full text-center text-gray-900 my-12  max-sm:text-2xl   sm:text-3xl capitalize tracking-widest lg:text-4xl">
           Barber tiêu biểu
         </div>
-        <div class="grid  lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 grid-cols-4 gap-12 p-3">
+        <div class="grid  lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 max-sm:grid-cols-1 grid-cols-4 gap-12 p-3">
           <BarberCard />
           <BarberCard />
           <BarberCard />

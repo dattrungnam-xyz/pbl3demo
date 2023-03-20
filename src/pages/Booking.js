@@ -9,12 +9,16 @@ const Booking = () => {
       <div className="bg-gray-10 mt-[62px] items-center justify-center  overflow-y-auto">
         <div class="w-full h-full max-sm:pt-4 pt-12 max-sm:pb-4 pb-8 md:px-10 px-4 flex flex-row max-sm:flex-col  ">
           <div className="w-1/2 max-sm:w-full">
-            <div class="w-3/4 mb-4 ">
-              <label className="ml-4 ">Thợ cắt tóc</label>
+            <div class="w-3/4 mb-4 relative">
+              <label className="ml-4 ">Chọn thợ cắt tóc</label>
+
+              {/* <div className="absolute right-0 top-[50%] translate-y-1 -translate-x-[10px] ">
+                <box-icon name="chevron-down"></box-icon>
+              </div> */}
               <select
                 className="w-full py-3 mt-2 pl-7 pr-3 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
-                placeholder="Chọn thợ cắt tóc"
-              >
+                placeholder="Thợ cắt tóc"
+              > 
                 <option value="Nguyễn Văn A">Nguyễn Văn A</option>
                 <option value="Nguyễn Văn B">Nguyễn Văn B</option>
                 <option value="Nguyễn Văn C">Nguyễn Văn C</option>
@@ -32,8 +36,12 @@ const Booking = () => {
               </div>
             </div>
 
-            <div class="w-3/4 mb-4 ">
+            <div class="w-3/4 mb-4 relative">
               <label className="ml-4 ">Chọn giờ cắt</label>
+              {/* <div className="absolute right-0 top-[50%] translate-y-1 -translate-x-[10px] ">
+                <box-icon name="chevron-down"></box-icon>
+              </div> */}
+              
               <select
                 className="w-full py-3 mt-2 pl-7 pr-3 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
                 id="cars"
