@@ -1,12 +1,24 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logOut } from "../redux/authSlice";
 
 const UserNavbar = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
   const [showOptionUser, setShowOptionUser] = useState(false);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogOut = () => {
+    dispatch(logOut());
+
+    navigate("/");
+    
+     window.location.reload(false);
+
+  };
 
   return (
     <nav class="fixed right-0 left-0 top-0 z-50 ">
@@ -65,7 +77,6 @@ const UserNavbar = () => {
                 </Link>
                 {user ? (
                   <>
-                    
                     <div className=" relative group p-1 ml-4 flex justify-center  items-center  cursor-pointer hover:bg-gray-200 rounded">
                       <img
                         className="rounded-full border w-[30px] h-[30px]"
@@ -81,15 +92,24 @@ const UserNavbar = () => {
                           name="down-arrow"
                         ></box-icon>
                       </div>
-                      
 
                       <div className="absolute w-[220px] top-[100%] right-0 hidden translate-y-[4px]  bg-white border border-gray-300 group-hover:block before:block before:absolute before:w-[103%] before:h-[6px] before:translate-y-[-6px] before:translate-x-[-2px] before:bg-transparent rounded">
-                        <div className="py-2 px-4 hover:bg-gray-200 text-gray-900 ">Chỉnh sửa thông tin</div>
-                        <div className="py-2 px-4 hover:bg-gray-200 text-gray-900">Lịch đặt của tôi</div>
-                        <div className="py-2 px-4 hover:bg-gray-200 text-gray-900">Đánh giá dịch vụ</div>
-                        <div className="py-2 px-4 hover:bg-gray-200 text-gray-900">Đăng xuất</div>
+                        <Link to={`/User/${user.id}`} className="py-2 px-4 w-full h-full block hover:bg-gray-200 text-gray-900 ">
+                          Chỉnh sửa thông tin
+                        </Link>
+                        <div className="py-2 px-4 hover:bg-gray-200 text-gray-900">
+                          Lịch đặt của tôi
+                        </div>
+                        <div className="py-2 px-4 hover:bg-gray-200 text-gray-900">
+                          Đánh giá dịch vụ
+                        </div>
+                        <div
+                          onClick={handleLogOut}
+                          className="py-2 px-4 hover:bg-gray-200 text-gray-900"
+                        >
+                          Đăng xuất
+                        </div>
                       </div>
-                      
                     </div>
                   </>
                 ) : (

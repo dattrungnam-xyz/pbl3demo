@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 // import { Link } from "react-router-dom";
 import { UserNavbar } from "../components";
 
 const Booking = () => {
+  const [mainService,setMainService] = useState({
+
+  })
+  const [subService,setSubService] = useState({
+    
+  })
   return (
     <>
       <UserNavbar />
@@ -76,16 +82,16 @@ const Booking = () => {
               <label className="ml-4 ">Chọn dịch vụ phụ</label>
               <div className="grid grid-cols-2 grid-rows-2 gap-2 h-[160px] mt-2">
                 <div className="col-start-1 col-end-2 row-start-1 row-end-2 bg-slate-200  border-[2px] border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md">
-                  Cắt Tóc
+                  Cạo râu
                 </div>
                 <div className="col-start-2 col-end-3 row-start-1 row-end-2 bg-slate-200 border-[2px] border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md">
-                  Uốn Tóc
+                  Gội đầu
                 </div>
                 <div className="col-start-1 col-end-2 row-start-2 row-end-3 bg-slate-200 border-[2px] border-blue-500 rounded flex items-center justify-center cursor-pointer font-semibold text-md">
-                  Nhuộm Tóc
+                  Lấy ráy tai
                 </div>
                 <div className="col-start-2 col-end-3 row-start-2  row-end-3 bg-slate-200 border-[2px] border-blue-500 rounded flex items-center justify-center cursor-pointer font-semibold text-md">
-                  Tatoo Hair
+                  Đắp mặt nạ
                 </div>
               </div>
             </div>

@@ -22,28 +22,33 @@ const Login = () => {
     e.preventDefault();
 
     // loginUser(account,dispatch,navigate)
+    if(account.username && account.password){
 
-    try {
-      await fetch("http://localhost:8080/v1/auth/login", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(account),
-      })
-        .then((res) => res.json())
-        //.then(res=> console.log(res))
-        .then((res) => {
-          
-          if (res.error !== "") {
-            setLoginError(res.error);
-          } else {
-            setLoginError("");
-            dispatch(loginSuccess(res));
-            navigate("/");
-          }
-        });
-    } catch (error) {}
+      try {
+        await fetch("http://localhost:8080/v1/auth/login", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(account),
+        })
+          .then((res) => res.json())
+          //.then(res=> console.log(res))
+          .then((res) => {
+            
+            if (res.error !== "") {
+              setLoginError(res.error);
+            } else {
+              setLoginError("");
+              dispatch(loginSuccess(res));
+              navigate("/");
+            }
+          });
+      } catch (error) {}
+    }
+    else{
+      setLoginError("Nhập thiếu thông tin");
+    }
  
   };
   const handleChange = (e) => {

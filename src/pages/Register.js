@@ -16,38 +16,45 @@ const Register = () => {
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await fetch("http://localhost:8080/v1/auth/register", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(account),
-      })
-        .then(
-          (res) => res.json()
-          // if (res.status === 400) {
-          //   setRegisterError(true);
-          // }
-          // if (res.status === 201) {
-          //   setRegisterError(false);
-          //   navigate("/Login");
+    if (account.username && account.password && account.name && account.phone) {
+      try {
+        await fetch("http://localhost:8080/v1/auth/register", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(account),
+        })
+          .then(
+            (res) => res.json()
+            // if (res.status === 400) {
+            //   setRegisterError(true);
+            // }
+            // if (res.status === 201) {
+            //   setRegisterError(false);
+            //   navigate("/Login");
 
-          // }
-        )
-        .then((res) => {
-          if (res.error !== "") {
-            setRegisterError(res.error)
-          }
-          else{
-            setRegisterError("")
-            navigate("/Login");
-          }
-        });
-      // .then((res) => dispatch(registerSuccess()))
-    } catch (error) {
-      console.log(error);
+            // }
+          )
+          .then((res) => {
+            if (res.error !== "") {
+              setRegisterError(res.error);
+            } else {
+              setRegisterError("");
+              navigate("/Login");
+            }
+          });
+        // .then((res) => dispatch(registerSuccess()))
+      } catch (error) {
+        console.log(error);
+      }
     }
+    else
+    {
+      setRegisterError("Thiếu thông tin")
+    }
+
+    
   };
   const handleChange = (e) => {
     setAccount({
@@ -147,7 +154,13 @@ const Register = () => {
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>
-                {registerError ? <p className="w-3/4 text-left text-sm text-[red]">{registerError}. Vui lòng nhập lại</p> : <></>}
+            {registerError ? (
+              <p className="w-3/4 text-left text-sm text-[red]">
+                {registerError}. Vui lòng nhập lại
+              </p>
+            ) : (
+              <></>
+            )}
             <div class="w-3/4 mt-3">
               <button
                 type="submit"
