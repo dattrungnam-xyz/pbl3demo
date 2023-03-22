@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logOut } from "../redux/authSlice";
+import { logOut } from "../../redux/authSlice";
 
 const UserNavbar = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
-  const [showOptionUser, setShowOptionUser] = useState(false);
+  // const [showOptionUser, setShowOptionUser] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -78,11 +78,15 @@ const UserNavbar = () => {
                 {user ? (
                   <>
                     <div className=" relative group p-1 ml-4 flex justify-center  items-center  cursor-pointer hover:bg-gray-200 rounded">
-                      <img
+                      {user.avatar?<img
                         className="rounded-full border w-[30px] h-[30px]"
                         src={user.avatar}
                         alt=" "
-                      />
+                      />:<img
+                      className="rounded-full border w-[30px] h-[30px]"
+                      src={"https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg"}
+                      alt=" "
+                    />}
                       <p className="text-gray-900 ml-2">{user.name}</p>
                       <div className="ml-2">
                         <box-icon
@@ -97,9 +101,9 @@ const UserNavbar = () => {
                         <Link to={`/User/${user.id}`} className="py-2 px-4 w-full h-full block hover:bg-gray-200 text-gray-900 ">
                           Chỉnh sửa thông tin
                         </Link>
-                        <div className="py-2 px-4 hover:bg-gray-200 text-gray-900">
+                        <Link to={`/BookingInfor/${user.id}`} className="w-full h-full block py-2 px-4 hover:bg-gray-200 text-gray-900">
                           Lịch đặt của tôi
-                        </div>
+                        </Link>
                         <div className="py-2 px-4 hover:bg-gray-200 text-gray-900">
                           Đánh giá dịch vụ
                         </div>

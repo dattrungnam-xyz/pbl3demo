@@ -1,6 +1,5 @@
 import React from "react";
 
-import { listBarber } from "../assets/BarberStaff";
 
 const BarberCard = () => {
   return (

@@ -48,8 +48,8 @@ const EditProfile = () => {
       },
       body: JSON.stringify(inforUser),
     }).then(res => res.json())
-    .then(res => setMessageUpdate(res.message))
-    
+    .then(res => setMessageUpdate(res.message));
+    setImgAvatar(inforUser.avatar)
   }
   useEffect(() => {
     fetchData(id).then((res) => {setInforUser(res)

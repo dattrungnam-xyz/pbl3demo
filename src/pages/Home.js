@@ -1,7 +1,7 @@
 import React from "react";
 // import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { BarberCard, UserNavbar, Hero, ServiceCard, Carousel } from "../components";
+import { BarberCard, UserNavbar, Hero, ServiceCard, HairGallery } from "../components";
 
 const Home = () => {
 
@@ -73,13 +73,22 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className=" px-4 pb-8">
+      <section className=" px-4 pb-8 mb-8">
         <div class="w-full text-center text-gray-900 my-12 max-sm:text-2xl  sm:text-3xl capitalize tracking-widest lg:text-4xl">
           Kiểu tóc thịnh hành
         </div>
-        <Carousel />
+      <HairGallery/>
+      {/* //  <Carousel /> */}
       </section>
-      <Link to="/Login" className="bg-red-700">abcd</Link>
+      {/* <Link to="/Login" className="bg-red-700">abcd</Link> */}
+
+      <section className="bg-booking h-[360px] object-cover">
+            <div className="w-full h-full bg-neutral-900/80">
+              <div>
+                Đặt lịch
+              </div>
+            </div>
+      </section>
     </>
   );
 };

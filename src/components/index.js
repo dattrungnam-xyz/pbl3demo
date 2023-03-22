@@ -1,11 +1,7 @@
 import {AdminNavbar, AdminSidebar, AdminContent} from './admin'
-import {Carousel,EditProfile} from './user'
-
-export {default as UserNavbar} from './UserNavbar'
-export {default as Hero} from './Hero'
-export {default as BarberCard} from './BarberCard'
-export {default as ServiceCard} from './ServiceCard'
-export {default as SubNavbar} from './SubNavbar'
+import {EditProfile,HairGallery,Hero,BarberCard,ServiceCard,UserNavbar,SubNavbar} from './user'
 
 
-export {AdminNavbar, AdminSidebar, AdminContent,Carousel,EditProfile}
+
+
+export {AdminNavbar, AdminSidebar, AdminContent,EditProfile,HairGallery,Hero,BarberCard,ServiceCard,UserNavbar,SubNavbar}

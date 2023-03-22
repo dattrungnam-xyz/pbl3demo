@@ -28,6 +28,11 @@ const data = [
         image:'https://phongbvb.com/upload/z3396222403079-f4881c7b20687a24c6359aa5e4db57ff.jpg?v=1.0.2',
         name:'Jaycut'
     },
+    {
+        image:'https://phongbvb.com/upload/z3396222347450-aa7ac6fa8c0892c59bd9a0745cbbf6e7.jpg?v=1.0.2',
+        name:'Tóc lò xo'
+    },
+
 
 ]
 
