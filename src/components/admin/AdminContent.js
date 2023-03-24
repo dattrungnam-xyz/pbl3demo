@@ -199,7 +199,7 @@ const AdminContent = () => {
                     </table>
                 </div>
             </div>
-        </div>
+    </div>
   )
 }
 

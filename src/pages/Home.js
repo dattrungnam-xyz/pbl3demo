@@ -5,7 +5,7 @@ import { BarberCard, UserNavbar, Hero, ServiceCard, HairGallery } from "../compo
 
 const Home = () => {
 
-  // const user = useSelector((state)=> state.auth.login.currentUser)
+  //  const user = useSelector((state)=> state.auth.login.currentUser)
 
 
   return (
@@ -80,7 +80,7 @@ const Home = () => {
       <HairGallery/>
       {/* //  <Carousel /> */}
       </section>
-      {/* <Link to="/Login" className="bg-red-700">abcd</Link> */}
+      <Link to="/Admin" className="bg-red-700">abcd</Link>
 
       <section className="bg-booking h-[360px] object-cover">
             <div className="w-full h-full flex items-center justify-center bg-neutral-900/80">

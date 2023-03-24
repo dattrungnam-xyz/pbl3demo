@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const AdminNavbar = ({login}) => {
-    
+const AdminNavbar = () => {
+  const user = useSelector((state)=> state.auth.login.currentUser)
   return (
     <div class="">
       <div class="antialiased bg-gray-100  border">
@@ -38,7 +39,7 @@ const AdminNavbar = ({login}) => {
               </button>
             </div>
             <nav class="flex-col flex-grow hidden pb-4 md:pb-0 md:flex md:justify-end md:flex-row">
-              {login ? <Link to={"/Logout"}>
+              {user ? <Link to={"/Logout"}>
               <button class="w-full h-full block ml-4 uppercase shadow bg-gray-600 hover:bg-gray-500 focus:shadow-outline focus:outline-none text-white text-xs py-2 px-6 rounded">
                 Đăng xuất
               </button>

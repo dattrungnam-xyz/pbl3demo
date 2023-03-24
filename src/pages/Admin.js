@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import { AdminNavbar, AdminSidebar,AdminContent } from '../components'
+import { AdminNavbar, AdminSidebar,AdminContent, AdminEditInfor } from '../components'
 
 const Admin = () => {
     const [login,setLogin] = useState(false);
@@ -9,7 +9,8 @@ const Admin = () => {
         <AdminNavbar login={login} setLogin={setLogin}/>
         <section class="flex flex-row">
             <AdminSidebar/>
-            <AdminContent/>
+            {/* <AdminContent/> */}
+            <AdminEditInfor/>
         </section>
     </>
   )
