@@ -1,19 +1,28 @@
-import React,{useState} from 'react'
-import { AdminNavbar, AdminSidebar,AdminContent, AdminEditInfor } from '../components'
+import React, { useState } from "react";
+import {
+  AdminNavbar,
+  AdminSidebar,
+  AdminContent,
+  AdminEditInfor,
+  AdminServiceContent,
+  AdminAccountContent,
+} from "../components";
 
 const Admin = () => {
-    const [login,setLogin] = useState(false);
+  const [active, setActive] = useState("Thành viên");
+  
   return (
     <>
-
-        <AdminNavbar login={login} setLogin={setLogin}/>
-        <section class="flex flex-row">
-            <AdminSidebar/>
-            {/* <AdminContent/> */}
-            <AdminEditInfor/>
-        </section>
+      <AdminNavbar />
+      <section class="flex flex-row">
+        <AdminSidebar active ={active} setActive={setActive} />
+        {/* <AdminContent/> */}
+        {/* <AdminEditInfor/> */}
+        {active === "Dịch vụ" && <AdminServiceContent />}
+        {active === "Tài khoản" && <AdminAccountContent />}
+      </section>
     </>
-  )
-}
+  );
+};
 
-export default Admin
+export default Admin;

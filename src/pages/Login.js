@@ -41,7 +41,14 @@ const Login = () => {
             } else {
               setLoginError("");
               dispatch(loginSuccess(res));
-              navigate("/");
+              console.log(res)
+              if(res.type === "admin")
+              {
+                navigate("/Admin");
+              }
+              else {
+                navigate("/");
+              }
             }
           });
       } catch (error) {}

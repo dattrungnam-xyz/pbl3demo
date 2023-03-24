@@ -16,7 +16,7 @@ const UserNavbar = () => {
 
     navigate("/");
     
-     window.location.reload(false);
+    window.location.reload(false);
 
   };
 
