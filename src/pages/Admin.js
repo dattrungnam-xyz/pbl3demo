@@ -6,6 +6,8 @@ import {
   AdminEditInfor,
   AdminServiceContent,
   AdminAccountContent,
+  AdminBooking,
+  AdminProducts,
 } from "../components";
 
 const Admin = () => {
@@ -16,10 +18,12 @@ const Admin = () => {
       <AdminNavbar />
       <section class="flex flex-row">
         <AdminSidebar active ={active} setActive={setActive} />
-        {/* <AdminContent/> */}
+        {active === "Thành viên" &&<AdminContent/>}
         {/* <AdminEditInfor/> */}
         {active === "Dịch vụ" && <AdminServiceContent />}
+        {active === "Sản phẩm bán kèm" && <AdminProducts />}
         {active === "Tài khoản" && <AdminAccountContent />}
+        {active === "Lịch đặt" && <AdminBooking />}
       </section>
     </>
   );

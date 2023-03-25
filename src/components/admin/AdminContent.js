@@ -2,7 +2,7 @@ import React from 'react'
 
 const AdminContent = () => {
   return (
-    <div class="w-full min-h-[300px] p-4  font-sans overflow-hidden">
+    <div class="w-full min-h-[300px] max-w-[80vw] p-4  font-sans overflow-hidden">
             <div class="w-full ">
                 <div class="bg-white shadow-md rounded my-6">
                     <table class="min-w-max w-full table-auto">

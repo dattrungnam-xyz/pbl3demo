@@ -32,7 +32,8 @@ const AdminAccountContent = () => {
                     <th class="py-3 px-6 text-center"></th>
                   </tr>
                 </thead>
-                <tbody class="text-gray-600 text-sm font-light">
+                <tbody class="text-gray-600 text-sm font-light max-h-[70vh] bg-yellow-300 overflow-y-auto">
+
                   {data.map((item) => {
                     return (
                       <tr
@@ -140,6 +141,7 @@ const AdminAccountContent = () => {
                       </tr>
                     );
                   })}
+
                 </tbody>
               </table>
             </div>
