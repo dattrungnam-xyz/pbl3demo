@@ -16,49 +16,49 @@ const AdminAccountContent = () => {
   return (
     <>
       {data ? (
-        <div class="w-full max-w-[80vw] min-h-[300px] p-4  font-sans overflow-hidden">
-          <div class="w-full ">
-            <div class="bg-white shadow-md rounded my-6">
-              <table class="min-w-max w-full table-auto">
+        <div className="w-full max-w-[80vw] min-h-[300px] p-4  font-sans overflow-hidden">
+          <div className="w-full ">
+            <div className="bg-white shadow-md rounded my-6">
+              <table className="min-w-max w-full table-auto">
                 <thead>
-                  <tr class="bg-gray-300 text-gray-600 uppercase text-sm leading-normal">
-                    <th class="py-3 px-6 text-left">ID </th>
-                    <th class="py-3 px-6 text-center">Họ Tên</th>
-                    <th class="py-3 px-6 text-center">Tên đăng nhập</th>
+                  <tr className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal">
+                    <th className="py-3 px-6 text-left">ID </th>
+                    <th className="py-3 px-6 text-center">Họ Tên</th>
+                    <th className="py-3 px-6 text-center">Tên đăng nhập</th>
 
-                    <th class="py-3 px-6 text-center">Số điện thoại</th>
-                    <th class="py-3 px-6 text-center">Loại </th>
+                    <th className="py-3 px-6 text-center">Số điện thoại</th>
+                    <th className="py-3 px-6 text-center">Loại </th>
 
-                    <th class="py-3 px-6 text-center"></th>
+                    <th className="py-3 px-6 text-center"></th>
                   </tr>
                 </thead>
-                <tbody class="text-gray-600 text-sm font-light max-h-[70vh] bg-yellow-300 overflow-y-auto">
+                <tbody className="text-gray-600 text-sm font-light max-h-[70vh] bg-yellow-300 overflow-y-auto">
 
                   {data.map((item) => {
                     return (
                       <tr
                         key={item.IdTaiKhoan}
-                        class="border-b border-gray-200 hover:bg-gray-100"
+                        className="border-b border-gray-200 hover:bg-gray-100"
                       >
-                        <td class="py-3 px-6 text-left">
-                          <div class="flex items-center">
+                        <td className="py-3 px-6 text-left">
+                          <div className="flex items-center">
                             {item.IdTaiKhoan}
                           </div>
                         </td>
 
-                        <td class="py-3 px-6 text-center">
-                          <div class="flex items-center ">
-                          <div class="mr-2">
+                        <td className="py-3 px-6 text-center">
+                          <div className="flex items-center ">
+                          <div className="mr-2">
                               {item.Avatar ? (
                                 <img
                                   alt=""
-                                  class="w-6 h-6 rounded-full"
+                                  className="w-6 h-6 rounded-full"
                                   src={item.Avatar}
                                 />
                               ) : (
                                 <img
                                   alt=""
-                                  class="w-6 h-6 rounded-full"
+                                  className="w-6 h-6 rounded-full"
                                   src="https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg"
                                 />
                               )}
@@ -67,25 +67,25 @@ const AdminAccountContent = () => {
                           </div>
                         </td>
 
-                        <td class="py-3 px-6 text-center">
-                          <div class="flex items-center justify-center">
+                        <td className="py-3 px-6 text-center">
+                          <div className="flex items-center justify-center">
                             {item.TenDangNhap}
                           </div>
                         </td>
-                        <td class="py-3 px-6 text-center">
-                          <div class="flex items-center justify-center">
+                        <td className="py-3 px-6 text-center">
+                          <div className="flex items-center justify-center">
                             {item.SoDienThoai}
                           </div>
                         </td>
-                        <td class="py-3 px-6 text-center">
-                          <div class="flex items-center justify-center">
+                        <td className="py-3 px-6 text-center">
+                          <div className="flex items-center justify-center">
                             {item.LoaiTaiKhoan}
                           </div>
                         </td>
 
-                        <td class="py-3 px-6 text-center">
-                          <div class="flex item-center justify-center">
-                            <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                        <td className="py-3 px-6 text-center">
+                          <div className="flex item-center justify-center">
+                            <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -106,7 +106,7 @@ const AdminAccountContent = () => {
                                 />
                               </svg>
                             </div>
-                            <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                            <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -121,7 +121,7 @@ const AdminAccountContent = () => {
                                 />
                               </svg>
                             </div>
-                            <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                            <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"

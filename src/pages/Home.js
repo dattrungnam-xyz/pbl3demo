@@ -2,6 +2,7 @@ import React from "react";
 // import { useSelector } from "react-redux";
  import { Link } from "react-router-dom";
 import { BarberCard, UserNavbar, Hero, ServiceCard, HairGallery } from "../components";
+import { listBarber } from "../assets/BarberStaff";
 
 const Home = () => {
 
@@ -13,21 +14,21 @@ const Home = () => {
       <UserNavbar />
       
       <Hero />
-      <section class="mt-8 px-4">
-        <div class="w-full text-center text-gray-900 my-12  max-sm:text-2xl   sm:text-3xl capitalize tracking-widest lg:text-4xl">
+      <section className="mt-8 px-4 flex items-center justify-center flex-col">
+        <div className="w-full text-center text-gray-900 my-12  max-sm:text-2xl   sm:text-3xl capitalize tracking-widest lg:text-4xl">
           Barber tiêu biểu
         </div>
-        <div class="grid  lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 max-sm:grid-cols-1 grid-cols-4 gap-12 p-3">
-          <BarberCard />
-          <BarberCard />
-          <BarberCard />
+        <div className="grid  lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 max-sm:grid-cols-1 grid-cols-4 gap-12 p-3 max-w-[1200px]">
+          {listBarber.map((item,index)=>{
+              return <BarberCard key={index} image={item.avatar} name={item.name}/>
+          })}
         </div>
       </section>
-      <section class="mt-8 px-4 pb-24 bg-gradient-to-r from-[#010c2a] to-[#090708] ">
-        <div class="w-full text-center text-white py-12  max-sm:text-2xl  sm:text-3xl capitalize tracking-widest lg:text-4xl">
+      <section className="mt-8 px-4 pb-24 bg-gradient-to-r from-[#010c2a] to-[#090708] ">
+        <div className="w-full text-center text-white py-12  max-sm:text-2xl  sm:text-3xl capitalize tracking-widest lg:text-4xl">
           Dịch vụ
         </div>
-        <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-12 p-3  bg-transparent">
+        <div className=" grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1  gap-12 p-3  bg-transparent">
           <ServiceCard
             image={
               "https://images.pexels.com/photos/3993132/pexels-photo-3993132.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
@@ -74,7 +75,7 @@ const Home = () => {
         </div>
       </section>
       <section className=" px-4 pb-8 mb-8">
-        <div class="w-full text-center text-gray-900 my-12 max-sm:text-2xl  sm:text-3xl capitalize tracking-widest lg:text-4xl">
+        <div className="w-full text-center text-gray-900 my-12 max-sm:text-2xl  sm:text-3xl capitalize tracking-widest lg:text-4xl">
           Kiểu tóc thịnh hành
         </div>
       <HairGallery/>
@@ -85,7 +86,7 @@ const Home = () => {
       <section className="bg-booking h-[360px] object-cover">
             <div className="w-full h-full flex items-center justify-center bg-neutral-900/80">
               <div className="grid max-sm:px-6 max-md:px-12 px-16 py-6 grid-cols-3 max-sm:gap-4 max-md:gap-6 gap-8 w-full min-h-[120px] bg-neutral-900">
-                <div className=" flex items-center justify-center">
+                <div className=" flex items-center justify-center max-sm:hidden">
                   <p className=" text-3xl font-semibold text-white ">BARBERSHOP</p>
                 </div>
                 <div className=" flex items-center justify-center">

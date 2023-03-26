@@ -21,20 +21,20 @@ const UserNavbar = () => {
   };
 
   return (
-    <nav class="fixed right-0 left-0 top-0 z-50 ">
-      <div class="w-full ">
-        <div class="w-full antialiased bg-gray-100 border">
-          <div class="w-full text-gray-700 bg-white ">
-            <div class="flex flex-col w-full px-2 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
-              <div class="flex flex-row items-center justify-between px-2 py-4">
+    <nav className="fixed right-0 left-0 top-0 z-50 ">
+      <div className="w-full ">
+        <div className="w-full antialiased bg-gray-100 border">
+          <div className="w-full text-gray-700 bg-white ">
+            <div className="flex flex-col w-full px-2 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
+              <div className="flex flex-row items-center justify-between px-2 py-4">
                 <Link
                   to={"/"}
-                  class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg focus:outline-none focus:shadow-outline"
+                  className="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg focus:outline-none focus:shadow-outline"
                 >
                   Barbershop
                 </Link>
-                {/* <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline">
-                  <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
+                {/* <button className="rounded-lg md:hidden focus:outline-none focus:shadow-outline">
+                  <svg fill="currentColor" viewBox="0 0 20 20" className="w-6 h-6">
                     <path
                       x-show="!open"
                       fill-rule="evenodd"
@@ -50,28 +50,28 @@ const UserNavbar = () => {
                   </svg>
                 </button> */}
               </div>
-              <nav class="flex-col flex-grow hidden pb-4 md:pb-0 md:flex md:justify-end md:flex-row">
+              <nav className="flex-col flex-grow hidden pb-4 md:pb-0 md:flex md:justify-end md:flex-row">
                 <Link
                   to="/"
-                  class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                  className="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                 >
                   Trang chủ
                 </Link>
                 <Link
                   to="/Staff"
-                  class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                  className="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                 >
                   Thành viên
                 </Link>
                 <Link
                   to="/Service"
-                  class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                  className="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                 >
                   Dịch vụ
                 </Link>
                 <Link
                   to="/Booking"
-                  class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                  className="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                 >
                   Đặt lịch
                 </Link>
@@ -119,12 +119,12 @@ const UserNavbar = () => {
                 ) : (
                   <>
                     <Link className="ml-4 lg:min-w-[120px]" to={"/Register"}>
-                      <button class="block w-full h-full border font-semibold  border-neutral-800 uppercase shadow bg-white  text-[#374151] text-xs py-2 px-6 rounded hover:opacity-80">
+                      <button className="block w-full h-full border font-semibold  border-neutral-800 uppercase shadow bg-white  text-[#374151] text-xs py-2 px-6 rounded hover:opacity-80">
                         Đăng Kí
                       </button>
                     </Link>
                     <Link className="ml-4 lg:min-w-[120px]" to={"/Login"}>
-                      <button class="block w-full h-full font-semibold  uppercase shadow bg-neutral-800 hover:bg-neutral-700 focus:shadow-outline focus:outline-none text-white text-xs py-2 px-6 rounded">
+                      <button className="block w-full h-full font-semibold  uppercase shadow bg-neutral-800 hover:bg-neutral-700 focus:shadow-outline focus:outline-none text-white text-xs py-2 px-6 rounded">
                         Đăng Nhập
                       </button>
                     </Link>

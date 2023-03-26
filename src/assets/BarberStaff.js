@@ -3,19 +3,19 @@ export const listBarber =
     {
         name:'Nguyễn Văn A',
         description:'',
-        avatar:'https://www.dropbox.com/s/hyf0logdqj74df8/76c1a7b5886e073ccf8a93f837e0c178.jpg?dl=0',
+        avatar:'http://2.bp.blogspot.com/-btcDiepAmMU/UWy2Nv98qCI/AAAAAAAACp4/pHyJY7HPZPI/s1600/IMG_9834.jpg',
         detailDescription:'',
     },
     {
         name:'Nguyễn Văn B',
         description:'',
-        avatar:'https://www.dropbox.com/s/z8uphngrkpzftgm/112e83e6787ba2db9a1718c0fdb396eb.jpg?dl=0',
+        avatar:'http://4.bp.blogspot.com/-CblMf4izKj4/UWy2Xpaw2VI/AAAAAAAACqo/pWhBgCRPQks/s1600/IMG_9883.jpg',
         detailDescription:'',
     },
     {
         name:'Nguyễn Văn C',
         description:'',
-        avatar:'https://www.dropbox.com/s/6rlzwh34ut7x8rq/308b1a3aed9bdf68186ff3c19309a344.jpg?dl=0',
+        avatar:'http://3.bp.blogspot.com/-vdC-TmIhFBs/UWy2SNsL8vI/AAAAAAAACqQ/x3xOksZKXXI/s1600/IMG_9851.jpg',
         detailDescription:'',
     },
     

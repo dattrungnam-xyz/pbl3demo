@@ -17,18 +17,18 @@ const AdminNavbar = () => {
     window.location.reload(false);
   }
   return (
-    <div class="">
-      <div class="antialiased bg-gray-100  border">
-        <div class="w-full text-gray-700 bg-white ">
+    <div className="">
+      <div className="antialiased bg-gray-100  border">
+        <div className="w-full text-gray-700 bg-white ">
           <div
             x-data="{ open: true }"
-            class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8"
+            className="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8"
           >
-            <div class="flex flex-row items-center justify-between p-4">
+            <div className="flex flex-row items-center justify-between p-4">
               <Link
                 to="/Admin"
                 href="#"
-                class="text-lg font-semibold tracking-widest text-gray-800 uppercase rounded-lg  focus:outline-none focus:shadow-outline"
+                className="text-lg font-semibold tracking-widest text-gray-800 uppercase rounded-lg  focus:outline-none focus:shadow-outline"
               >
                 Barbershop
               </Link>
@@ -36,17 +36,17 @@ const AdminNavbar = () => {
               
             </div>
 
-             <nav class="flex-col flex-grow hidden pb-4 md:pb-0 md:flex md:justify-end md:flex-row">
+             <nav className="flex-col flex-grow hidden pb-4 md:pb-0 md:flex md:justify-end md:flex-row">
                 <Link
                   to="/"
-                  class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                  className="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                 >
                   Trang chủ
                 </Link>
                 
                 <Link
                   to="/Booking"
-                  class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+                  className="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                 >
                   Đặt lịch
                 </Link>

@@ -65,7 +65,7 @@ const EditProfile = () => {
       <section className="pt-[62px] min-h-screen flex flex-col items-center justify-center bg-gray-200  ">
         <div className="text-2xl my-6 ">Chỉnh sửa thông tin</div>
         <form onSubmit={handleSubmit}>
-          <div className="flex md:min-w-[720px] min-h-[440px] px-8 py-6 gap-16 max-md:gap-8 max-md:px-4 h-full bg-white items-cente max-sm:w-full max-sm:flex-col justify-between rounded-lg border">
+          <div className="flex md:min-w-[720px]  px-8 py-6 gap-16 max-md:gap-8 max-md:px-4 h-full bg-white items-cente max-sm:w-full max-sm:flex-col justify-between rounded-lg border">
             <div className="flex justify-center items-center">
               {imgAvatar ? (
                 <img
@@ -83,8 +83,8 @@ const EditProfile = () => {
                 />
               )}
             </div>
-            <div className=" flex flex-col py-6 px-4">
-              <div className=" flex items-center justify-center">
+            <div className=" flex flex-col py-6 px-4 h-full">
+              <div className=" flex items-center justify-center ">
                 <div className="min-w-[160px] max-md:min-w-[140px] font-medium ">
                   Tên đăng nhập:
                 </div>
@@ -139,7 +139,7 @@ const EditProfile = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className="flex flex-col items-center justify-center mt-4">
+              <div className="flex h-full flex-col items-center justify-center mt-4">
                 {messageUpdate ? <p className="mb-4 text-[green]">{messageUpdate}</p> : <></>}
                 <button
                   type="submit"

@@ -11,13 +11,13 @@ const SubNavbar = ({ login }) => {
       <div className="flex items-center justify-center">
         {login ? (
           <Link className="lg:min-w-[120px]" to={"/Login"}>
-            <button class="block w-full h-[42px] border font-semibold  border-neutral-800 uppercase shadow bg-white  text-[#374151] text-xs py-2 px-6 rounded hover:opacity-80">
+            <button className="block w-full h-[42px] border font-semibold  border-neutral-800 uppercase shadow bg-white  text-[#374151] text-xs py-2 px-6 rounded hover:opacity-80">
               Đăng Nhập
             </button>
           </Link>
         ) : (
           <Link className=" lg:min-w-[120px]" to={"/Register"}>
-            <button class="block w-full h-[42px] border font-semibold  border-neutral-800 uppercase shadow bg-white  text-[#374151] text-xs py-2 px-6 rounded hover:opacity-80">
+            <button className="block w-full h-[42px] border font-semibold  border-neutral-800 uppercase shadow bg-white  text-[#374151] text-xs py-2 px-6 rounded hover:opacity-80">
               Đăng Kí
             </button>
           </Link>

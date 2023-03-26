@@ -6,7 +6,7 @@ const StaffCard = () => {
     <div className="flex max-lg:flex-col max-lg:gap-4 gap-12 w-[70%] max-lg:p-8 h-full max-lg:w-full  p-14 items-center justify-between rounded bg-gradient-to-r from-[#010c2a] to-[#090708]">
       <div className="flex flex-col  items-center justify-center ">
         <img
-          src="https://i.pinimg.com/736x/98/5a/8a/985a8a9969b2c905306125a5f9d937df.jpg"
+          src="http://4.bp.blogspot.com/-CblMf4izKj4/UWy2Xpaw2VI/AAAAAAAACqo/pWhBgCRPQks/s1600/IMG_9883.jpg"
           alt=""
           className="w-[240px] max-lg:w-[180px] h-[240px] min-w-[150px] min-h-[150px] max-lg:h-[180px] object-cover "
         />
@@ -39,7 +39,7 @@ const ListStaffCard = () => {
           <div className="flex w-full h-16 p-2 gap-4  items-center rounded-xl cursor-pointer bg-gradient-to-r from-[#010c2a] to-[#090708]">
             <img
               className="w-[46px] h-[46px] border border-white object-cover rounded-full"
-              src="https://i.pinimg.com/736x/98/5a/8a/985a8a9969b2c905306125a5f9d937df.jpg"
+              src="http://4.bp.blogspot.com/-CblMf4izKj4/UWy2Xpaw2VI/AAAAAAAACqo/pWhBgCRPQks/s1600/IMG_9883.jpg"
               alt=""
             />
             <p className="text-xl text-white"> Nguyễn văn A</p>

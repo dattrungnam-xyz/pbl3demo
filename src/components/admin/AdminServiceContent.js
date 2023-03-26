@@ -14,62 +14,75 @@ const AdminServiceContent = () => {
   }, []);
   return (
     <>
-      {data ? (
-        <div class="w-full max-w-[80vw] min-h-[300px] p-4  font-sans overflow-hidden">
-          <div class="w-full ">
-            <div class="bg-white shadow-md rounded my-6">
-              <table class="min-w-max w-full table-auto">
+      {data ? (<section className="flex flex-col w-full max-w-[80vw]">
+        <div className="w-full p-4 flex justify-between">
+          <div></div>
+          <div>
+            <input type="text" placeholder="search...."className="h-full w-[250px] border-[2px] border-gray-200 rounded-xl outline-none p-2 "/>
+          </div>
+          <div>
+            <button type="button" className="h-full py-2 px-6 bg-green-600 flex justify-center items-center text-white">
+            <box-icon name='plus' color='#ffffff' ></box-icon>
+              Add
+            </button>
+          </div>
+
+        </div>
+        <div className="w-full max-w-[80vw] min-h-[300px] p-4  font-sans overflow-hidden">
+          <div className="w-full ">
+            <div className="bg-white shadow-md rounded my-6">
+              <table className="min-w-max w-full table-auto">
                 <thead>
-                  <tr class="bg-gray-300 text-gray-600 uppercase text-sm leading-normal">
-                    <th class="py-3 px-6 text-left">Id </th>
-                    <th class="py-3 px-6 text-center">Tên dịch vụ</th>
+                  <tr className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal">
+                    <th className="py-3 px-6 text-left">Id </th>
+                    <th className="py-3 px-6 text-center">Tên dịch vụ</th>
 
-                    <th class="py-3 px-6 text-center">Giá tiền</th>
+                    <th className="py-3 px-6 text-center">Giá tiền</th>
 
-                    <th class="py-3 px-6 text-center">Thời gian</th>
-                    <th class="py-3 px-6 text-center">Loại dịch vụ</th>
-                    <th class="py-3 px-6 text-center"> </th>
+                    <th className="py-3 px-6 text-center">Thời gian</th>
+                    <th className="py-3 px-6 text-center">Loại dịch vụ</th>
+                    <th className="py-3 px-6 text-center"> </th>
                   </tr>
                 </thead>
-                <tbody class="text-gray-600 text-sm font-light">
+                <tbody className="text-gray-600 text-sm font-light">
                   {data.map((item) => {
                     return (
                       <tr
                         key={item.IdDichVu}
-                        class="border-b border-gray-200 hover:bg-gray-100"
+                        className="border-b border-gray-200 hover:bg-gray-100"
                       >
-                        <td class="py-3 px-6 text-left">
-                          <div class="flex items-center">
-                            <div class="mr-2"></div>
+                        <td className="py-3 px-6 text-left">
+                          <div className="flex items-center">
+                            <div className="mr-2"></div>
                             <span>{item.IdDichVu}</span>
                           </div>
                         </td>
 
-                        <td class="py-3 px-6 text-center">
-                          <div class="flex items-center justify-center">
+                        <td className="py-3 px-6 text-center">
+                          <div className="flex items-center justify-center">
                             {item.TenDichVu}
                           </div>
                         </td>
 
-                        <td class="py-3 px-6 text-center">
-                          <div class="flex items-center justify-center">
+                        <td className="py-3 px-6 text-center">
+                          <div className="flex items-center justify-center">
                             {item.Gia}
                           </div>
                         </td>
-                        <td class="py-3 px-6 text-center">
-                          <div class="flex items-center justify-center">
+                        <td className="py-3 px-6 text-center">
+                          <div className="flex items-center justify-center">
                             {item.ThoiGian} phút
                           </div>
                         </td>
-                        <td class="py-3 px-6 text-center">
-                          <div class="flex items-center justify-center">
+                        <td className="py-3 px-6 text-center">
+                          <div className="flex items-center justify-center">
                             {item.LoaiDichVu}
                           </div>
                         </td>
 
-                        <td class="py-3 px-6 text-center">
-                          <div class="flex item-center justify-center">
-                            <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                        <td className="py-3 px-6 text-center">
+                          <div className="flex item-center justify-center">
+                            <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -90,7 +103,7 @@ const AdminServiceContent = () => {
                                 />
                               </svg>
                             </div>
-                            <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                            <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -105,7 +118,7 @@ const AdminServiceContent = () => {
                                 />
                               </svg>
                             </div>
-                            <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                            <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -130,7 +143,7 @@ const AdminServiceContent = () => {
             </div>
           </div>
         </div>
-      ) : (
+      </section>) : (
         <></>
       )}
     </>

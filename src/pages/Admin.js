@@ -16,7 +16,7 @@ const Admin = () => {
   return (
     <>
       <AdminNavbar />
-      <section class="flex flex-row">
+      <section className="flex flex-row">
         <AdminSidebar active ={active} setActive={setActive} />
         {active === "Thành viên" &&<AdminContent/>}
         {/* <AdminEditInfor/> */}

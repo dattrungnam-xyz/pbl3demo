@@ -5,12 +5,21 @@ import { getData } from "../utils/fetchApi";
 
 const Booking = () => {
   const [service, setService] = useState([]);
-  const [mainService, setMainService] = useState({
-    
-  })
+  const [booking, setBooking] = useState({});
+  const handleSubmit = ()=>{
+    console.log(booking)
+  }
+
+  const handleBooking = (e) => {
+    if (booking?.[e]) {
+      setBooking({ ...booking, [e]: false });
+    } else {
+      setBooking({ ...booking, [e]: true });
+    }
+   
+  };
   useEffect(() => {
-    getData("http://localhost:8080/v1/service").then(res => setService(res));
-    
+    getData("http://localhost:8080/v1/service").then((res) => setService(res));
   }, []);
   return (
     <>
@@ -78,13 +87,39 @@ const Booking = () => {
                 <div className="col-start-2 col-end-3 row-start-2  row-end-3 bg-slate-200 border-[2px] border-blue-500 rounded flex items-center justify-center cursor-pointer font-semibold text-md">
                   Tatoo Hair
                 </div> */}
-                {
-               service &&   service.filter(item => {return item.LoaiDichVu === 1}).map((item)=>{
-                    return (<div className=" bg-slate-200  border-[2px] border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md">
-                    {item.TenDichVu}
-                  </div>)
-                  })
-                }
+                {service &&
+                  service
+                    .filter((item) => {
+                      return item.LoaiDichVu === 1;
+                    })
+                    .map((item) => {
+                     
+                      return (
+                        <>
+                          {booking?.[item.TenDichVu] ? (
+                            <>
+                              <div
+                                name={item.TenDichVu}
+                                onClick={()=>handleBooking(item.TenDichVu)}
+                                className=" bg-slate-200  border-[2px] border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md"
+                              >
+                                {item.TenDichVu}
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div
+                                name={item.TenDichVu}
+                                onClick={()=>handleBooking(item.TenDichVu)}
+                                className=" bg-slate-200   border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md"
+                              >
+                                {item.TenDichVu}
+                              </div>
+                            </>
+                          )}
+                        </>
+                      );
+                    })}
               </div>
             </div>
             <div className="w-full mt-4">
@@ -102,13 +137,39 @@ const Booking = () => {
                 <div className="col-start-2 col-end-3 row-start-2  row-end-3 bg-slate-200 border-[2px] border-blue-500 rounded flex items-center justify-center cursor-pointer font-semibold text-md">
                   Đắp mặt nạ
                 </div> */}
-                {
-               service &&   service.filter(item => {return item.LoaiDichVu === 2}).map((item)=>{
-                    return (<div className=" bg-slate-200  border-[2px] border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md">
-                    {item.TenDichVu}
-                  </div>)
-                  })
-                }
+                {service &&
+                  service
+                    .filter((item) => {
+                      return item.LoaiDichVu === 2;
+                    })
+                    .map((item) => {
+                   
+                      return (
+                        <>
+                          {booking?.[item.TenDichVu] ? (
+                            <>
+                              <div
+                                name={item.TenDichVu}
+                                onClick={()=>handleBooking(item.TenDichVu)}
+                                className=" bg-slate-200  border-[2px] border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md"
+                              >
+                                {item.TenDichVu}
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div
+                                name={item.TenDichVu}
+                                onClick={()=>handleBooking(item.TenDichVu)}
+                                className=" bg-slate-200   border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md"
+                              >
+                                {item.TenDichVu}
+                              </div>
+                            </>
+                          )}
+                        </>
+                      );
+                    })}
               </div>
             </div>
           </div>
@@ -116,7 +177,8 @@ const Booking = () => {
 
         <div className=" flex w-full mb-6 items-center justify-center">
           <button
-            type="submit"
+          onClick={handleSubmit}
+            type="button"
             className="max-sm:w-3/4 w-[280px] py-2 bg-[#194284]  rounded-2xl text-blue-50 text-[20px] font-semibold hover:opacity-75"
           >
             Đặt lịch

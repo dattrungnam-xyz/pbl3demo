@@ -2,66 +2,66 @@ import React from "react";
 
 const AdminBooking = () => {
   return (
-    <div class="w-full min-h-[300px] max-w-[80vw] p-4  font-sans overflow-hidden">
-      <div class="w-full ">
-        <div class="bg-white shadow-md rounded my-6">
-          <table class="min-w-max w-full table-auto">
+    <div className="w-full min-h-[300px] max-w-[80vw] p-4  font-sans overflow-hidden">
+      <div className="w-full ">
+        <div className="bg-white shadow-md rounded my-6">
+          <table className="min-w-max w-full table-auto">
             <thead>
-              <tr class="bg-gray-300 text-gray-600 uppercase text-sm leading-normal">
-                <th class="py-3 px-6 text-left">ID</th>
-                <th class="py-3 px-6 text-left">Người đặt</th>
-                <th class="py-3 px-6 text-left">Thợ cắt</th>
-                <th class="py-3 px-6 text-center">Ngày đặt</th>
-                <th class="py-3 px-6 text-center">Ngày cắt</th>
+              <tr className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal">
+                <th className="py-3 px-6 text-left">ID</th>
+                <th className="py-3 px-6 text-left">Người đặt</th>
+                <th className="py-3 px-6 text-left">Thợ cắt</th>
+                <th className="py-3 px-6 text-center">Ngày đặt</th>
+                <th className="py-3 px-6 text-center">Ngày cắt</th>
 
-                <th class="py-3 px-6 text-center">Giờ cắt</th>
+                <th className="py-3 px-6 text-center">Giờ cắt</th>
 
-                <th class="py-3 px-6 text-center"></th>
+                <th className="py-3 px-6 text-center"></th>
               </tr>
             </thead>
-            <tbody class="text-gray-600 text-sm font-light">
-              <tr class="border-b border-gray-200 hover:bg-gray-100">
-                <td class="py-3 px-6 text-left">
-                  <div class="flex items-center ">abd</div>
+            <tbody className="text-gray-600 text-sm font-light">
+              <tr className="border-b border-gray-200 hover:bg-gray-100">
+                <td className="py-3 px-6 text-left">
+                  <div className="flex items-center ">abd</div>
                 </td>
-                <td class="py-3 px-6 text-left">
-                  <div class="flex items-center">
-                    <div class="mr-2">
+                <td className="py-3 px-6 text-left">
+                  <div className="flex items-center">
+                    <div className="mr-2">
                       <img
                         alt=""
-                        class="w-6 h-6 rounded-full"
+                        className="w-6 h-6 rounded-full"
                         src="https://randomuser.me/api/portraits/men/1.jpg"
                       />
                     </div>
                     <span>Trần A</span>
                   </div>
                 </td>
-                <td class="py-3 px-6 text-left">
-                  <div class="flex items-center">
-                    <div class="mr-2">
+                <td className="py-3 px-6 text-left">
+                  <div className="flex items-center">
+                    <div className="mr-2">
                       <img
                         alt=""
-                        class="w-6 h-6 rounded-full"
+                        className="w-6 h-6 rounded-full"
                         src="https://randomuser.me/api/portraits/men/1.jpg"
                       />
                     </div>
                     <span>Trần A</span>
                   </div>
                 </td>
-                <td class="py-3 px-6 text-center">
-                  <div class="flex items-center justify-center">20/06/2003</div>
+                <td className="py-3 px-6 text-center">
+                  <div className="flex items-center justify-center">20/06/2003</div>
                 </td>
-                <td class="py-3 px-6 text-center">
-                  <div class="flex items-center justify-center">20/06/2003</div>
-                </td>
-
-                <td class="py-3 px-6 text-center">
-                  <div class="flex items-center justify-center">15:00</div>
+                <td className="py-3 px-6 text-center">
+                  <div className="flex items-center justify-center">20/06/2003</div>
                 </td>
 
-                <td class="py-3 px-6 text-center">
-                  <div class="flex item-center justify-center">
-                    <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                <td className="py-3 px-6 text-center">
+                  <div className="flex items-center justify-center">15:00</div>
+                </td>
+
+                <td className="py-3 px-6 text-center">
+                  <div className="flex item-center justify-center">
+                    <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -82,7 +82,7 @@ const AdminBooking = () => {
                         />
                       </svg>
                     </div>
-                    <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                    <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -97,7 +97,7 @@ const AdminBooking = () => {
                         />
                       </svg>
                     </div>
-                    <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                    <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
