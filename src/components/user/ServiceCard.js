@@ -1,9 +1,9 @@
 import React from "react";
 
-const ServiceCard = ({image}) => {
+const ServiceCard = ({image,key,name,description}) => {
   return (
     // <div className="bg-gray-900 min-w-[300px]">
-    <div className=" bg-transparent flex flex-col justify-center items-center min-w-[300px] ">
+    <div key={key} className=" bg-transparent flex flex-col justify-center items-center min-w-[300px] ">
       {/* <div className="w- p-6 bg-white rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all transform duration-500">
           <img
             className="w-64 object-cover rounded-t-md"
@@ -32,10 +32,10 @@ const ServiceCard = ({image}) => {
         alt=""
         />}
       <p className="mt-6 px-6 text-zinc-200 text-justify text-xl uppercase">
-        Cắt tóc 
+        {name}
       </p>
       <p className="mt-4 px-6 text-zinc-200 text-justify">
-        Trải nghiệm dịch vụ cắt tóc chuyên nghiệp chỉ với 120.000 VND.
+        {description} 
       </p>
 
       <p className="mt-4 text-lg text-white underline cursor-pointer">

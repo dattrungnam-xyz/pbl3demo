@@ -23,6 +23,6 @@ const getDataOnlyAdmin = async (url,token) => {
 }
 export {
   getData,
-    getDataOnlyAdmin
-
+  getDataOnlyAdmin,
+  
 }

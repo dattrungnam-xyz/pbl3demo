@@ -1,26 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // import { useSelector } from "react-redux";
- import { Link } from "react-router-dom";
-import { BarberCard, UserNavbar, Hero, ServiceCard, HairGallery } from "../components";
-import { listBarber } from "../assets/BarberStaff";
+import { Link } from "react-router-dom";
+import {
+  BarberCard,
+  UserNavbar,
+  Hero,
+  ServiceCard,
+  HairGallery,
+} from "../components";
+// import { listBarber } from "../assets/BarberStaff";
+import { getData } from "../utils/fetchApi";
 
 const Home = () => {
-
   //  const user = useSelector((state)=> state.auth.login.currentUser)
-
-
+  const [barber, setBarBer] = useState([]);
+  const [service, setService] = useState([]);
+  useEffect(() => {
+    getData("http://localhost:8080/v1/staff/barber").then((res) => {
+      setBarBer(res);
+    });
+    getData("http://localhost:8080/v1/service").then((res) => {
+      setService(res);
+    });
+  }, []);
   return (
     <>
       <UserNavbar />
-      
+
       <Hero />
       <section className="mt-8 px-4 flex items-center justify-center flex-col">
         <div className="w-full text-center text-gray-900 my-12  max-sm:text-2xl   sm:text-3xl capitalize tracking-widest lg:text-4xl">
           Barber tiêu biểu
         </div>
         <div className="grid  lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 max-sm:grid-cols-1 grid-cols-4 gap-12 p-3 max-w-[1200px]">
-          {listBarber.map((item,index)=>{
-              return <BarberCard key={index} image={item.avatar} name={item.name}/>
+          {barber?.map((item, index) => {
+            if (index < 3) {
+              return (
+                <BarberCard key={index} image={item.Avatar} name={item.HoTen} />
+              );
+            } else return;
           })}
         </div>
       </section>
@@ -29,12 +47,22 @@ const Home = () => {
           Dịch vụ
         </div>
         <div className=" grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1  gap-12 p-3  bg-transparent">
-          <ServiceCard
-            image={
-              "https://images.pexels.com/photos/3993132/pexels-photo-3993132.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            }
-          />
-          <ServiceCard
+          {service?.filter((item)=>{
+                return item.LoaiDichVu == 1
+          })?.map((item, index) => {
+            return (
+              <ServiceCard
+                key={index}
+                name={item.TenDichVu}
+                image={
+                  item.Avatar
+                  // "https://images.pexels.com/photos/3993132/pexels-photo-3993132.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                }
+                description={item.Description}
+              />
+            );
+          })}
+          {/* <ServiceCard
             image={
               "https://i.pinimg.com/564x/b9/80/0b/b9800be5ddc78f6280406f2bc118f328.jpg"
             }
@@ -48,7 +76,7 @@ const Home = () => {
             image={
               "https://images.pexels.com/photos/12304505/pexels-photo-12304505.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             }
-          />
+          /> */}
         </div>
         <div className=" mt-10 relative flex">
           <div className="z-20 flex-1">
@@ -78,31 +106,36 @@ const Home = () => {
         <div className="w-full text-center text-gray-900 my-12 max-sm:text-2xl  sm:text-3xl capitalize tracking-widest lg:text-4xl">
           Kiểu tóc thịnh hành
         </div>
-      <HairGallery/>
-      {/* //  <Carousel /> */}
+        <HairGallery />
+        {/* //  <Carousel /> */}
       </section>
-      <Link to="/Admin" className="bg-red-700">abcd</Link>
+      <Link to="/Admin" className="bg-red-700">
+        abcd
+      </Link>
 
       <section className="bg-booking h-[360px] object-cover">
-            <div className="w-full h-full flex items-center justify-center bg-neutral-900/80">
-              <div className="grid max-sm:px-6 max-md:px-12 px-16 py-6 grid-cols-3 max-sm:gap-4 max-md:gap-6 gap-8 w-full min-h-[120px] bg-neutral-900">
-                <div className=" flex items-center justify-center max-sm:hidden">
-                  <p className=" text-3xl font-semibold text-white ">BARBERSHOP</p>
-                </div>
-                <div className=" flex items-center justify-center">
-                  <p className="text-justify text-lg pl-8 pr-4 text-white border-l-[2px]">
-                    Barbershop cung cấp những dịch vụ cắt tóc theo xu hướng phù hợp với mọi lứa tuổi.
-                  Đặt lịch để trải nghiệm, thay đổi diện mạo cùng Barbershop.
-                  </p>
-                </div>
-                <div className=" flex items-center pl-8"> 
-                  <Link to={"/Booking"} className="border-none outline-none bg-[#d6a354] px-10 py-4  text-lg hover:opacity-90">
-                    Đặt Lịch
-                  </Link>
-                </div>
-                
-              </div>
+        <div className="w-full h-full flex items-center justify-center bg-neutral-900/80">
+          <div className="grid max-sm:px-6 max-md:px-12 px-16 py-6 grid-cols-3 max-sm:gap-4 max-md:gap-6 gap-8 w-full min-h-[120px] bg-neutral-900">
+            <div className=" flex items-center justify-center max-sm:hidden">
+              <p className=" text-3xl font-semibold text-white ">BARBERSHOP</p>
             </div>
+            <div className=" flex items-center justify-center">
+              <p className="text-justify text-lg pl-8 pr-4 text-white border-l-[2px]">
+                Barbershop cung cấp những dịch vụ cắt tóc theo xu hướng phù hợp
+                với mọi lứa tuổi. Đặt lịch để trải nghiệm, thay đổi diện mạo
+                cùng Barbershop.
+              </p>
+            </div>
+            <div className=" flex items-center pl-8">
+              <Link
+                to={"/Booking"}
+                className="border-none outline-none bg-[#d6a354] px-10 py-4  text-lg hover:opacity-90"
+              >
+                Đặt Lịch
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
     </>
   );

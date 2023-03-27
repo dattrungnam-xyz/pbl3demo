@@ -41,7 +41,7 @@ const EditProfile = () => {
  
 
     await fetch(`http://localhost:8080/v1/account/infor/${id}`, {
-      method: "post",
+      method: "put",
       headers: {
         "Content-Type": "application/json",
         "token":`${user.token}`
