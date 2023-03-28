@@ -1,8 +1,22 @@
 import React from 'react'
 
 const AdminContent = () => {
-  return (
-    <div className="w-full min-h-[300px] max-w-[80vw] p-4  font-sans overflow-hidden">
+  return (<div className='flex flex-col w-full max-w-[80vw]'>
+  
+  <div className="w-full p-4 flex justify-between">
+          <div></div>
+          <div>
+            <input type="text" placeholder="search...."className="h-full w-[250px] border-[2px] border-gray-200 rounded-xl outline-none p-2 "/>
+          </div>
+          <div>
+            <button type="button" className="h-full py-2 px-6 bg-green-600 flex justify-center items-center text-white">
+            <box-icon name='plus' color='#ffffff' ></box-icon>
+              Add
+            </button>
+          </div>
+
+        </div>
+    <div className="w-full min-h-[300px]  p-4  font-sans overflow-hidden">
             <div className="w-full ">
                 <div className="bg-white shadow-md rounded my-6">
                     <table className="min-w-max w-full table-auto">
@@ -200,6 +214,7 @@ const AdminContent = () => {
                 </div>
             </div>
     </div>
+  </div>
   )
 }
 

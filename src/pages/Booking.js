@@ -14,21 +14,25 @@ const Booking = () => {
 
   const [timeDisplay, setTimeDisplay] = useState([]);
 
-  const [ca, setCa] = useState();
+  const [ca, setCa] = useState("1");
   const [timeCutHair, setTimeCutHair] = useState("1");
 
   const [date, setDate] = useState();
+  const [thu, setThu] = useState();
 
   const [dateTimeError, setDateTimeError] = useState();
 
   const handleSubmit = () => {
     // console.log(timeDisplay);
-    // console.log(date)
+    console.log("time:"+timeCutHair)
+    console.log("thu:"+thu)
+    console.log("ca:"+ca)
+    console.log(date)
     // const datebooking = new Date(date);
     // if (!datebooking.getTime()) {
     //   setDateTimeError("Vui lòng chọn ngày cắt tóc");
     // }
-    // const now = new Date();
+     const now = new Date();
     // const example = "15:00";
     // const hours = example.split(":");
     // console.log(hours[0])
@@ -39,7 +43,7 @@ const Booking = () => {
     //  console.log(now.getMinutes())
 
     // console.log(ca)
-    console.log(timeCutHair);
+    //console.log(timeCutHair);
   };
   const handleSetBooking = (e) => {
     if (booking?.[e]) {
@@ -49,36 +53,61 @@ const Booking = () => {
     }
   };
 
+  const handleChangeDay = (e) =>
+  {
+    setDate(e.target.value)
+    const tempdate = new Date(e.target.value)
+    setThu(tempdate.getDay())
+  }
+
   
 
-  useEffect(() => {
-    getData(`http://localhost:8080/v1/staff/barbernotbusy/${timeCutHair}`).then((res) => {
-      setAvailableStaff(res);
-    });
-  }, [timeCutHair]);
+  useEffect(()=>{
+    const now = new Date();
+    const month = now.getMonth() + 1;
+    //month.toString().length
+   const monthtemp =  month.toString().length == "1" ?  "0" + month : month
+    setDate(`${now.getFullYear()}-${monthtemp}-${now.getDate()}`)
+    setThu(now.getDay())
+    //setDate(monthtemp)
+  },[])
 
   useEffect(() => {
-    getData("http://localhost:8080/v1/service").then((res) => {
-      setService(res);
-    });
-  }, []);
-
-  useEffect(() => {
-    getData("http://localhost:8080/v1/booking/time").then((res) => {
-      const data = res.filter((item) => {
-        if (ca) {
-          // eslint-disable-next-line eqeqeq
-          return item.Ca == ca;
-        } else {
-          // eslint-disable-next-line eqeqeq
-          return item.Ca == 1;
-        }
-      });
-      setTimeDisplay(data);
-    });
-    
-  }, [ca]);
-
+    console.log("time:"+timeCutHair)
+    console.log("thu:"+thu)
+    console.log("ca:"+ca)
+    console.log(date)
+    timeCutHair&&  ca && date&& getData(`http://localhost:8080/v1/staff/barbernotbusy/${timeCutHair}&${thu}&${ca}&${date}`).then((res) => {
+       setAvailableStaff(res);
+       console.log(res)
+     });
+     // getData(`http://localhost:8080/v1/staff/barbernotbusy/1&1&2&2023-03-28`).then((res) => {
+     //   setAvailableStaff(res);
+     //   console.log(res)
+     // });
+   }, [timeCutHair,ca,date,thu]);
+ 
+   useEffect(() => {
+     getData("http://localhost:8080/v1/service").then((res) => {
+       setService(res);
+     });
+   }, []);
+ 
+   useEffect(() => {
+     getData("http://localhost:8080/v1/booking/time").then((res) => {
+       const data = res.filter((item) => {
+         if (ca) {
+           // eslint-disable-next-line eqeqeq
+           return item.Ca == ca;
+         } else {
+           // eslint-disable-next-line eqeqeq
+           return item.Ca == 1;
+         }
+       });
+       setTimeDisplay(data);
+     });
+     
+   }, [ca]);
   return (
     <>
       <UserNavbar />
@@ -93,8 +122,10 @@ const Booking = () => {
                   className="w-full py-3 mt-2 pl-7 pr-3 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
                   type="date"
                   onChange={(e) => {
-                    setDate(e.target.value);
+                    handleChangeDay(e)
+                    
                   }}
+                  value={date}
                 />
               </div>
             </div>
@@ -137,7 +168,7 @@ const Booking = () => {
                 {timeDisplay.map((item, index) => {
                   return (
                     <option
-                      selected={index == 1 ? true : false}
+                      selected={index == 0 ? true : false}
                       key={item.IdGioCat}
                       value={item.IdGioCat}
                     >
@@ -157,17 +188,17 @@ const Booking = () => {
                 className="w-full py-3 mt-2 pl-7 pr-3 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
                 placeholder="Thợ cắt tóc"
               >
-                {availableStaff?.map((item, index) => {
+                {availableStaff ? availableStaff.map((item, index) => {
                   return (
                     <option
-                      select={index == 1 ? true : false}
+                      select={index == 0 ? true : false}
                       key={index}
                       value={item.IdNhanVien}
                     >
                       {item.HoTen}
                     </option>
                   );
-                })}
+                }): <></>}
                 {/* <option value="Nguyễn Văn A">Nguyễn Văn A</option>
                   <option value="Nguyễn Văn B">Nguyễn Văn B</option>
                   <option value="Nguyễn Văn C">Nguyễn Văn C</option>
