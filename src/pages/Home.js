@@ -7,6 +7,7 @@ import {
   Hero,
   ServiceCard,
   HairGallery,
+  Footer,
 } from "../components";
 // import { listBarber } from "../assets/BarberStaff";
 import { getData } from "../utils/fetchApi";
@@ -113,30 +114,8 @@ const Home = () => {
         abcd
       </Link>
 
-      <section className="bg-booking h-[360px] object-cover">
-        <div className="w-full h-full flex items-center justify-center bg-neutral-900/80">
-          <div className="grid max-sm:px-6 max-md:px-12 px-16 py-6 grid-cols-3 max-sm:gap-4 max-md:gap-6 gap-8 w-full min-h-[120px] bg-neutral-900">
-            <div className=" flex items-center justify-center max-sm:hidden">
-              <p className=" text-3xl font-semibold text-white ">BARBERSHOP</p>
-            </div>
-            <div className=" flex items-center justify-center">
-              <p className="text-justify text-lg pl-8 pr-4 text-white border-l-[2px]">
-                Barbershop cung cấp những dịch vụ cắt tóc theo xu hướng phù hợp
-                với mọi lứa tuổi. Đặt lịch để trải nghiệm, thay đổi diện mạo
-                cùng Barbershop.
-              </p>
-            </div>
-            <div className=" flex items-center pl-8">
-              <Link
-                to={"/Booking"}
-                className="border-none outline-none bg-[#d6a354] px-10 py-4  text-lg hover:opacity-90"
-              >
-                Đặt Lịch
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      
+      <Footer />
     </>
   );
 };
