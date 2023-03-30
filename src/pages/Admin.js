@@ -3,32 +3,35 @@ import { useSelector } from "react-redux";
 import {
   AdminNavbar,
   AdminSidebar,
-  AdminContent,
+  AdminStaff,
   AdminEditInfor,
-  AdminServiceContent,
-  AdminAccountContent,
+  AdminService,
+  AdminAccount,
   AdminBooking,
   AdminProducts,
+
 } from "../components";
 
 const Admin = () => {
-  const [active, setActive] = useState("Thành viên");
+  const [active, setActive] = useState("Nhân viên");
   const user = useSelector(state => state.auth.login.currentUser)
   return (
     <>
       <AdminNavbar />
-      <section className="flex flex-row">
+      
+
+      <section className="flex flex-row pt-[60px]">
         {
         user.type ==="admin" ? <>
         <AdminSidebar active ={active} setActive={setActive} />
-        {active === "Thành viên" &&<AdminContent/>}
+        {active === "Nhân viên" &&<AdminStaff/> }
         {/* <AdminEditInfor/> */}
-        {active === "Dịch vụ" && <AdminServiceContent />}
+        {active === "Dịch vụ" && <AdminService />}
         {active === "Sản phẩm bán kèm" && <AdminProducts />}
-        {active === "Tài khoản" && <AdminAccountContent />}
+        {active === "Khách hàng" && <AdminAccount />}
         {active === "Lịch đặt" && <AdminBooking />}
          </>   : <>
-          Khach hang deo duoc dung
+          Khach hang khong duoc dung
          </>
         }
       </section>

@@ -17,7 +17,7 @@ const AdminNavbar = () => {
     window.location.reload(false);
   }
   return (
-    <div className="">
+    <div className="fixed top-0 left-0 right-0">
       <div className="antialiased bg-gray-100  border">
         <div className="w-full text-gray-700 bg-white ">
           <div

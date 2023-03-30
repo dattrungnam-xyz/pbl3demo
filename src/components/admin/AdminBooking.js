@@ -136,85 +136,80 @@ const AdminBooking = () => {
     // </div>
     // </div>
     <div className="w-[300px] h-[600px]  mt-[10px] ml-[60px] flex flex-col bg-gray-200 rounded relative">
-        <div className=" absolute top-0 right-0 font-bold text-xl w-[25px] h-[30px] bg-red-400 rounded-tr text-white text-center">
-          x
-        </div>
-        <div className="text-xl font-bold mt-5 text-center mb-5">
-          Thêm Dịch Vụ
-        </div>
-        <div class="w-full px-4 mb-3">
-              <label className="ml-4 " for="username">
-              Tên Dịch Vụ
-              </label>
+      <div className=" absolute top-0 right-0 font-bold text-xl w-[25px] h-[30px] bg-red-400 rounded-tr text-white text-center">
+        x
+      </div>
+      <div className="text-xl font-bold mt-5 text-center mb-5">
+        Thêm Dịch Vụ
+      </div>
+      <div class="w-full px-4 mb-3">
+        <label className="ml-4 " for="username">
+          Tên Dịch Vụ
+        </label>
 
-              <input
-                type="text"
-                name="username"
-                id="username"
-             
-                class="w-full py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
-              />
-        </div>
-        <div class="w-full px-4 mb-3">
-              <label className="ml-4 " for="username">
-                Thời gian
-              </label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          class="w-full py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
+        />
+      </div>
+      <div class="w-full px-4 mb-3">
+        <label className="ml-4 " for="username">
+          Thời gian
+        </label>
 
-              <input
-                type="text"
-                name="username"
-                id="username"
-             
-                class="w-full py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
-              />
-        </div>
-        <div class="w-full px-4 mb-3">
-              <label className="ml-4 " for="username">
-                Giá Tiền
-              </label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          class="w-full py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
+        />
+      </div>
+      <div class="w-full px-4 mb-3">
+        <label className="ml-4 " for="username">
+          Giá Tiền
+        </label>
 
-              <input
-                type="text"
-                name="username"
-                id="username"
-             
-                class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
-              />
-        </div>
-        <div class="w-full px-4 mb-3">
-              <label className="ml-4 " for="username">
-                Loại Dịch Vụ
-              </label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
+        />
+      </div>
+      <div class="w-full px-4 mb-3">
+        <label className="ml-4 " for="username">
+          Loại Dịch Vụ
+        </label>
 
-              <input
-                type="text"
-                name="username"
-                id="username"
-             
-                class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
-              />
-        </div>
-        <div class="w-full px-4 mb-3">
-              <label className="ml-4 " for="username">
-                Tiền Công Cho Nhân Viên
-              </label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
+        />
+      </div>
+      <div class="w-full px-4 mb-3">
+        <label className="ml-4 " for="username">
+          Tiền Công Cho Nhân Viên
+        </label>
 
-              <input
-                type="text"
-                name="username"
-                id="username"
-             
-                class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
-              />
-        </div>
-        <div class="w-full px-8 mt-3  ">
-              <button
-                type="submit"
-                class=" py-2 bg-[#194284] w-full rounded-2xl text-blue-50 text-[20px] font-semibold hover:opacity-75"
-              >
-                Lưu
-              </button>
-            </div>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
+        />
+      </div>
+      <div class="w-full px-8 mt-3  ">
+        <button
+          type="submit"
+          class=" py-2 bg-[#194284] w-full rounded-2xl text-blue-50 text-[20px] font-semibold hover:opacity-75"
+        >
+          Lưu
+        </button>
+      </div>
     </div>
   );
 };

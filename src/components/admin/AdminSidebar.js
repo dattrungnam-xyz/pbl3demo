@@ -4,39 +4,39 @@ const AdminSidebar = ({ active, setActive }) => {
   return (
     <>
       <div className="max-w-[20vw] h-[calc(100vh-62px)] bg-gray-600 text-white flex flex-col items-center ">
-        {active === "Thành viên" ? (
+        {active === "Nhân viên" ? (
           <div
-            onClick={()=> setActive("Thành viên")}
+            onClick={()=> setActive("Nhân viên")}
             className="mt-8 py-3 flex min-w-[150px] bg-neutral-700 w-full px-8 cursor-pointer"
           >
             <box-icon name="user" color="#ffffff"></box-icon>
-            <div className="text-base pl-2  ">Thành viên</div>
+            <div className="text-base pl-2  ">Nhân viên</div>
           </div>
         ) : (
           <div
-            onClick={()=>setActive("Thành viên")}
+            onClick={()=>setActive("Nhân viên")}
             className="mt-8 py-3 flex min-w-[150px] hover:bg-neutral-500 w-full px-8 cursor-pointer"
           >
             <box-icon name="user" color="#ffffff"></box-icon>
-            <div className="text-base pl-2  ">Thành viên</div>
+            <div className="text-base pl-2  ">Nhân viên</div>
           </div>
         )}
 
-        {active === "Tài khoản" ? (
+        {active === "Khách hàng" ? (
           <div
-            onClick={()=>setActive("Tài khoản")}
+            onClick={()=>setActive("Khách hàng")}
             className=" py-3 flex min-w-[150px] bg-neutral-700 w-full px-8 cursor-pointer "
           >
             <box-icon name="user" color="#ffffff"></box-icon>
-            <div className="text-base pl-2  ">Tài khoản</div>
+            <div className="text-base pl-2  ">Khách hàng</div>
           </div>
         ) : (
           <div
-            onClick={()=>setActive("Tài khoản")}
+            onClick={()=>setActive("Khách hàng")}
             className=" py-3 flex min-w-[150px] hover:bg-neutral-500 w-full px-8 cursor-pointer "
           >
             <box-icon name="user" color="#ffffff"></box-icon>
-            <div className="text-base pl-2  ">Tài khoản</div>
+            <div className="text-base pl-2  ">Khách hàng</div>
           </div>
         )}
         {active === "Dịch vụ" ? (
