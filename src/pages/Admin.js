@@ -28,7 +28,7 @@ const Admin = () => {
         {/* <AdminEditInfor/> */}
         {active === "Dịch vụ" && <AdminService />}
         {active === "Sản phẩm bán kèm" && <AdminProducts />}
-        {active === "Khách hàng" && <AdminAccount />}
+        {active === "Tài khoản" && <AdminAccount />}
         {active === "Lịch đặt" && <AdminBooking />}
          </>   : <>
           Khach hang khong duoc dung

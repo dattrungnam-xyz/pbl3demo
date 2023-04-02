@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { getData } from "../../utils/fetchApi";
+import { useSelector } from "react-redux";
+const ServiceModal = ({ status, id, handleModal }) => {
 
-const ServiceModal = ({ id, handleModal }) => {
-  const [serviceData, setServiceData] = useState([]);
-  const [error,setError] = useState("");
+  const user = useSelector(state => state.auth.login.currentUser)
+  const [serviceData, setServiceData] = useState({
+    Avatar: "",
+    Description: "",
+    GiaTien: "",
+    IdDichVu: "",
+    LoaiDichVu: "",
+    TenDichVu: "",
+    ThoiGian: "",
+    TienCongNhanVien: "",
+  });
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+
   useEffect(() => {
     id &&
       getData(`http://localhost:8080/v1/service/${id}`).then((res) => {
@@ -12,26 +25,53 @@ const ServiceModal = ({ id, handleModal }) => {
       });
   }, []);
 
-  const handleSubmit = async(e)=>{
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      if(!serviceData.TenDichVu || !serviceData.ThoiGian || !serviceData.TienCongNhanVien)
-      {
-          setError("Không được để trống Tên dịch vụ, Thời gian hoàn thành, Tiền công trả cho nhân viên")
+      if (
+        !serviceData.TenDichVu ||
+        !serviceData.ThoiGian ||
+        !serviceData.TienCongNhanVien
+      ) {
+        setError(
+          "Không được để trống Tên dịch vụ, Thời gian hoàn thành, Tiền công trả cho nhân viên"
+        );
+      } else {
+        
+        status === "Add" &&
+          (await fetch("http://localhost:8080/v1/service/", {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+              "token": `${user.token}`
+            },
+            body: JSON.stringify(serviceData),
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              setMessage(res.message);
+              setError(res.error);
+            }));
+
+        status === "Edit" &&
+          (await fetch(`http://localhost:8080/v1/service/${id}`, {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+              "token": `${user.token}`
+            },
+            body: JSON.stringify(serviceData),
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              setMessage(res.message);
+              setError(res.error);
+            }));
+          handleModal()
       }
-      else{
-          //add service hoặc update service
-        // await fetch("http://localhost:8080/v1/auth/register", {
-        //     method: "post",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(serviceData),
-        //   })
-      }
-    } catch (error) {
-      
-    }
-  }
+    } catch (error) {}
+  };
   return (
     <div
       onClick={() => {
@@ -39,10 +79,11 @@ const ServiceModal = ({ id, handleModal }) => {
       }}
       className="fixed top-0 right-0 left-0 bottom-0 bg-black/10 z-50 flex items-center justify-center"
     >
-      <div
+      <form
         onClick={(e) => {
           e.stopPropagation();
         }}
+        onSubmit={handleSubmit}
         className="w-[700px] flex flex-col bg-gray-200 rounded relative border border-black "
       >
         <div
@@ -54,7 +95,7 @@ const ServiceModal = ({ id, handleModal }) => {
           x
         </div>
         <div className="text-xl font-bold mt-5 text-center mb-5">
-          Thêm Nhân Viên
+          Thêm Dịch Vụ
         </div>
         <div className="grid grid-cols-2">
           <div>
@@ -65,7 +106,7 @@ const ServiceModal = ({ id, handleModal }) => {
 
               <input
                 type="text"
-                value={`${id ? serviceData.TenDichVu : ""}`}
+                value={`${serviceData.TenDichVu}`}
                 onChange={(e) => {
                   setServiceData({
                     ...serviceData,
@@ -75,6 +116,7 @@ const ServiceModal = ({ id, handleModal }) => {
                 name="TenDichVu"
                 id="TenDichVu"
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
+                readOnly={status === "View" ? true : false}
               />
             </div>
             <div class="w-full px-4 mb-3">
@@ -95,12 +137,16 @@ const ServiceModal = ({ id, handleModal }) => {
               >
                 <option
                   selected={serviceData.LoaiDichVu === 1 ? true : false}
+                  hidden={serviceData.LoaiDichVu !== 1 && status === "View"}
+                  disabled={serviceData.LoaiDichVu === 1 && status === "View"}
                   value="1"
                 >
                   Dịch vụ chính
                 </option>
                 <option
                   selected={serviceData.LoaiDichVu === 2 ? true : false}
+                  hidden={serviceData.LoaiDichVu !== 2 && status === "View"}
+                  disabled={serviceData.LoaiDichVu === 2 && status === "View"}
                   value="2"
                 >
                   Dịch vụ phụ
@@ -113,16 +159,17 @@ const ServiceModal = ({ id, handleModal }) => {
               </label>
 
               <input
-                type="text"
+                type="number"
                 name="GiaTien"
                 id="GiaTien"
-                value={`${id ? serviceData.GiaTien : ""}`}
+                value={`${serviceData.GiaTien}`}
                 onChange={(e) => {
                   setServiceData({
                     ...serviceData,
                     [e.target.name]: e.target.value,
                   });
                 }}
+                readOnly={status === "View" ? true : false}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>
@@ -132,16 +179,17 @@ const ServiceModal = ({ id, handleModal }) => {
               </label>
 
               <input
-                type="text"
+                type="number"
                 name="ThoiGian"
                 id="ThoiGian"
-                value={`${id ? serviceData.ThoiGian : ""}`}
+                value={`${serviceData.ThoiGian}`}
                 onChange={(e) => {
                   setServiceData({
                     ...serviceData,
                     [e.target.name]: e.target.value,
                   });
                 }}
+                readOnly={status === "View" ? true : false}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>
@@ -153,16 +201,17 @@ const ServiceModal = ({ id, handleModal }) => {
               </label>
 
               <input
-                type="text"
+                type="number"
                 name="TienCongNhanVien"
                 id="TienCongNhanVien"
-                value={`${id ? serviceData.TienCongNhanVien : ""}`}
+                value={`${serviceData.TienCongNhanVien}`}
                 onChange={(e) => {
                   setServiceData({
                     ...serviceData,
                     [e.target.name]: e.target.value,
                   });
                 }}
+                readOnly={status === "View" ? true : false}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>
@@ -176,13 +225,14 @@ const ServiceModal = ({ id, handleModal }) => {
                 type="text"
                 name="Avatar"
                 id="Avatar"
-                value={`${id ? serviceData?.Avatar : ""}`}
+                value={`${serviceData?.Avatar}`}
                 onChange={(e) => {
                   setServiceData({
                     ...serviceData,
                     [e.target.name]: e.target.value,
                   });
                 }}
+                readOnly={status === "View" ? true : false}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>
@@ -199,13 +249,14 @@ const ServiceModal = ({ id, handleModal }) => {
                 id="Description"
                 rows="4"
                 cols="50"
-                value={`${id ? serviceData?.Description : ""}`}
+                value={`${serviceData?.Description}`}
                 onChange={(e) => {
                   setServiceData({
                     ...serviceData,
                     [e.target.name]: e.target.value,
                   });
                 }}
+                readOnly={status === "View" ? true : false}
                 class="w-full h py-6 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>
@@ -221,7 +272,7 @@ const ServiceModal = ({ id, handleModal }) => {
             Lưu
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

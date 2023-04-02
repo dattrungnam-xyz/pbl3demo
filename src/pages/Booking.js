@@ -17,6 +17,9 @@ const Booking = () => {
 
   const [ca, setCa] = useState("1");
   const [timeCutHair, setTimeCutHair] = useState("1");
+
+  const [totalTimeCutHair, setTotalTimeCutHair] = useState(0);
+
   const [IdNhanVienSelected, setIdNhanVienSelected] = useState();
 
   const [date, setDate] = useState();
@@ -24,8 +27,9 @@ const Booking = () => {
 
   const [dateTimeError, setDateTimeError] = useState();
   const [serviceSelectedError, setServiceSelectedError] = useState();
+  const [response, setResponse] = useState();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // console.log(timeDisplay);
     // console.log("time:" + timeCutHair);
     // console.log("thu:" + thu);
@@ -55,17 +59,19 @@ const Booking = () => {
     const now = new Date();
     const month = now.getMonth() + 1;
     const monthtemp = month.toString().length == "1" ? "0" + month : month;
-    
-    const dayBooking = `${now.getFullYear()}-${monthtemp}-${now.getDate()}`
 
-    const today = new Date(
-      `${now.getFullYear()}-${monthtemp}-${now.getDate()}`
-      );
-      
-      // console.log(today.getTime())
-      // console.log(datebooking.getTime())
-      //console.log(today.getTime() - datebooking.getTime())
+    const datetemp =
+      (now.getDate() + 1).toString().length == "1"
+        ? "0" + (now.getDate() + 1)
+        : now.getDate() + 1;
 
+    const dayBooking = `${now.getFullYear()}-${monthtemp}-${datetemp}`;
+
+    const today = new Date(`${now.getFullYear()}-${monthtemp}-${datetemp}`);
+
+    // console.log(today.getTime())
+    // console.log(datebooking.getTime())
+    //console.log(today.getTime() - datebooking.getTime())
 
     const hoursCutHair = timeDisplay.find((item) => {
       return item.IdGioCat === +timeCutHair;
@@ -79,43 +85,68 @@ const Booking = () => {
 
     if (+today.getTime() > +datebooking.getTime()) {
       setDateTimeError("Vui lòng chọn lại ngày cắt tóc.");
-    } else if (+hoursCutHair?.split(":")[0] < now.getHours() - 1) {
+    } else if (+today.getTime() === +datebooking.getTime() && +hoursCutHair?.split(":")[0] < now.getHours() - 1) {
       setDateTimeError("Vui lòng chọn lại giờ cắt tóc.");
     } else if (!IdNhanVienSelected) {
       setDateTimeError("Vui lòng chọn nhân viên cắt tóc.");
     }
     if (!dateTimeError && !serviceSelectedError) {
-      const IdServiceBooking = []
+      const IdServiceBooking = [];
       for (const [key, value] of Object.entries(booking)) {
-        value&& IdServiceBooking.push(service.find((item)=>{
-            return item.TenDichVu === key
-        }).IdDichVu)
+        value &&
+          IdServiceBooking.push(
+            service.find((item) => {
+              return item.TenDichVu === key;
+            }).IdDichVu
+          );
       }
-      const b = {
-        "IdDichVu": IdServiceBooking,
-        "NgayCat": date,
-        "NgayDat":dayBooking,
-        "IdGioCat":timeCutHair,
-        "IdNhanVien": IdNhanVienSelected,
-        "IdKhachHang":user?.IdNguoiDung ||"",
-        "Ca": ca,
-        "ThuNgay": thu,
-      }
-      console.log(b)
+      const dataBooking = {
+        IdDichVu: IdServiceBooking,
+        NgayCat: date,
+        NgayDat: dayBooking,
+        IdGioCat: +timeCutHair,
+        IdNhanVien: +IdNhanVienSelected,
+        IdKhachHang: user.id ,
+        Ca: ca,
+        ThuNgay: thu,
+        TongThoiGianCat: totalTimeCutHair,
+      };
+      console.log(JSON.stringify(dataBooking))
+      await fetch("http://localhost:8080/v1/booking", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            "token": `${user.token}`
+          },
+          body: JSON.stringify(dataBooking),
+        }).then(res=> res.json()).then(res=> setResponse(res))
     }
+
   };
+
   const handleSetBooking = (e) => {
+    setResponse("")
     setServiceSelectedError("");
     if (booking?.[e]) {
       setCountServiceBooking((pre) => pre - 1);
       setBooking({ ...booking, [e]: false });
+      const time = service.find((item) => {
+        return item.TenDichVu === e;
+      }).ThoiGian;
+      setTotalTimeCutHair((pre) => pre - time);
     } else {
       setCountServiceBooking((pre) => pre + 1);
       setBooking({ ...booking, [e]: true });
+      const time = service.find((item) => {
+        return item.TenDichVu === e;
+      }).ThoiGian;
+      setTotalTimeCutHair((pre) => pre + time);
     }
+
   };
 
   const handleChangeDay = (e) => {
+    setResponse("")
     setDateTimeError("");
     setDate(e.target.value);
     const tempdate = new Date(e.target.value);
@@ -127,16 +158,18 @@ const Booking = () => {
     const month = now.getMonth() + 1;
     //month.toString().length
     const monthtemp = month.toString().length == "1" ? "0" + month : month;
-    setDate(`${now.getFullYear()}-${monthtemp}-${now.getDate()}`);
+    const datetemp =
+      (now.getDate() + 1).toString().length == "1"
+        ? "0" + (now.getDate() + 1)
+        : now.getDate() + 1;
+
+    setDate(`${now.getFullYear()}-${monthtemp}-${datetemp}`);
     setThu(now.getDay());
     //setDate(monthtemp)
   }, []);
 
   useEffect(() => {
-    // console.log("time:"+timeCutHair)
-    // console.log("thu:"+thu)
-    // console.log("ca:"+ca)
-    // console.log(date)
+
     timeCutHair &&
       ca &&
       date &&
@@ -144,13 +177,10 @@ const Booking = () => {
         `http://localhost:8080/v1/staff/barbernotbusy/${timeCutHair}&${thu}&${ca}&${date}`
       ).then((res) => {
         setAvailableStaff(res);
-        //  console.log(res)
+   
       });
-    // getData(`http://localhost:8080/v1/staff/barbernotbusy/1&1&2&2023-03-28`).then((res) => {
-    //   setAvailableStaff(res);
-    //   console.log(res)
-    // });
-  }, [timeCutHair, ca, date, thu]);
+   
+  }, [timeCutHair, ca, date, thu,IdNhanVienSelected]);
 
   useEffect(() => {
     getData("http://localhost:8080/v1/service").then((res) => {
@@ -265,10 +295,7 @@ const Booking = () => {
                 ) : (
                   <></>
                 )}
-                {/* <option value="Nguyễn Văn A">Nguyễn Văn A</option>
-                  <option value="Nguyễn Văn B">Nguyễn Văn B</option>
-                  <option value="Nguyễn Văn C">Nguyễn Văn C</option>
-                  <option value="Nguyễn Văn D">Nguyễn Văn D</option> */}
+
               </select>
             </div>
             <div>
@@ -279,18 +306,7 @@ const Booking = () => {
             <div className="w-full ">
               <label className="ml-4 ">Chọn dịch vụ</label>
               <div className="grid grid-cols-2 grid-rows-2 gap-2 h-[160px] mt-2">
-                {/* <div className="col-start-1 col-end-2 row-start-1 row-end-2 bg-slate-200  border-[2px] border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md">
-                  Cắt Tóc
-                </div>
-                <div className="col-start-2 col-end-3 row-start-1 row-end-2 bg-slate-200 border rounded  flex items-center justify-center cursor-pointer font-semibold text-md">
-                  Uốn Tóc
-                </div>
-                <div className="col-start-1 col-end-2 row-start-2 row-end-3 bg-slate-200 border-[2px] border-blue-500 rounded flex items-center justify-center cursor-pointer font-semibold text-md">
-                  Nhuộm Tóc
-                </div>
-                <div className="col-start-2 col-end-3 row-start-2  row-end-3 bg-slate-200 border-[2px] border-blue-500 rounded flex items-center justify-center cursor-pointer font-semibold text-md">
-                  Tatoo Hair
-                </div> */}
+       
                 {service &&
                   service
                     .filter((item) => {
@@ -303,7 +319,10 @@ const Booking = () => {
                             <>
                               <div
                                 name={item.TenDichVu}
-                                onClick={() => handleSetBooking(item.TenDichVu)}
+                                value={item.TenDichVu}
+                                onClick={() => {
+                                  handleSetBooking(item.TenDichVu);
+                                }}
                                 className=" bg-slate-200  border-[2px] border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md"
                               >
                                 {item.TenDichVu}
@@ -313,7 +332,10 @@ const Booking = () => {
                             <>
                               <div
                                 name={item.TenDichVu}
-                                onClick={() => handleSetBooking(item.TenDichVu)}
+                                value={item.TenDichVu}
+                                onClick={() => {
+                                  handleSetBooking(item.TenDichVu);
+                                }}
                                 className=" bg-slate-200   border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md"
                               >
                                 {item.TenDichVu}
@@ -328,18 +350,7 @@ const Booking = () => {
             <div className="w-full mt-4 ">
               <label className="ml-4 ">Chọn dịch vụ phụ</label>
               <div className="grid grid-cols-2 grid-rows-2 gap-2 h-[160px] mt-2">
-                {/* <div className="col-start-1 col-end-2 row-start-1 row-end-2 bg-slate-200  border-[2px] border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md">
-                  Cạo râu
-                </div>
-                <div className="col-start-2 col-end-3 row-start-1 row-end-2 bg-slate-200 border-[2px] border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md">
-                  Gội đầu
-                </div>
-                <div className="col-start-1 col-end-2 row-start-2 row-end-3 bg-slate-200 border-[2px] border-blue-500 rounded flex items-center justify-center cursor-pointer font-semibold text-md">
-                  Lấy ráy tai
-                </div>
-                <div className="col-start-2 col-end-3 row-start-2  row-end-3 bg-slate-200 border-[2px] border-blue-500 rounded flex items-center justify-center cursor-pointer font-semibold text-md">
-                  Đắp mặt nạ
-                </div> */}
+         
                 {service &&
                   service
                     .filter((item) => {
@@ -352,7 +363,10 @@ const Booking = () => {
                             <>
                               <div
                                 name={item.TenDichVu}
-                                onClick={() => handleSetBooking(item.TenDichVu)}
+                                value={item.TenDichVu}
+                                onClick={() => {
+                                  handleSetBooking(item.TenDichVu);
+                                }}
                                 className=" bg-slate-200  border-[2px] border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md"
                               >
                                 {item.TenDichVu}
@@ -362,7 +376,10 @@ const Booking = () => {
                             <>
                               <div
                                 name={item.TenDichVu}
-                                onClick={() => handleSetBooking(item.TenDichVu)}
+                                value={item.TenDichVu}
+                                onClick={() => {
+                                  handleSetBooking(item.TenDichVu);
+                                }}
                                 className=" bg-slate-200   border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md"
                               >
                                 {item.TenDichVu}
@@ -381,12 +398,12 @@ const Booking = () => {
                   serviceSelectedError && "visible"
                 }`}
               >
-                {serviceSelectedError}.
+                {serviceSelectedError}
               </p>
             </div>
           </div>
         </div>
-
+        {response && <div className="w-full text-center text-sm text-green-900">{response.message}</div>}
         <div className=" flex w-full mb-6 items-center justify-center">
           <button
             onClick={handleSubmit}

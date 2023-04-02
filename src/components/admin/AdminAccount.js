@@ -4,17 +4,22 @@ import { useSelector } from "react-redux";
 
 const AdminAccount = () => {
   const [data, setData] = useState();
+  const [filter, setFilter] = useState();
   const user = useSelector((state) => state.auth.login.currentUser);
 
   useEffect(() => {
     user &&
       getDataOnlyAdmin("http://localhost:8080/v1/account/", user.token).then(
         (res) => {
-          setData(res);
+          setData(res.filter((item)=>{
+            if(filter)
+              return item.LoaiTaiKhoan === filter
+            else return item  
+          }));
           console.log(res);
         }
       );
-  }, []);
+  }, [filter]);
   return (
     <>
       {data ? (
@@ -22,18 +27,44 @@ const AdminAccount = () => {
           <div className="w-full py-4 grid grid-cols-3">
             <div className="flex gap-4">
               <button
+              onClick={()=>{
+                setFilter()
+              }}
                 type="button"
-                className="h-full py-2 px-6 bg-gray-400 flex justify-center items-center text-white"
+                className="h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white"
               >
                 <box-icon name="user" color="#ffffff"></box-icon>
-                Khách Hàng
+                All
               </button>
               <button
+              onClick={()=>{
+                setFilter("staff")
+              }}
                 type="button"
-                className="h-full py-2 px-6 bg-gray-400 flex justify-center items-center text-white"
+                className="h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white"
               >
                 <box-icon name="user" color="#ffffff"></box-icon>
-                Nhân Viên
+                staff
+              </button>
+              <button
+              onClick={()=>{
+                setFilter("admin")
+              }}
+                type="button"
+                className="h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white"
+              >
+                <box-icon name="user" color="#ffffff"></box-icon>
+                admin
+              </button>
+              <button
+              onClick={()=>{
+                setFilter("user")
+              }}
+                type="button"
+                className="h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white"
+              >
+                <box-icon name="user" color="#ffffff"></box-icon>
+                user
               </button>
             </div>
             <div className="flex items-center justify-center">
@@ -188,17 +219,13 @@ const AdminAccount = () => {
           </div> */}
           {/*  */}
           <div className="w-full ">
-            <div className="w-full grid grid-cols-5">
+            <div className="w-full grid grid-cols-4">
               <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3 ">
                 Id
               </div>
               <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
-                Họ Tên
-              </div>
-              <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
                 Tên Đăng Nhập
               </div>
-             
               <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
                 Loại
               </div>
@@ -210,14 +237,12 @@ const AdminAccount = () => {
                 return (
                   <div
                     key={item.IdTaiKhoan}
-                    className="w-full grid grid-cols-5 h-[70px] border-b border-gray-200 hover:bg-gray-100"
+                    className="w-full grid grid-cols-4 h-[70px] border-b border-gray-200 hover:bg-gray-100"
                   >
                     <div className=" items-center py-3 px-2 text-center flex justify-center">
                       {item.IdTaiKhoan}
                     </div>
-                    <div className=" items-center py-3 px-2 text-center ">
-                      {item.HoTen}
-                    </div>
+
                     <div className=" py-3 px-2 text-center flex items-center justify-center">
                       {
                         item.TenDangNhap

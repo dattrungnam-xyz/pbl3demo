@@ -6,28 +6,66 @@ import ServiceModal from "./ServiceModal";
 const AdminService = () => {
   const [serviceData, setServiceData] = useState();
   const [modal,setModal] = useState(false);
+  const [modalStatus,setModalStatus] = useState();
   const [idServiceModal,setIdServiceModal] = useState(0);
+  const [filter,setFilter] = useState();
 
 
   const user = useSelector((state) => state.auth.login.currentUser);
   useEffect(() => {
     user &&
       getData("http://localhost:8080/v1/service").then((res) => {
-        setServiceData(res);
+        setServiceData(res.filter((item)=>{
+          if(filter ) return item.LoaiDichVu === filter;
+          else{
+            return item
+          }
+        }));
         console.log(res);
       });
-  }, []);
+  }, [modal,filter]);
 
   const handleModal= () =>{
     setModal(false);
     setIdServiceModal(0)
+    setModalStatus()
   }
   return (
     <>
       {serviceData ? (<>
         <section className="flex flex-col w-full max-w-[80vw] p-4">
           <div className="w-full grid grid-cols-3 py-4">
-            <div className="flex gap-4"></div>
+            <div className="flex gap-4"> 
+            <button
+            onClick={()=>{
+              setFilter()
+            }}
+                type="button"
+                className="h-full py-2 px-4 bg-gray-400 flex justify-center items-center text-white"
+              >
+                
+                All
+              </button>
+            <button
+            onClick={()=>{
+              setFilter(1)
+            }}
+                type="button"
+                className="h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white"
+              >
+                
+                Dịch vụ chính
+              </button>
+              <button
+              onClick={()=>{
+                setFilter(2)
+              }}
+                type="button"
+                className="h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white"
+              >
+                
+                Dịch vụ phụ
+              </button></div>
             <div className="flex items-center justify-center">
               <input
                 type="text"
@@ -41,6 +79,7 @@ const AdminService = () => {
                 className="h-full py-2 px-6 bg-green-600 flex justify-center items-center text-white"
                 onClick={()=>{
                   setModal(true)
+                  setModalStatus("Add")
                 }}
               >
                 <box-icon name="plus" color="#ffffff"></box-icon>
@@ -77,7 +116,7 @@ const AdminService = () => {
                       <div className=" items-center py-3 px-2 text-center flex justify-center">
                         {item.IdDichVu}
                       </div>
-                      <div className=" items-center py-3 px-2 text-center ">
+                      <div className=" items-center py-3 px-2 text-center flex justify-center ">
                         {item.TenDichVu}
                       </div>
                       <div className=" py-3 px-2 text-center flex items-center justify-center">
@@ -90,7 +129,11 @@ const AdminService = () => {
                           : "Dịch vụ phụ"}
                       </div>
                       <div className=" py-3 px-2 text-center flex items-center justify-center">
-                        <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                        <div onClick={()=>{
+                          setIdServiceModal(item.IdDichVu)
+                          setModal(true)
+                          setModalStatus("View")
+                        }} className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -114,6 +157,7 @@ const AdminService = () => {
                         <div onClick={()=>{
                           setIdServiceModal(item.IdDichVu)
                           setModal(true)
+                          setModalStatus("Edit")
                         }} className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -129,21 +173,7 @@ const AdminService = () => {
                             />
                           </svg>
                         </div>
-                        <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                            />
-                          </svg>
-                        </div>
+                       
                       </div>
                     </div>
                   );
@@ -152,7 +182,8 @@ const AdminService = () => {
             </div>
           </div>
         </section>
-        {modal && <ServiceModal id={idServiceModal} handleModal={handleModal} />}
+                    
+        {modal && <ServiceModal status={modalStatus} id={idServiceModal} handleModal={handleModal} />}
         </>
       ) : (
         <div className=" ">
