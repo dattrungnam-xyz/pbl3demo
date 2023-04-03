@@ -9,7 +9,7 @@ const ServiceModal = ({ status, id, handleModal }) => {
     Description: "",
     GiaTien: "",
     IdDichVu: "",
-    LoaiDichVu: "",
+    LoaiDichVu: 1,
     TenDichVu: "",
     ThoiGian: "",
     TienCongNhanVien: "",
@@ -27,7 +27,7 @@ const ServiceModal = ({ status, id, handleModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(serviceData)
     try {
       if (
         !serviceData.TenDichVu ||
@@ -140,6 +140,13 @@ const ServiceModal = ({ status, id, handleModal }) => {
                   hidden={serviceData.LoaiDichVu !== 1 && status === "View"}
                   disabled={serviceData.LoaiDichVu === 1 && status === "View"}
                   value="1"
+                  name="LoaiDichVu"
+                  onClick={(e) => {
+                    setServiceData({
+                      ...serviceData,
+                      [e.target.name]: 1,
+                    });
+                  }}
                 >
                   Dịch vụ chính
                 </option>
@@ -148,6 +155,13 @@ const ServiceModal = ({ status, id, handleModal }) => {
                   hidden={serviceData.LoaiDichVu !== 2 && status === "View"}
                   disabled={serviceData.LoaiDichVu === 2 && status === "View"}
                   value="2"
+                  name="LoaiDichVu"
+                  onClick={(e) => {
+                    setServiceData({
+                      ...serviceData,
+                      [e.target.name]: 2,
+                    });
+                  }}
                 >
                   Dịch vụ phụ
                 </option>
@@ -263,7 +277,7 @@ const ServiceModal = ({ status, id, handleModal }) => {
           </div>
         </div>
 
-        <div class="w-full px-8 mt-3 pb-2 flex items-center justify-center">
+        {status!== "View" ? <div class="w-full px-8 mt-3 pb-2 flex items-center justify-center">
           <button
             onClick={handleSubmit}
             type="submit"
@@ -271,7 +285,7 @@ const ServiceModal = ({ status, id, handleModal }) => {
           >
             Lưu
           </button>
-        </div>
+        </div>:<></>}
       </form>
     </div>
   );

@@ -13,7 +13,7 @@ import {
 } from "../components";
 
 const Admin = () => {
-  const [active, setActive] = useState("Nhân viên");
+  const [active, setActive] = useState("Tài khoản");
   const user = useSelector(state => state.auth.login.currentUser)
   return (
     <>
@@ -21,8 +21,8 @@ const Admin = () => {
       
 
       <section className="flex flex-row pt-[60px]">
-        {
-        user.type ==="admin" ? <>
+        
+       
         <AdminSidebar active ={active} setActive={setActive} />
         {active === "Nhân viên" &&<AdminStaff/> }
         {/* <AdminEditInfor/> */}
@@ -30,10 +30,8 @@ const Admin = () => {
         {active === "Sản phẩm bán kèm" && <AdminProducts />}
         {active === "Tài khoản" && <AdminAccount />}
         {active === "Lịch đặt" && <AdminBooking />}
-         </>   : <>
-          Khach hang khong duoc dung
-         </>
-        }
+        
+        
       </section>
     </>
   );

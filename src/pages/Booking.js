@@ -6,6 +6,7 @@ import { getData } from "../utils/fetchApi";
 
 const Booking = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
+  const [hasBooking,setHasBooking] = useState(false)
 
   const [service, setService] = useState([]);
   const [booking, setBooking] = useState({});
@@ -59,19 +60,18 @@ const Booking = () => {
     const now = new Date();
     const month = now.getMonth() + 1;
     const monthtemp = month.toString().length == "1" ? "0" + month : month;
+    
 
     const datetemp =
-      (now.getDate() + 1).toString().length == "1"
-        ? "0" + (now.getDate() + 1)
-        : now.getDate() + 1;
+      now.getDate().toString().length == "1"
+        ? "0" + now.getDate()
+        : now.getDate();
 
     const dayBooking = `${now.getFullYear()}-${monthtemp}-${datetemp}`;
 
     const today = new Date(`${now.getFullYear()}-${monthtemp}-${datetemp}`);
 
-    // console.log(today.getTime())
-    // console.log(datebooking.getTime())
-    //console.log(today.getTime() - datebooking.getTime())
+
 
     const hoursCutHair = timeDisplay.find((item) => {
       return item.IdGioCat === +timeCutHair;
@@ -79,18 +79,22 @@ const Booking = () => {
 
     // submit logic
 
+    
     countServiceBooking
       ? setServiceSelectedError("")
       : setServiceSelectedError("Vui lòng chọn dịch vụ");
 
     if (+today.getTime() > +datebooking.getTime()) {
       setDateTimeError("Vui lòng chọn lại ngày cắt tóc.");
-    } else if (+today.getTime() === +datebooking.getTime() && +hoursCutHair?.split(":")[0] < now.getHours() - 1) {
+    } else if (
+      +today.getTime() === +datebooking.getTime() &&
+      +hoursCutHair?.split(":")[0] < now.getHours() - 1
+    ) {
       setDateTimeError("Vui lòng chọn lại giờ cắt tóc.");
     } else if (!IdNhanVienSelected) {
       setDateTimeError("Vui lòng chọn nhân viên cắt tóc.");
     }
-    if (!dateTimeError && !serviceSelectedError) {
+    if (!dateTimeError && !serviceSelectedError && hasBooking === false) {
       const IdServiceBooking = [];
       for (const [key, value] of Object.entries(booking)) {
         value &&
@@ -106,26 +110,29 @@ const Booking = () => {
         NgayDat: dayBooking,
         IdGioCat: +timeCutHair,
         IdNhanVien: +IdNhanVienSelected,
-        IdKhachHang: user.id ,
+        IdKhachHang: user.id,
         Ca: ca,
         ThuNgay: thu,
         TongThoiGianCat: totalTimeCutHair,
       };
-      console.log(JSON.stringify(dataBooking))
+      console.log(JSON.stringify(dataBooking));
       await fetch("http://localhost:8080/v1/booking", {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-            "token": `${user.token}`
-          },
-          body: JSON.stringify(dataBooking),
-        }).then(res=> res.json()).then(res=> setResponse(res))
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          token: `${user.token}`,
+        },
+        body: JSON.stringify(dataBooking),
+      })
+        .then((res) => res.json())
+        .then((res) => setResponse(res));
+        setHasBooking(true)
+        
     }
-
   };
 
   const handleSetBooking = (e) => {
-    setResponse("")
+    setResponse("");
     setServiceSelectedError("");
     if (booking?.[e]) {
       setCountServiceBooking((pre) => pre - 1);
@@ -140,13 +147,13 @@ const Booking = () => {
       const time = service.find((item) => {
         return item.TenDichVu === e;
       }).ThoiGian;
+
       setTotalTimeCutHair((pre) => pre + time);
     }
-
   };
 
   const handleChangeDay = (e) => {
-    setResponse("")
+    setResponse("");
     setDateTimeError("");
     setDate(e.target.value);
     const tempdate = new Date(e.target.value);
@@ -159,9 +166,9 @@ const Booking = () => {
     //month.toString().length
     const monthtemp = month.toString().length == "1" ? "0" + month : month;
     const datetemp =
-      (now.getDate() + 1).toString().length == "1"
-        ? "0" + (now.getDate() + 1)
-        : now.getDate() + 1;
+      (now.getDate() ).toString().length == "1"
+        ? "0" + (now.getDate() )
+        : now.getDate() ;
 
     setDate(`${now.getFullYear()}-${monthtemp}-${datetemp}`);
     setThu(now.getDay());
@@ -169,7 +176,6 @@ const Booking = () => {
   }, []);
 
   useEffect(() => {
-
     timeCutHair &&
       ca &&
       date &&
@@ -177,10 +183,8 @@ const Booking = () => {
         `http://localhost:8080/v1/staff/barbernotbusy/${timeCutHair}&${thu}&${ca}&${date}`
       ).then((res) => {
         setAvailableStaff(res);
-   
       });
-   
-  }, [timeCutHair, ca, date, thu,IdNhanVienSelected]);
+  }, [timeCutHair, ca, date, thu, IdNhanVienSelected]);
 
   useEffect(() => {
     getData("http://localhost:8080/v1/service").then((res) => {
@@ -295,7 +299,6 @@ const Booking = () => {
                 ) : (
                   <></>
                 )}
-
               </select>
             </div>
             <div>
@@ -305,8 +308,7 @@ const Booking = () => {
           <div className="w-1/2 max-sm:w-full ">
             <div className="w-full ">
               <label className="ml-4 ">Chọn dịch vụ</label>
-              <div className="grid grid-cols-2 grid-rows-2 gap-2 h-[160px] mt-2">
-       
+              <div className="grid grid-cols-2  gap-2 h-[160px] mt-2">
                 {service &&
                   service
                     .filter((item) => {
@@ -349,8 +351,7 @@ const Booking = () => {
             </div>
             <div className="w-full mt-4 ">
               <label className="ml-4 ">Chọn dịch vụ phụ</label>
-              <div className="grid grid-cols-2 grid-rows-2 gap-2 h-[160px] mt-2">
-         
+              <div className="grid grid-cols-2 gap-2 h-[160px] mt-2">
                 {service &&
                   service
                     .filter((item) => {
@@ -403,7 +404,11 @@ const Booking = () => {
             </div>
           </div>
         </div>
-        {response && <div className="w-full text-center text-sm text-green-900">{response.message}</div>}
+        {response && (
+          <div className="w-full text-center text-sm text-green-900">
+            {response.message}
+          </div>
+        )}
         <div className=" flex w-full mb-6 items-center justify-center">
           <button
             onClick={handleSubmit}

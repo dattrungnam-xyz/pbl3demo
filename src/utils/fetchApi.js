@@ -21,8 +21,19 @@ const getDataOnlyAdmin = async (url,token) => {
 
     return data;
 }
+const getDataWithToken = async (url,token) => {
+  const data = await fetch(url,{
+    method: "get",
+    headers:{
+      "Content-Type": "application/json",
+      "token": `${token}`,
+    }
+  }).then(res => res.json())
+
+  return data;
+}
 export {
   getData,
   getDataOnlyAdmin,
-  
+  getDataWithToken
 }

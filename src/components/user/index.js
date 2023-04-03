@@ -7,3 +7,4 @@ export {default as ServiceCard} from './ServiceCard';
 export {default as UserNavbar} from './UserNavbar';
 export {default as SubNavbar} from './SubNavbar';
 export {default as Footer} from './Footer';
+export {default as BookingInforModal} from './BookingInforModal';

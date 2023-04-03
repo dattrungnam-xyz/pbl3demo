@@ -5,6 +5,12 @@ import StaffModal from "./StaffModal";
 
 const AdminStaff = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
+
+
+  const [modal,setModal] = useState(false)
+  const [modalStatus,setModalStatus] = useState()
+  const [idStaff,setIdStaff] = useState()
+
   const [staffData, setStaffData] = useState([]);
   useEffect(() => {
     user.type === "admin" &&
@@ -53,7 +59,9 @@ const AdminStaff = () => {
                 type="button"
                 className="h-full py-2 px-6 bg-green-600 flex justify-center items-center text-white"
                 onClick={()=>{
-                  console.log(staffData)
+                  setModalStatus("Add")
+                  setIdStaff()
+                  setModal(true)
                 }}
               >
                 <box-icon name="plus" color="#ffffff"></box-icon>
@@ -90,7 +98,7 @@ const AdminStaff = () => {
                   <div className=" items-center py-3 px-2 text-center flex justify-center">
                     {item.IdNhanVien}
                   </div>
-                  <div className=" items-center py-3 px-2 text-center ">
+                  <div className=" items-center py-3 px-2  flex justify-center text-center ">
                     {item.HoTen}
                   </div>
                   <div className=" py-3 px-2 text-center flex items-center justify-center">
@@ -101,7 +109,11 @@ const AdminStaff = () => {
                     {item.LoaiNhanVien === "1" ? "Thợ cắt tóc" : "Kế toán"}
                   </div>
                   <div className=" py-3 px-2 text-center flex items-center justify-center">
-                    <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                    <div onClick={()=>{
+                      setModalStatus("View")
+                      setIdStaff(item.IdNhanVien)
+                      setModal(true)
+                    }} className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -122,7 +134,12 @@ const AdminStaff = () => {
                         />
                       </svg>
                     </div>
-                    <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                    <div
+                    onClick={()=>{
+                      setModalStatus("Edit")
+                      setIdStaff(item.IdNhanVien)
+                      setModal(true)
+                    }}  className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -137,21 +154,7 @@ const AdminStaff = () => {
                         />
                       </svg>
                     </div>
-                    <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                        />
-                      </svg>
-                    </div>
+                   
                   </div>
                 </div>
               );
@@ -162,7 +165,7 @@ const AdminStaff = () => {
 
       
     </div>
-  {/* <StaffModal/> */}
+  { modal && <StaffModal data = {staffData} status={modalStatus} IdNhanVien = {idStaff} setModal={setModal} /> }
   </>
   );
 };
