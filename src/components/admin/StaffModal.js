@@ -1,18 +1,60 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const StaffModal = ({ status, setModal, data, IdNhanVien }) => {
+  const user = useSelector(state => state.auth.login.currentUser)
+  const [error,setError] = useState()
   const [staffData,setStaffData] = useState({})
-
-  const handleSubmit = (e) => {
+  const [registerAccount,setRegisterAccount] = useState({
+    TenDangNhap:"",
+    MatKhau:"",
+    LoaiTaiKhoan:"staff",
+  })
+ 
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if(
+      staffData.HoTen && staffData.DiaChi && staffData.SoDienThoai && staffData.NamKinhNghiem && staffData.LoaiNhanVien
+    )
+    {
+      status === "Edit" &&  await fetch("http://localhost:8080/v1/staff/", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "token":`${user.token}`
+        },
+        body: JSON.stringify(staffData),
+      })
+    }
+    else{
+      setError("Không được để trống thông tin.")
+    }
+
+    if(status ==="Add" && registerAccount.TenDangNhap && registerAccount.MatKhau)
+    {
+      //add account  logic
+    }
+    else {
+      setError("Không được để trống thông tin.")
+    }
+
+    console.log(staffData)
+    console.log(registerAccount)
+   // setModal(false)
   };
 
+
   useEffect(()=>{
-    const staffInfor = data.filter((item)=>{
-      return item.IdNhanVien === IdNhanVien
-    })
-    setStaffData(staffInfor[0])
-  })
+    if(status==="View" || status==="Edit"){
+      const staffInfor = data.filter((item)=>{
+        return item.IdNhanVien === IdNhanVien
+      })
+      setStaffData(staffInfor[0])
+    }
+      
+
+  
+  },[])
   return (
     // <div className='fixed bg-black/20 w-full h-full z-30'>
 
@@ -29,6 +71,7 @@ const StaffModal = ({ status, setModal, data, IdNhanVien }) => {
         onClick={(e) => {
           e.stopPropagation();
         }}
+
         className="w-[700px] flex flex-col bg-gray-200 rounded relative border border-black "
       >
         <div
@@ -53,33 +96,58 @@ const StaffModal = ({ status, setModal, data, IdNhanVien }) => {
                 type="text"
                 name="HoTen"
                 id="HoTen"
-                value={staffData.HoTen}
+                readOnly={status === "View" ? true : false}
+                value={staffData?.HoTen}
+
+                onChange={(e) => {
+                  setStaffData({
+                    ...staffData,
+                    [e.target.name]: e.target.value,
+                  });
+                  setError()
+                }}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>
             {status === "Add" && (
               <>
                 <div class="w-full px-4 mb-3">
-                  <label className="ml-4 " for="username">
+                  <label className="ml-4 " for="TenDangNhap">
                     Tên Đăng Nhập
                   </label>
 
                   <input
                     type="text"
-                    name="username"
-                    id="username"
+                    name="TenDangNhap"
+                    id="TenDangNhap"
+                    value={registerAccount.TenDangNhap}
+                    onChange={(e) => {
+                      setRegisterAccount({
+                        ...registerAccount,
+                        [e.target.name]: e.target.value,
+                      });
+                      setError()
+                    }}
                     class="w-full py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
                   />
                 </div>
                 <div class="w-full px-4 mb-3">
-                  <label className="ml-4 " for="password">
+                  <label className="ml-4 " for="MatKhau">
                     Mật Khẩu
                   </label>
 
                   <input
                     type="text"
-                    name="password"
-                    id="password"
+                    name="MatKhau"
+                    id="MatKhau"
+                    value={registerAccount.MatKhau}
+                    onChange={(e) => {
+                      setRegisterAccount({
+                        ...registerAccount,
+                        [e.target.name]: e.target.value,
+                      });
+                      setError()
+                    }}
                     class="w-full py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
                   />
                 </div>
@@ -90,10 +158,8 @@ const StaffModal = ({ status, setModal, data, IdNhanVien }) => {
                   </label>
 
                   <select className="w-full py-3 mt-2 pl-7 pr-3 bg-white  rounded-2xl hover:ring-1 outline-blue-500">
-                    <option selected value="admin">
-                      Admin
-                    </option>
-                    <option value="staff">Nhân viên</option>
+                    
+                    <option selected value="staff">Nhân viên</option>
                   </select>
                 </div>
               </>
@@ -109,20 +175,35 @@ const StaffModal = ({ status, setModal, data, IdNhanVien }) => {
                   type="text"
                   name="SoDienThoai"
                   id="SoDienThoai"
-                  value={staffData.SoDienThoai}
+                  value={staffData?.SoDienThoai}
+                  readOnly={status === "View" ? true : false}
+                  onChange={(e) => {
+                    setStaffData({
+                      ...staffData,
+                      [e.target.name]: e.target.value,
+                    });
+                    setError()
+                  }}
                   class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
                 />
               </div>
               <div class="w-full px-4 mb-3">
-                <label className="ml-4 " for="username">
+                <label className="ml-4 ">
                   Loại Nhân Viên
                 </label>
 
-                <select className="w-full py-3 mt-2 pl-7 pr-3 bg-white  rounded-2xl hover:ring-1 outline-blue-500">
-                  <option selected value="1">
+                <select
+                name="LoaiNhanVien" onChange={(e) => {
+                  setStaffData({
+                    ...staffData,
+                    [e.target.name]: e.target.value,
+                  });
+                  setError()
+                }} className="w-full py-3 mt-2 pl-7 pr-3 bg-white  rounded-2xl hover:ring-1 outline-blue-500">
+                  <option selected={staffData.LoaiNhanVien ==="1" ?true : false} disabled={staffData.LoaiNhanVien ==="2" && status==="View"} hidden={staffData.LoaiNhanVien ==="2" && status==="View"} value="1">
                     Thợ cắt tóc
                   </option>
-                  <option value="2">Kế toán</option>
+                  <option selected={staffData.LoaiNhanVien ==="2" ?true : false} disabled={staffData.LoaiNhanVien ==="1" && status==="View"} hidden={staffData.LoaiNhanVien ==="1" && status==="View"} value="2">Kế toán</option>
                 </select>
               </div>
             </>
@@ -132,34 +213,50 @@ const StaffModal = ({ status, setModal, data, IdNhanVien }) => {
             {
               status === "Add" &&  <>
               <div class="w-full px-4 mb-3">
-                <label className="ml-4 " for="username">
+                <label className="ml-4 " for="SoDienThoai">
                   Số Điện Thoại
                 </label>
 
                 <input
                   type="text"
-                  name="username"
-                  id="username"
+                  name="SoDienThoai"
+                  id="SoDienThoai"
+                  readOnly={status === "View" ? true : false}
+                  onChange={(e) => {
+                    setStaffData({
+                      ...staffData,
+                      [e.target.name]: e.target.value,
+                    });
+                    setError()
+                  }}
                   class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
                 />
               </div>
               <div class="w-full px-4 mb-3">
-                <label className="ml-4 " for="username">
+                <label className="ml-4 " >
                   Loại Nhân Viên
                 </label>
 
-                <select className="w-full py-3 mt-2 pl-7 pr-3 bg-white  rounded-2xl hover:ring-1 outline-blue-500">
-                  <option selected value="admin">
+                <select
+                onChange={(e) => {
+                  setStaffData({
+                    ...staffData,
+                    [e.target.name]: e.target.value,
+                  });
+                  setError()
+                }}
+                 className="w-full py-3 mt-2 pl-7 pr-3 bg-white  rounded-2xl hover:ring-1 outline-blue-500">
+                  <option selected value="1">
                     Thợ cắt tóc
                   </option>
-                  <option value="staff">Kế toán</option>
+                  <option value="2">Kế toán</option>
                 </select>
               </div>
             </>
             }
            
 
-            <div class="w-full px-4 mb-3">
+            {/* <div class="w-full px-4 mb-3">
               <label className="ml-4 " htmlfor="Luong1Gio">
                 Lương 1 giờ
               </label>
@@ -171,7 +268,7 @@ const StaffModal = ({ status, setModal, data, IdNhanVien }) => {
                 value={staffData.Luong1Gio}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
               />
-            </div>
+            </div> */}
 
             <div class="w-full px-4 mb-3">
               <label className="ml-4 " htmlfor="DiaChi">
@@ -182,7 +279,16 @@ const StaffModal = ({ status, setModal, data, IdNhanVien }) => {
                 type="text"
                 name="DiaChi"
                 id="DiaChi"
-                value={staffData.DiaChi}
+                value={staffData?.DiaChi}
+                onChange={(e) => {
+                  setStaffData({
+                    ...staffData,
+                    [e.target.name]: e.target.value,
+                  });
+                  setError()
+                }}
+                readOnly={status === "View" ? true : false}
+
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>
@@ -195,17 +301,27 @@ const StaffModal = ({ status, setModal, data, IdNhanVien }) => {
                 type="text"
                 name="NamKinhNghiem"
                 id="NamKinhNghiem"
-                value={staffData.NamKinhNghiem}
+                value={staffData?.NamKinhNghiem}
+                onChange={(e) => {
+                  setStaffData({
+                    ...staffData,
+                    [e.target.name]: e.target.value,
+                  });
+                  setError()
+                }}
+                readOnly={status === "View" ? true : false}
+
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>
           </div>
         </div>
-
+        {error && <p className=" block text-center text-sm text-red-900 ">{error}</p>}
         {status !== "View" && (
           <div class="w-full px-8 mt-3 pb-2 flex items-center justify-center">
             <button
               type="submit"
+            
               class=" py-2 bg-[#194284] w-1/2 rounded-2xl text-blue-50 text-[20px] font-semibold hover:opacity-75"
             >
               Lưu

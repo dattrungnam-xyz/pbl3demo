@@ -1,4 +1,4 @@
-import {AdminNavbar, AdminSidebar, AdminStaff,AdminEditInfor,AdminService,AdminAccount,AdminBooking,AdminProducts,StaffModal,ServiceModal,AccountModal} from './admin'
+import {AdminNavbar, AdminSidebar, AdminStaff,AdminEditInfor,AdminService,AdminAccount,AdminBooking,AdminProducts,StaffModal,ServiceModal} from './admin'
 import {EditProfile,HairGallery,Hero,BarberCard,ServiceCard,UserNavbar,SubNavbar,Footer,BookingInforModal} from './user'
 
 

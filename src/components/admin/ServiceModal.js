@@ -209,7 +209,7 @@ const ServiceModal = ({ status, id, handleModal }) => {
             </div>
           </div>
           <div>
-            <div class="w-full px-4 mb-3">
+            {/* <div class="w-full px-4 mb-3">
               <label className="ml-4 " for="TienCongNhanVien">
                 Tiền công trả nhân viên
               </label>
@@ -228,7 +228,7 @@ const ServiceModal = ({ status, id, handleModal }) => {
                 readOnly={status === "View" ? true : false}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
               />
-            </div>
+            </div> */}
             <div class="w-full px-4 mb-3">
               <label className="ml-4 " for="Avatar">
                 Avatar{" "}

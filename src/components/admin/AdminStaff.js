@@ -27,7 +27,7 @@ const AdminStaff = () => {
         }
       );
     
-  }, []);
+  }, [modal]);
   return (<>
     <div className="flex flex-col w-full max-w-[80vw] p-4">
       <div className="w-full py-4 grid grid-cols-3">

@@ -6,7 +6,14 @@ import { getDataWithToken } from "../utils/fetchApi";
 const UserBookingInfor = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
   const [data, setData] = useState([]);
+  const [id,setId] = useState();
   const [modal,setModal] = useState(false)
+  const [modalStatus,setModalStatus] = useState()
+
+  const [hasRate,setHasRate] = useState(false)
+
+
+
   const [dataRemove,setDataRemove] = useState({
     IdLich:"",
     IdNhanVien:"",
@@ -72,9 +79,25 @@ const UserBookingInfor = () => {
                       {item.GioCat}
                     </div>
                     <div className=" py-3 px-2 text-center flex items-center justify-center">
+                    <div
+                        onClick={() => { setModalStatus("Rate")
+                        setId(item.IdLich)
+                        setHasRate(item.DaDanhGia)
+                        
+                        setModal(true)}
+                      }
+                        className="w-4 mr-2 transform  hover:scale-110"
+                      >
+                        
+                        <box-icon  size={"xs"} type='solid' name='calendar-minus'></box-icon>
+
+                      </div>
                       <div
-                        onClick={() => {}}
-                        className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+                        onClick={() => { setModalStatus("View")
+                        setId(item.IdLich)
+                        setModal(true)}
+                      }
+                        className="w-4 mr-2 transform  hover:scale-110"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -99,6 +122,7 @@ const UserBookingInfor = () => {
                       <div
                       onClick={
                         ()=>{
+                          setModalStatus("Remove")
                           setDataRemove({
                             IdLich:item.IdLich,
                             IdNhanVien:item.IdNhanVien,
@@ -109,7 +133,7 @@ const UserBookingInfor = () => {
                           setModal(true)
                         }
                       }
-                       class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                       class="w-4 mr-2 transform  hover:scale-110">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -132,7 +156,9 @@ const UserBookingInfor = () => {
           </div>
         </section>
       )}
-      {modal&& <BookingInforModal status={"Remove"} dataRemove={dataRemove} setModal={setModal} />}
+     
+
+      {modal&& <BookingInforModal status={modalStatus} dataRemove={dataRemove} setModal={setModal} idLich={id} hasRate={hasRate} />}
     </>
   );
 };
