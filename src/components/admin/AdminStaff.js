@@ -10,7 +10,8 @@ const AdminStaff = () => {
   const [modal,setModal] = useState(false)
   const [modalStatus,setModalStatus] = useState()
   const [idStaff,setIdStaff] = useState()
-
+  const [filter,setFilter] = useState()
+  
   const [staffData, setStaffData] = useState([]);
   useEffect(() => {
     user.type === "admin" &&

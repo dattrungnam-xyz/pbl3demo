@@ -6,21 +6,19 @@ import { getDataWithToken } from "../utils/fetchApi";
 const UserBookingInfor = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
   const [data, setData] = useState([]);
-  const [id,setId] = useState();
-  const [modal,setModal] = useState(false)
-  const [modalStatus,setModalStatus] = useState()
+  const [id, setId] = useState();
+  const [modal, setModal] = useState(false);
+  const [modalStatus, setModalStatus] = useState();
 
-  const [hasRate,setHasRate] = useState(false)
+  const [hasRate, setHasRate] = useState(false);
 
-
-
-  const [dataRemove,setDataRemove] = useState({
-    IdLich:"",
-    IdNhanVien:"",
-    NgayCat:"",
-    IdGioCat:"",
-    TongThoiGian:""
-  })
+  const [dataRemove, setDataRemove] = useState({
+    IdLich: "",
+    IdNhanVien: "",
+    NgayCat: "",
+    IdGioCat: "",
+    TongThoiGian: "",
+  });
 
   useEffect(() => {
     user?.type === "user" &&
@@ -79,24 +77,31 @@ const UserBookingInfor = () => {
                       {item.GioCat}
                     </div>
                     <div className=" py-3 px-2 text-center flex items-center justify-center">
-                    <div
-                        onClick={() => { setModalStatus("Rate")
-                        setId(item.IdLich)
-                        setHasRate(item.DaDanhGia)
-                        
-                        setModal(true)}
-                      }
+                      {
+                        user?.type === "user" && <div
+                        onClick={() => {
+                          setModalStatus("Rate");
+                          setId(item.IdLich);
+                          setHasRate(item.DaDanhGia);
+
+                          setModal(true);
+                        }}
                         className="w-4 mr-2 transform  hover:scale-110"
                       >
-                        
-                        <box-icon  size={"xs"} type='solid' name='calendar-minus'></box-icon>
-
+                        <box-icon
+                          size={"xs"}
+                          type="solid"
+                          name="calendar-minus"
+                        ></box-icon>
                       </div>
-                      <div
-                        onClick={() => { setModalStatus("View")
-                        setId(item.IdLich)
-                        setModal(true)}
                       }
+                      
+                      <div
+                        onClick={() => {
+                          setModalStatus("View");
+                          setId(item.IdLich);
+                          setModal(true);
+                        }}
                         className="w-4 mr-2 transform  hover:scale-110"
                       >
                         <svg
@@ -119,21 +124,20 @@ const UserBookingInfor = () => {
                           />
                         </svg>
                       </div>
-                      <div
-                      onClick={
-                        ()=>{
-                          setModalStatus("Remove")
+                      { user?.type === "user" && <div
+                        onClick={() => {
+                          setModalStatus("Remove");
                           setDataRemove({
-                            IdLich:item.IdLich,
-                            IdNhanVien:item.IdNhanVien,
-                            NgayCat:item.NgayCat.slice(0, 10),
-                            IdGioCat:item.IdGioCat,
-                            TongThoiGian:item.TongThoiGian
-                          })
-                          setModal(true)
-                        }
-                      }
-                       class="w-4 mr-2 transform  hover:scale-110">
+                            IdLich: item.IdLich,
+                            IdNhanVien: item.IdNhanVien,
+                            NgayCat: item.NgayCat.slice(0, 10),
+                            IdGioCat: item.IdGioCat,
+                            TongThoiGian: item.TongThoiGian,
+                          });
+                          setModal(true);
+                        }}
+                        class="w-4 mr-2 transform  hover:scale-110"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -147,7 +151,8 @@ const UserBookingInfor = () => {
                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                           />
                         </svg>
-                      </div>
+                      </div> }
+                      
                     </div>
                   </div>
                 );
@@ -156,9 +161,16 @@ const UserBookingInfor = () => {
           </div>
         </section>
       )}
-     
 
-      {modal&& <BookingInforModal status={modalStatus} dataRemove={dataRemove} setModal={setModal} idLich={id} hasRate={hasRate} />}
+      {modal && (
+        <BookingInforModal
+          status={modalStatus}
+          dataRemove={dataRemove}
+          setModal={setModal}
+          idLich={id}
+          hasRate={hasRate}
+        />
+      )}
     </>
   );
 };

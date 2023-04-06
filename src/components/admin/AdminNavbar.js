@@ -44,12 +44,7 @@ const AdminNavbar = () => {
                   Trang chủ
                 </Link>
                 
-                <Link
-                  to="/Booking"
-                  className="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                >
-                  Đặt lịch
-                </Link>
+                
                 {user ? (
                   <>
                     <div className=" relative group p-1 ml-4 flex justify-center  items-center  cursor-pointer hover:bg-gray-200 rounded">

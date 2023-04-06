@@ -9,6 +9,7 @@ import {
   AdminAccount,
   AdminBooking,
   AdminProducts,
+  AdminUser,
 
 } from "../components";
 
@@ -24,8 +25,10 @@ const Admin = () => {
         
        
         <AdminSidebar active ={active} setActive={setActive} />
-        {active === "Nhân viên" &&<AdminStaff/> }
         {/* <AdminEditInfor/> */}
+        {active === "Nhân viên" &&<AdminStaff/> }
+
+        {active === "Khách hàng" &&<AdminUser/> }
         {active === "Dịch vụ" && <AdminService />}
         {active === "Sản phẩm bán kèm" && <AdminProducts />}
         {active === "Tài khoản" && <AdminAccount />}

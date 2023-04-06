@@ -237,6 +237,8 @@ const Booking = () => {
                 className="w-full py-3 mt-2 pl-7 pr-3 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
                 onChange={(e) => {
                   setCa(e.target.value);
+                  e.target.value === "2" && setTimeCutHair(22)
+                  e.target.value === "3" && setTimeCutHair(45)
                 }}
               >
                 <option selected value="1">
@@ -325,7 +327,7 @@ const Booking = () => {
                                 onClick={() => {
                                   handleSetBooking(item.TenDichVu);
                                 }}
-                                className=" bg-slate-200  border-[2px] border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md"
+                                className=" bg-slate-200   border-[2px] border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md"
                               >
                                 {item.TenDichVu}
                               </div>
@@ -338,7 +340,7 @@ const Booking = () => {
                                 onClick={() => {
                                   handleSetBooking(item.TenDichVu);
                                 }}
-                                className=" bg-slate-200   border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md"
+                                className=" bg-slate-200    border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md"
                               >
                                 {item.TenDichVu}
                               </div>
@@ -368,7 +370,7 @@ const Booking = () => {
                                 onClick={() => {
                                   handleSetBooking(item.TenDichVu);
                                 }}
-                                className=" bg-slate-200  border-[2px] border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md"
+                                className=" bg-slate-200   border-[2px] border-blue-500 rounded  flex items-center justify-center cursor-pointer font-semibold text-md"
                               >
                                 {item.TenDichVu}
                               </div>

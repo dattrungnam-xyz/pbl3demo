@@ -20,6 +20,8 @@ const BookingInforModal = ({
     MoTaNV: "",
   });
   const [rateError, setRateError] = useState();
+
+
   const handleSubmitRate = async (e) => {
     e.preventDefault();
     if (staffStar === 0 || serviceStar === 0) {
@@ -76,6 +78,8 @@ const BookingInforModal = ({
   const user = useSelector((state) => state.auth.login.currentUser);
 
   const [message, setMessage] = useState();
+
+  
   const handleRemove = async () => {
     await fetch("http://localhost:8080/v1/booking/remove", {
       method: "post",
