@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import { getData,getDataWithToken } from "../../utils/fetchApi";
+import { getDataWithToken } from "../../utils/fetchApi";
 import { useSelector } from "react-redux";
 import ProductModal from './ProductModal';
 
@@ -22,7 +22,6 @@ const AdminProducts = () => {
       user &&
       getDataWithToken("http://localhost:8080/v1/product/",user.token).then((res) => {
           setProductData(res);
-          
         });
     }, [modal]);
   

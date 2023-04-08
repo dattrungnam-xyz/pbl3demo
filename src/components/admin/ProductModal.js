@@ -129,6 +129,7 @@ const ProductModal = ({ status, id, handleModal }) => {
                 name="GiaNhap"
                 id="GiaNhap"
                 value={`${productData.GiaNhap}`}
+                min={0}
                 onChange={(e) => {
                   setProductData({
                     ...productData,
@@ -150,6 +151,7 @@ const ProductModal = ({ status, id, handleModal }) => {
                 type="number"
                 name="GiaBan"
                 id="GiaBan"
+                min={0}
                 value={`${productData.GiaBan}`}
                 onChange={(e) => {
                   setProductData({

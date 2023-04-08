@@ -12,6 +12,7 @@ import {
   AdminUser,
 
 } from "../components";
+import { AdminImport } from "../components/admin";
 
 const Admin = () => {
   const [active, setActive] = useState("Tài khoản");
@@ -27,6 +28,7 @@ const Admin = () => {
         <AdminSidebar active ={active} setActive={setActive} />
         {/* <AdminEditInfor/> */}
         {active === "Nhân viên" &&<AdminStaff/> }
+        {active === "Nhập hàng" &&<AdminImport/> }
 
         {active === "Khách hàng" &&<AdminUser/> }
         {active === "Dịch vụ" && <AdminService />}

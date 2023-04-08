@@ -176,6 +176,7 @@ const ServiceModal = ({ status, id, handleModal }) => {
                 type="number"
                 name="GiaTien"
                 id="GiaTien"
+                min={0}
                 value={`${serviceData.GiaTien}`}
                 onChange={(e) => {
                   setServiceData({
@@ -196,6 +197,7 @@ const ServiceModal = ({ status, id, handleModal }) => {
                 type="number"
                 name="ThoiGian"
                 id="ThoiGian"
+                min={0}
                 value={`${serviceData.ThoiGian}`}
                 onChange={(e) => {
                   setServiceData({
