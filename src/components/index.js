@@ -1,8 +1,51 @@
-import {AdminNavbar, AdminSidebar, AdminStaff,AdminEditInfor,AdminService,AdminAccount,AdminBooking,AdminProducts,StaffModal,ServiceModal,AdminUser} from './admin'
-import {EditProfile,HairGallery,Hero,BarberCard,ServiceCard,UserNavbar,SubNavbar,Footer,BookingInforModal} from './user'
+import {
+  AdminNavbar,
+  AdminSidebar,
+  AdminStaff,
+  AdminEditInfor,
+  AdminService,
+  AdminAccount,
+  AdminBooking,
+  AdminProducts,
+  StaffModal,
+  ServiceModal,
+  AdminUser,
+  AdminBill,
+} from "./admin";
+import {
+  EditProfile,
+  HairGallery,
+  Hero,
+  BarberCard,
+  ServiceCard,
+  UserNavbar,
+  SubNavbar,
+  Footer,
+  BookingInforModal,
+} from "./user";
 
-
-
-
-export {AdminNavbar, AdminSidebar, AdminStaff,AdminEditInfor,AdminService,AdminAccount,AdminBooking,AdminProducts ,StaffModal,ServiceModal,AdminUser}
-export {EditProfile,HairGallery,Hero,BarberCard,ServiceCard,UserNavbar,SubNavbar,Footer ,BookingInforModal}
+export {
+  AdminNavbar,
+  AdminSidebar,
+  AdminStaff,
+  AdminEditInfor,
+  AdminService,
+  AdminAccount,
+  AdminBooking,
+  AdminProducts,
+  StaffModal,
+  ServiceModal,
+  AdminUser,
+  AdminBill,
+};
+export {
+  EditProfile,
+  HairGallery,
+  Hero,
+  BarberCard,
+  ServiceCard,
+  UserNavbar,
+  SubNavbar,
+  Footer,
+  BookingInforModal,
+};

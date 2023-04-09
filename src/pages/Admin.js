@@ -12,7 +12,7 @@ import {
   AdminUser,
 
 } from "../components";
-import { AdminImport } from "../components/admin";
+import { AdminBill, AdminImport } from "../components/admin";
 
 const Admin = () => {
   const [active, setActive] = useState("Tài khoản");
@@ -35,6 +35,7 @@ const Admin = () => {
         {active === "Sản phẩm bán kèm" && <AdminProducts />}
         {active === "Tài khoản" && <AdminAccount />}
         {active === "Lịch đặt" && <AdminBooking />}
+        {active === "Hóa đơn" && <AdminBill />}
         
         
       </section>
