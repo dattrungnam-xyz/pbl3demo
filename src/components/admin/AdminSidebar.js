@@ -3,7 +3,7 @@ import React from "react";
 const AdminSidebar = ({ active, setActive }) => {
   return (
     <>
-      <div className="max-w-[20vw] h-[calc(100vh-62px)] bg-gray-600 text-white flex flex-col items-center ">
+      <div className="max-w-[20vw] h-[calc(100vh-60px)] bg-gray-600 text-white flex flex-col items-center ">
         <div
           onClick={() => setActive("Tài khoản")}
           className={`mt-8 py-3 flex min-w-[150px] ${
@@ -92,6 +92,26 @@ const AdminSidebar = ({ active, setActive }) => {
           <box-icon type="solid" color="#ffffff" name="notepad"></box-icon>
 
           <div className="text-base pl-2  ">Sản phẩm bán kèm</div>
+        </div>
+        <div
+          onClick={() => setActive("Đánh giá")}
+          className={`py-3 flex min-w-[150px] ${
+            active === "Đánh giá" ? "bg-neutral-700" : " hover:bg-neutral-500"
+          } w-full px-8 cursor-pointer`}
+        >
+          <box-icon type='solid' color="#ffffff" name='comment'></box-icon>
+
+          <div className="text-base pl-2  ">Đánh giá</div>
+        </div>
+        <div
+          onClick={() => setActive("Ca làm")}
+          className={`py-3 flex min-w-[150px] ${
+            active === "Ca làm" ? "bg-neutral-700" : " hover:bg-neutral-500"
+          } w-full px-8 cursor-pointer`}
+        >
+          <box-icon type='solid' color="#ffffff" name='calendar'></box-icon>
+
+          <div className="text-base pl-2  ">Ca làm</div>
         </div>
       </div>
     </>

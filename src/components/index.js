@@ -11,6 +11,9 @@ import {
   ServiceModal,
   AdminUser,
   AdminBill,
+  AdminProfit,
+  AdminRate,
+  AdminShift
 } from "./admin";
 import {
   EditProfile,
@@ -37,6 +40,9 @@ export {
   ServiceModal,
   AdminUser,
   AdminBill,
+  AdminProfit,
+  AdminRate,
+  AdminShift
 };
 export {
   EditProfile,

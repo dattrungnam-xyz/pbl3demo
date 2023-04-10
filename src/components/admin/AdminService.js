@@ -33,7 +33,7 @@ const AdminService = () => {
   return (
     <>
       {serviceData ? (<>
-        <section className="flex flex-col w-full max-w-[80vw] p-4">
+        <div className="flex flex-col w-full max-w-[80vw] p-4">
           <div className="w-full grid grid-cols-3 py-4">
             <div className="flex gap-4"> 
             <button
@@ -106,7 +106,7 @@ const AdminService = () => {
                 </div>
                 <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3"></div>
               </div>
-              <div className="w-full max-h-[65vh] overflow-y-auto">
+              <div className="w-full max-h-[62vh] overflow-y-auto">
                 {serviceData?.map((item) => {
                   return (
                     <div
@@ -181,14 +181,12 @@ const AdminService = () => {
               </div>
             </div>
           </div>
-        </section>
+        </div>
                     
         {modal && <ServiceModal status={modalStatus} id={idServiceModal} handleModal={handleModal} />}
         </>
       ) : (
-        <div className=" ">
-          
-        </div>
+        <></>
       )}
     </>
   );
