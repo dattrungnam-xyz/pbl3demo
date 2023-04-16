@@ -14,9 +14,19 @@ const Register = () => {
     phone: "",
     type: "user",
   });
+  const check = () => {};
   const handleSubmit = async (e) => {
+    const reg = RegExp("^[0-9]+$");
+    // console.log(account);
     e.preventDefault();
-    if (account.username && account.password && account.name && account.phone) {
+    if (
+      account.username &&
+      account.password.length > 6 &&
+      account.name.trim() &&
+      reg.test(account.phone) &&
+      account.phone.length <= 11 &&
+      account.phone.length > 9
+    ) {
       try {
         await fetch("http://localhost:8080/v1/auth/register", {
           method: "post",
@@ -25,17 +35,7 @@ const Register = () => {
           },
           body: JSON.stringify(account),
         })
-          .then(
-            (res) => res.json()
-            // if (res.status === 400) {
-            //   setRegisterError(true);
-            // }
-            // if (res.status === 201) {
-            //   setRegisterError(false);
-            //   navigate("/Login");
-
-            // }
-          )
+          .then((res) => res.json())
           .then((res) => {
             if (res.error !== "") {
               setRegisterError(res.error);
@@ -44,19 +44,28 @@ const Register = () => {
               navigate("/Login");
             }
           });
-        // .then((res) => dispatch(registerSuccess()))
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    else
-    {
-      setRegisterError("Thiếu thông tin")
+        //.then((res) => dispatch(registerSuccess()))
+      } catch (error) {}
+    } else {
+      account.password.length < 6 &&
+        setRegisterError("Mật khẩu phải dài hơn 6 kí tự");
+      account.phone.length > 11 &&
+        setRegisterError("Số điện thoại phải từ 10-11 kí tự");
+      account.phone.length < 10 &&
+        setRegisterError("Số điện thoại phải từ 10-11 kí tự");
+      !reg.test(account.phone) &&
+        setRegisterError("Sai định dạng số điện thoại");
+      !account.name.trim() && setRegisterError("Sai định dạng họ tên");
     }
 
-    
+    (!account.password ||
+      !account.name ||
+      !account.phone ||
+      !account.username) &&
+      setRegisterError("Vui lòng điền đầy đủ thông tin");
   };
   const handleChange = (e) => {
+    setRegisterError();
     setAccount({
       ...account,
       [e.target.name]: e.target.value,
@@ -86,7 +95,13 @@ const Register = () => {
                 name="username"
                 id="username"
                 value={account.username}
-                onChange={handleChange}
+                onChange={(e) => {
+                  setRegisterError();
+                  setAccount({
+                    ...account,
+                    [e.target.name]: e.target.value.trimStart().trimEnd(),
+                  });
+                }}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>
@@ -101,7 +116,13 @@ const Register = () => {
                   name="password"
                   id="password"
                   value={account.password}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    setRegisterError();
+                    setAccount({
+                      ...account,
+                      [e.target.name]: e.target.value.trimStart().trimEnd(),
+                    });
+                  }}
                   class="w-full py-3 pl-8 pr-10 mt-2 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
                 />
               ) : (
@@ -110,7 +131,13 @@ const Register = () => {
                   name="password"
                   id="password"
                   value={account.password}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    setRegisterError();
+                    setAccount({
+                      ...account,
+                      [e.target.name]: e.target.value.trimStart().trimEnd(),
+                    });
+                  }}
                   class="w-full py-3 pl-8 pr-10 mt-2 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
                 />
               )}
@@ -146,11 +173,17 @@ const Register = () => {
                 Số điện thoại
               </label>
               <input
-                type="text"
+                type="tel"
                 name="phone"
                 id="phone"
                 value={account.phone}
-                onChange={handleChange}
+                onChange={(e) => {
+                  setRegisterError();
+                  setAccount({
+                    ...account,
+                    [e.target.name]: e.target.value.trimStart().trimEnd(),
+                  });
+                }}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>

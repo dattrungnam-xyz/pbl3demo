@@ -27,7 +27,10 @@ const BookingInforModal = ({
     if (staffStar === 0 || serviceStar === 0) {
       setRateError("Vui lòng đánh giá chất lượng nhân viên và dịch vụ.");
     } else {
+
       // fetch api đánh giá
+
+      
       await fetch("http://localhost:8080/v1/booking/rating", {
         method: "post",
         headers: {
@@ -71,6 +74,7 @@ const BookingInforModal = ({
       `http://localhost:8080/v1/service/schedule/${idLich}`,
       user.token
     ).then((res) => {
+      console.log(res)
       setServiceData(res);
     });
   }, []);

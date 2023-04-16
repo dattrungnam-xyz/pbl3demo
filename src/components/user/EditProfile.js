@@ -15,14 +15,17 @@ const EditProfile = () => {
     avatar: "",
     newAvatar: "",
   });
-  const [messageUpdate,setMessageUpdate] = useState("")
-  const [imgAvatar, setImgAvatar] = useState("")
+  const [messageUpdate, setMessageUpdate] = useState("");
+  const [error, setError] = useState("");
+
+  const [imgAvatar, setImgAvatar] = useState("");
   const handleChange = (e) => {
     setInforUser({
       ...inforUser,
       [e.target.name]: e.target.value,
     });
-    setMessageUpdate("")
+    setMessageUpdate("");
+    setError("");
   };
   const fetchData = async (id) => {
     const { data } = await axios.get(
@@ -33,32 +36,48 @@ const EditProfile = () => {
         },
       }
     );
-  
+
     return data;
   };
-  const handleSubmit  = async (e) => {
+  const handleSubmit = async (e) => {
+    const reg = RegExp("^[0-9]+$");
     e.preventDefault();
- 
+    if (
+      inforUser.username &&
+      inforUser.name.trim() &&
+      reg.test(inforUser.phone) &&
+      inforUser.phone.length <= 11 &&
+      inforUser.phone.length > 9
+    ) {
+      await fetch(`http://localhost:8080/v1/account/infor/${id}`, {
+        method: "put",
+        headers: {
+          "Content-Type": "application/json",
+          token: `${user.token}`,
+        },
+        body: JSON.stringify(inforUser),
+      })
+        .then((res) => res.json())
+        .then((res) => setMessageUpdate(res.message));
+      setImgAvatar(inforUser.avatar);
+    } else {
+      inforUser.phone.length > 11 &&
+        setError("Số điện thoại phải từ 10-11 kí tự");
+      inforUser.phone.length < 10 &&
+        setError("Số điện thoại phải từ 10-11 kí tự");
+      !reg.test(inforUser.phone) && setError("Sai định dạng số điện thoại");
+      !inforUser.name.trim() && setError("Sai định dạng họ tên");
 
-    await fetch(`http://localhost:8080/v1/account/infor/${id}`, {
-      method: "put",
-      headers: {
-        "Content-Type": "application/json",
-        "token":`${user.token}`
-      },
-      body: JSON.stringify(inforUser),
-    }).then(res => res.json())
-    .then(res => setMessageUpdate(res.message));
-    setImgAvatar(inforUser.avatar)
-  }
+      (!inforUser.name || !inforUser.phone || !inforUser.username) &&
+        setError("Vui lòng điền đầy đủ thông tin");
+    }
+  };
+
   useEffect(() => {
-    fetchData(id).then((res) => {setInforUser(res)
-      setImgAvatar(res.avatar)
+    fetchData(id).then((res) => {
+      setInforUser(res);
+      setImgAvatar(res.avatar);
     });
-
-
-    
-    
   }, [id]);
   return (
     <>
@@ -111,6 +130,7 @@ const EditProfile = () => {
                   Số điện thoại:
                 </div>
                 <input
+                  type="number"
                   className=" py-2 pl-8 pr-8 mb-2 bg-white  rounded-2xl ring-1 outline-blue-500"
                   name="phone"
                   value={inforUser?.phone}
@@ -140,7 +160,12 @@ const EditProfile = () => {
                 />
               </div>
               <div className="flex h-full flex-col items-center justify-center mt-4">
-                {messageUpdate ? <p className="mb-4 text-[green]">{messageUpdate}</p> : <></>}
+                {messageUpdate ? (
+                  <p className="mb-4 text-[green]">{messageUpdate}</p>
+                ) : (
+                  <></>
+                )}
+                {error ? <p className="mb-4 text-[red]">{error}</p> : <></>}
                 <button
                   type="submit"
                   class=" py-1 bg-[#194284] w-[180px] rounded-2xl text-blue-50 text-[20px] font-semibold hover:opacity-75"

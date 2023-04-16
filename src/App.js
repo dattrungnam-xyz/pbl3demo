@@ -2,7 +2,8 @@ import {BrowserRouter,Routes,Route, Navigate} from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
-import {Home, Login,Register,Admin,Staff,Service,Booking,User,UserBookingInfor, RateService} from './pages';
+import {Home, Login,Register,Admin,Staff,Service,Booking,User,UserBookingInfor, RateService, Rate,EditBooking} from './pages';
+
 
 function App() {
   const user = useSelector((state)=> state.auth.login.currentUser)
@@ -21,6 +22,8 @@ function App() {
       <Route path="/Service" element={<Service/>}/>
       <Route path="/Booking" element={<Booking/>}/>
       <Route path="/BookingInfor/:id" element={<UserBookingInfor/>}/>
+      <Route path="/Rate" element={<Rate/>}/>
+      <Route path="/EditBooking/:id" element={<EditBooking/>}/>
       
     </Routes>
 

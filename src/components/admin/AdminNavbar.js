@@ -68,10 +68,10 @@ const AdminNavbar = () => {
                       </div>
 
                       <div className="absolute w-[220px] top-[100%] right-0 hidden translate-y-[4px]  bg-white border border-gray-300 group-hover:block before:block before:absolute before:w-[103%] before:h-[6px] before:translate-y-[-6px] before:translate-x-[-2px] before:bg-transparent rounded">
-                        <Link to={`/User/${user.id}`} className="py-2 px-4 w-full h-full block hover:bg-gray-200 text-gray-900 ">
+                        {/* <Link to={`/User/${user.id}`} className="py-2 px-4 w-full h-full block hover:bg-gray-200 text-gray-900 ">
                           Chỉnh sửa thông tin
                         </Link>
-                        
+                         */}
                         
                         <div
                           onClick={handleLogOut}

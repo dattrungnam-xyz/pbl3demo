@@ -61,7 +61,7 @@ const Login = () => {
   const handleChange = (e) => {
     setAccount({
       ...account,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value.trimStart().trimEnd(),
     });
   };
 

@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getData } from "../../utils/fetchApi";
 import { useSelector } from "react-redux";
 const ServiceModal = ({ status, id, handleModal }) => {
-
-  const user = useSelector(state => state.auth.login.currentUser)
+  const user = useSelector((state) => state.auth.login.currentUser);
   const [serviceData, setServiceData] = useState({
     Avatar: "",
     Description: "",
@@ -27,39 +26,45 @@ const ServiceModal = ({ status, id, handleModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(serviceData)
+    console.log(serviceData);
     try {
       if (
-        !serviceData.TenDichVu ||
-        !serviceData.ThoiGian ||
-        !serviceData.TienCongNhanVien
+        !serviceData.TenDichVu.trim() ||
+        !serviceData.ThoiGian.trim() ||
+        !serviceData.GiaTien.trim()
       ) {
-        setError(
-          "Không được để trống Tên dịch vụ, Thời gian hoàn thành, Tiền công trả cho nhân viên"
-        );
+        !serviceData.TenDichVu.trim() && setError("Sai định dạng dịch vụ");
+        !serviceData.ThoiGian.trim() && setError("Sai định dạng thời gian");
+        !serviceData.GiaTien.trim() && setError("Sai định dạng giá tiền");
+        (!serviceData.TenDichVu ||
+          !serviceData.ThoiGian ||
+          !serviceData.GiaTien) &&
+          setError(
+            "Không được để trống Tên dịch vụ, Thời gian hoàn thành, Giá tiền"
+          );
       } else {
-        
         status === "Add" &&
           (await fetch("http://localhost:8080/v1/service/", {
             method: "post",
             headers: {
               "Content-Type": "application/json",
-              "token": `${user.token}`
+              token: `${user.token}`,
             },
-            body: JSON.stringify(serviceData),
+            body: JSON.stringify({ ...serviceData, TienCongNhanVien: "0" }),
           })
             .then((res) => res.json())
             .then((res) => {
+              // console.log(res)
               setMessage(res.message);
               setError(res.error);
             }));
-
+        // status === "Add" && console.log({...serviceData,TienCongNhanVien:"0"})
         status === "Edit" &&
           (await fetch(`http://localhost:8080/v1/service/${id}`, {
             method: "post",
             headers: {
               "Content-Type": "application/json",
-              "token": `${user.token}`
+              token: `${user.token}`,
             },
             body: JSON.stringify(serviceData),
           })
@@ -67,8 +72,9 @@ const ServiceModal = ({ status, id, handleModal }) => {
             .then((res) => {
               setMessage(res.message);
               setError(res.error);
+              // console.log(res)
             }));
-          handleModal()
+        //handleModal()
       }
     } catch (error) {}
   };
@@ -112,6 +118,8 @@ const ServiceModal = ({ status, id, handleModal }) => {
                     ...serviceData,
                     [e.target.name]: e.target.value,
                   });
+                  setError();
+                  setMessage();
                 }}
                 name="TenDichVu"
                 id="TenDichVu"
@@ -130,6 +138,8 @@ const ServiceModal = ({ status, id, handleModal }) => {
                     ...serviceData,
                     [e.target.name]: e.target.value,
                   });
+                  setError();
+                  setMessage();
                 }}
                 name="LoaiDichVu"
                 id="LoaiDichVu"
@@ -146,6 +156,8 @@ const ServiceModal = ({ status, id, handleModal }) => {
                       ...serviceData,
                       [e.target.name]: 1,
                     });
+                    setError();
+                    setMessage();
                   }}
                 >
                   Dịch vụ chính
@@ -161,6 +173,8 @@ const ServiceModal = ({ status, id, handleModal }) => {
                       ...serviceData,
                       [e.target.name]: 2,
                     });
+                    setError();
+                    setMessage();
                   }}
                 >
                   Dịch vụ phụ
@@ -183,6 +197,8 @@ const ServiceModal = ({ status, id, handleModal }) => {
                     ...serviceData,
                     [e.target.name]: e.target.value,
                   });
+                  setError();
+                  setMessage();
                 }}
                 readOnly={status === "View" ? true : false}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
@@ -204,6 +220,8 @@ const ServiceModal = ({ status, id, handleModal }) => {
                     ...serviceData,
                     [e.target.name]: e.target.value,
                   });
+                  setError();
+                  setMessage();
                 }}
                 readOnly={status === "View" ? true : false}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
@@ -247,6 +265,8 @@ const ServiceModal = ({ status, id, handleModal }) => {
                     ...serviceData,
                     [e.target.name]: e.target.value,
                   });
+                  setError();
+                  setMessage();
                 }}
                 readOnly={status === "View" ? true : false}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
@@ -271,6 +291,8 @@ const ServiceModal = ({ status, id, handleModal }) => {
                     ...serviceData,
                     [e.target.name]: e.target.value,
                   });
+                  setError();
+                  setMessage();
                 }}
                 readOnly={status === "View" ? true : false}
                 class="w-full h py-6 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
@@ -278,16 +300,27 @@ const ServiceModal = ({ status, id, handleModal }) => {
             </div>
           </div>
         </div>
-
-        {status!== "View" ? <div class="w-full px-8 mt-3 pb-2 flex items-center justify-center">
-          <button
-            onClick={handleSubmit}
-            type="submit"
-            class=" py-2 bg-[#194284] w-1/2 rounded-2xl text-blue-50 text-[20px] font-semibold hover:opacity-75"
-          >
-            Lưu
-          </button>
-        </div>:<></>}
+        {error && (
+          <p className=" block text-center text-sm text-red-900 ">{error}</p>
+        )}
+        {message && (
+          <p className=" block text-center text-sm text-green-900 ">
+            {message}
+          </p>
+        )}
+        {status !== "View" ? (
+          <div class="w-full px-8 mt-3 pb-2 flex items-center justify-center">
+            <button
+              onClick={handleSubmit}
+              type="submit"
+              class=" py-2 bg-[#194284] w-1/2 rounded-2xl text-blue-50 text-[20px] font-semibold hover:opacity-75"
+            >
+              Lưu
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
       </form>
     </div>
   );

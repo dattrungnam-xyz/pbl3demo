@@ -10,6 +10,7 @@ const ImportProductModal = ({ status, data, setModal }) => {
   const [dateImportProduct, setDateImportProduct] = useState("");
 
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     status !== "Add" && setDateImportProduct(data.NgayNhap);
@@ -57,8 +58,11 @@ const ImportProductModal = ({ status, data, setModal }) => {
             { dateImportProduct: dateImportProduct },
             [...productData],
           ]),
-        }).then(() => {
-          setModal(false);
+        }).then((res) => {
+          console.log(res)
+          res.ok && setMessage("Updated successfully")
+          !res.ok && setError("Error")
+          //setModal(false);
         }));
 
       status === "Add" &&
@@ -73,8 +77,11 @@ const ImportProductModal = ({ status, data, setModal }) => {
           { dateImportProduct: dateImportProduct },
           [...productData ],
          ]),
-      }).then(() => {
-        setModal(false);
+      }).then((res) => {
+        console.log(res)
+        res.ok && setMessage("Add successfully")
+          !res.ok && setError("Error")
+       // setModal(false);
       }));
     
     } else {
@@ -175,6 +182,8 @@ const ImportProductModal = ({ status, data, setModal }) => {
                   value={dateImportProduct.slice(0, 10)}
                   onChange={(e) => {
                     setDateImportProduct(e.target.value);
+                    setError()
+                    setMessage()
                   }}
                 />
               )}
@@ -184,6 +193,8 @@ const ImportProductModal = ({ status, data, setModal }) => {
                   class="w-full py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
                   onChange={(e) => {
                     setDateImportProduct(e.target.value);
+                    setError()
+                    setMessage()
                   }}
                 />
               )}
@@ -215,6 +226,7 @@ const ImportProductModal = ({ status, data, setModal }) => {
                               temp[index].SoLuong = +e.target.value;
                               setProductData(temp);
                               setError();
+                              setMessage()
                               //item.SoLuong = e.target.value
                             }}
                             type="number"
@@ -241,6 +253,7 @@ const ImportProductModal = ({ status, data, setModal }) => {
                               temp[index].SoLuong = +e.target.value;
                               setProductData(temp);
                               setError();
+                              setMessage()
                               //item.SoLuong = e.target.value
                             }}
                             type="number"
@@ -256,6 +269,9 @@ const ImportProductModal = ({ status, data, setModal }) => {
         </div>
         {error && (
           <p className="block text-center text-sm text-red-900">{error}</p>
+        )}
+        {message && (
+          <p className="block text-center text-sm text-green-900">{message}</p>
         )}
         {status !== "View" ? (
           <div class="w-full px-8 mt-3 pb-2 flex items-center justify-center">

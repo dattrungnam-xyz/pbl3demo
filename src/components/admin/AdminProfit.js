@@ -23,7 +23,7 @@ const AdminProfit = () => {
 
   return (
     <div className="flex flex-col w-full max-w-[80vw] p-4">
-      <div className="w-full py-4 grid grid-cols-3">
+      {/* <div className="w-full py-4 grid grid-cols-3">
         <div className="flex gap-4">
           <button
             type="button"
@@ -59,7 +59,7 @@ const AdminProfit = () => {
             Add
           </button>
         </div>
-      </div>
+      </div> */}
 
       <div className="w-full flex items-center justify-center font-sans overflow-hidden">
         <div className="w-[90%] ">

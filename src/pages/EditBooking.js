@@ -3,11 +3,13 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { UserNavbar } from "../components";
 import { getData } from "../utils/fetchApi";
+import { getDataWithToken } from "../utils/fetchApi";
+import { useParams } from "react-router-dom";
 
-const Booking = () => {
+const EditBooking = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
   const [hasBooking, setHasBooking] = useState(false);
-
+  const { id } = useParams();
   const [service, setService] = useState([]);
   const [booking, setBooking] = useState({});
   const [countServiceBooking, setCountServiceBooking] = useState(0);
@@ -31,7 +33,6 @@ const Booking = () => {
   const [response, setResponse] = useState();
 
   const handleSubmit = async () => {
- 
     const datebooking = new Date(date);
 
     const now = new Date();
@@ -45,7 +46,6 @@ const Booking = () => {
     const today = new Date(`${now.getFullYear()}-${monthtemp}-${datetemp}`);
 
     const dayBooking = `${now.getFullYear()}-${monthtemp}-${datetemp}`;
-
 
     const hoursCutHair = timeDisplay.find((item) => {
       return item.IdGioCat === +timeCutHair;
@@ -163,9 +163,31 @@ const Booking = () => {
   }, [timeCutHair, ca, date, thu, IdNhanVienSelected]);
 
   useEffect(() => {
-    getData("http://localhost:8080/v1/service").then((res) => {
-      setService(res);
-    });
+    getData("http://localhost:8080/v1/service")
+      .then((res) => {
+        setService(res);
+        return res;
+      })
+      .then((serviceRes) => {
+        getDataWithToken(
+          `http://localhost:8080/v1/service/schedule/${id}`,
+          user.token
+        ).then((res) => {
+          console.log(res);
+
+          res.forEach((item) => {
+        
+           
+            setBooking((pre) =>{return  { ...pre, [item.TenDichVu]: true}});
+            const time = serviceRes.find((it) => {
+              return it.TenDichVu === item.TenDichVu;
+            })?.ThoiGian;
+            setTotalTimeCutHair((pre) => pre + time);
+          });
+          console.log("--")
+          console.log(booking)
+        });
+      });
   }, []);
 
   useEffect(() => {
@@ -182,6 +204,22 @@ const Booking = () => {
       setTimeDisplay(data);
     });
   }, [ca]);
+  useEffect(() => {
+    // getDataWithToken(
+    //   `http://localhost:8080/v1/service/schedule/${id}`,
+    //   user.token
+    // ).then((res) => {
+    //   console.log(res);
+    //   service &&
+    //     res.forEach((item) => {
+    //       setBooking({ ...booking, [item.TenDichVu]: true });
+    //       const time = service.find((it) => {
+    //         return it.TenDichVu === item.TenDichVu;
+    //       })?.ThoiGian;
+    //       setTotalTimeCutHair((pre) => pre + time);
+    //     });
+    // });
+  }, []);
   return (
     <>
       <UserNavbar />
@@ -251,7 +289,9 @@ const Booking = () => {
               </select>
             </div>
             <div className="w-3/4 mb-4 relative">
-              <label className="ml-4 ">Chọn thợ cắt tóc</label>
+              <label onClick = {()=>{
+                    console.log(booking)
+              }} className="ml-4 ">Chọn thợ cắt tóc</label>
 
               {/* <div className="absolute right-0 top-[50%] translate-y-1 -translate-x-[10px] ">
                 <box-icon name="chevron-down"></box-icon>
@@ -416,4 +456,4 @@ const Booking = () => {
   );
 };
 
-export default Booking;
+export default EditBooking;

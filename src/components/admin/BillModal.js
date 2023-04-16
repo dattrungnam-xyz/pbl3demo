@@ -5,6 +5,7 @@ import { getDataWithToken } from "../../utils/fetchApi";
 const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
   const user = useSelector((state) => state.auth.login.currentUser);
   const [error, setError] = useState();
+  const [message, setMessage] = useState();
   const [serviceCost, setServiceCost] = useState(0);
   const [productCost, setProductCost] = useState(0);
 
@@ -45,17 +46,21 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
           },
           { productData: productData },
         ]),
-      }).then(() => {
-        console.log([
-          {
-            NgayTaoHoaDon: dateCreateBill,
-            IdLich: "",
-            TongTien: productCost + serviceCost,
-            GioTaoHoaDon: `${now.getHours()}:${now.getMinutes()}`,
-          },
-          { productData: productData },
-        ]);
+      }).then((res) => {
+        // console.log([
+        //   {
+        //     NgayTaoHoaDon: dateCreateBill,
+        //     IdLich: "",
+        //     TongTien: productCost + serviceCost,
+        //     GioTaoHoaDon: `${now.getHours()}:${now.getMinutes()}`,
+        //   },
+        //   { productData: productData },
+        // ]);
         setModal(false);
+      //   console.log(res)
+
+      //   res.ok && setMessage("Create bill successfully")
+      // !res.ok && setError("Error")
       }));
 
     status === "Add Empty" &&
@@ -80,17 +85,18 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
           },
           { productData: productData },
         ]),
-      }).then(() => {
-        console.log([
-          {
-            NgayTaoHoaDon: dateCreateBill,
-            IdLich: IdLich,
-            TongTien: productCost + serviceCost,
-            GioTaoHoaDon: `${now.getHours()}:${now.getMinutes()}`,
-          },
-          { productData: productData },
-        ]);
-        setModal(false);
+      }).then((res) => {
+        // console.log([
+        //   {
+        //     NgayTaoHoaDon: dateCreateBill,
+        //     IdLich: IdLich,
+        //     TongTien: productCost + serviceCost,
+        //     GioTaoHoaDon: `${now.getHours()}:${now.getMinutes()}`,
+        //   },
+        //   { productData: productData },
+        // ]);
+         setModal(false);
+        
       }));
   };
   const handleProductCost = () => {
@@ -118,6 +124,7 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
     status === "Add Empty" &&
       getDataWithToken("http://localhost:8080/v1/product/", user.token).then(
         (res) => {
+          console.log(res)
           setProductData(
             res.map((item) => {
               return { ...item, SoLuong: 0 };
@@ -140,7 +147,9 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
     status === "Add" &&
       getDataWithToken("http://localhost:8080/v1/product/", user.token).then(
         (res) => {
+          console.log(res)
           setProductData(
+          
             res.map((item) => {
               return { ...item, SoLuong: 0 };
             })
@@ -278,7 +287,8 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                             {item.TenSanPham}:
                           </div>
                           <div>
-                            <input
+                           { item.SoLuongNhap ?
+                            <>  <input
                               name={item.IdSanPham}
                               className="border p-2 outline-blue-500 rounded-lg"
                               value={item.SoLuong}
@@ -288,18 +298,20 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                                 temp[index].SoLuong = +e.target.value;
                                 setProductData(temp);
                                 setError();
+                                setMessage();
                                 handleProductCost();
                               }}
                               type="number"
-                            />{" "}
-                            * {item.GiaBan}
+                            />
+                            * {item.GiaBan}</> : "Hết Hàng"
+                           } 
                           </div>
                         </div>
                       );
                     })}
                     <div className="grid grid-cols-2 border-t">
-                      <div className=" ">Tổng:</div>
-                      <div className=" px-2">{productCost} VND</div>
+                      <div className=" pt-4">Tổng:</div>
+                      <div className=" pt-4 px-2">{productCost} VND</div>
                     </div>
                   </div>
                 </div>
@@ -356,8 +368,8 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                       );
                     })}
                     <div className="grid grid-cols-2 border-t">
-                      <div>Tổng:</div>
-                      <div>{serviceCost} VND</div>
+                      <div className="pt-4">Tổng:</div>
+                      <div className="pt-4">{serviceCost} VND</div>
                     </div>
                   </div>
                 </div>
@@ -399,32 +411,37 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                             {item.TenSanPham}:
                           </div>
                           <div>
-                            <input
-                              name={item.IdSanPham}
-                              className="border p-2 outline-blue-500 rounded-lg w-[60px]"
-                              value={item.SoLuong}
-                              min={0}
-                              onChange={(e) => {
-                                const temp = [...productData];
 
-                                temp[index].SoLuong = +e.target.value;
-                                setProductData(temp);
-                                setError();
-                                // setProductCost(
-                                //   (pre) => pre + e.target.value * item.GiaBan
-                                // );
-                                handleProductCost();
-                              }}
-                              type="number"
-                            />{" "}
-                            * {item.GiaBan}
+                          { item.SoLuongNhap ?
+                            <> <input
+                            name={item.IdSanPham}
+                            className="border p-2 outline-blue-500 rounded-lg w-[60px]"
+                            value={item.SoLuong}
+                            min={0}
+                            onChange={(e) => {
+                              const temp = [...productData];
+
+                              temp[index].SoLuong = +e.target.value;
+                              setProductData(temp);
+                              setError();
+                              setMessage()
+                              // setProductCost(
+                              //   (pre) => pre + e.target.value * item.GiaBan
+                              // );
+                              handleProductCost();
+                            }}
+                            type="number"
+                          />{" "}
+                          * {item.GiaBan} </> : "Hết Hàng"
+                           }
+                            
                           </div>
                         </div>
                       );
                     })}
                     <div className="grid grid-cols-2 border-t">
-                      <div className=" ">Tổng:</div>
-                      <div className=" px-4">{productCost} VND</div>
+                      <div className="pt-4 ">Tổng:</div>
+                      <div className="pt-4 px-4">{productCost} VND</div>
                     </div>
                   </div>
                 </div>
@@ -441,6 +458,9 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
         )}
         {error && (
           <p className=" block text-center text-sm text-red-900 ">{error}</p>
+        )}
+        {message && (
+          <p className=" block text-center text-sm text-green-900 ">{message}</p>
         )}
         {status !== "View" && (
           <div class="w-full px-8 mt-3 pb-2 flex items-center justify-center">

@@ -19,22 +19,31 @@ const ProductModal = ({ status, id, handleModal }) => {
         user.token
       ).then((res) => {
         setProductData(res[0]);
-        
       });
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(productData);
+
+    console.log(+productData.GiaBan);
     try {
       if (
-        !productData.GiaBan ||
-        !productData.GiaNhap ||
-        !productData.TenSanPham
+        !productData.GiaBan.toString().trim() ||
+        !productData.GiaNhap.toString().trim() ||
+        !productData.TenSanPham.trim() ||
+        !productData.GiaBan.toString() ||
+        !productData.GiaNhap.toString() ||
+        !productData.TenSanPham ||
+        +productData.GiaBan <= 0 ||
+        +productData.GiaNhap <= 0
       ) {
-        setError(
-          "Không được để trống thông tin"
-        );
+        setError("Không được để trống thông tin");
+        +productData.GiaBan <= 0 && setError("Giá bán phải lớn hơn 0");
+        //
+        +productData.GiaNhap <= 0 && setError("Giá nhập phải lớn hơn 0");
+        !productData.GiaBan && setError("Không được để trống thông tin");
+        !productData.GiaNhap && setError("Không được để trống thông tin");
       } else {
         status === "Add" &&
           (await fetch("http://localhost:8080/v1/product/", {
@@ -62,11 +71,12 @@ const ProductModal = ({ status, id, handleModal }) => {
           })
             .then((res) => res.json())
             .then((res) => {
+              console.log(res);
               setMessage(res.message);
               setError(res.error);
             }));
-       handleModal();
-       //console.log(productData)
+        //   handleModal();
+        //console.log(productData)
       }
     } catch (error) {}
   };
@@ -93,7 +103,7 @@ const ProductModal = ({ status, id, handleModal }) => {
           x
         </div>
         <div className="text-xl font-bold mt-5 text-center mb-5">
-         {status === "Add" &&"Thêm "} Sản Phẩm Bán Kèm
+          {status === "Add" && "Thêm "} Sản Phẩm Bán Kèm
         </div>
         <div className="grid grid-cols-1">
           <div>
@@ -110,36 +120,13 @@ const ProductModal = ({ status, id, handleModal }) => {
                     ...productData,
                     [e.target.name]: e.target.value,
                   });
-                  setError()
+                  setError();
+                  setMessage();
                 }}
                 name="TenSanPham"
                 id="TenSanPham"
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
                 readOnly={status === "View" ? true : false}
-              />
-            </div>
-
-            <div class="w-full px-4 mb-3">
-              <label className="ml-4 " for="GiaNhap">
-                Giá nhập
-              </label>
-
-              <input
-                type="number"
-                name="GiaNhap"
-                id="GiaNhap"
-                value={`${productData.GiaNhap}`}
-                min={0}
-                onChange={(e) => {
-                  setProductData({
-                    ...productData,
-                    [e.target.name]: e.target.value,
-                  });
-                  setError()
-
-                }}
-                readOnly={status === "View" ? true : false}
-                class="w-full py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>
             <div class="w-full px-4 mb-3">
@@ -158,17 +145,44 @@ const ProductModal = ({ status, id, handleModal }) => {
                     ...productData,
                     [e.target.name]: e.target.value,
                   });
-                  setError()
-
+                  setError();
+                  setMessage();
                 }}
                 readOnly={status === "View" ? true : false}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>
+            <div class="w-full px-4 mb-3">
+              <label className="ml-4 " for="GiaNhap">
+                Giá nhập
+              </label>
+
+              <input
+                type="number"
+                name="GiaNhap"
+                id="GiaNhap"
+                value={`${productData.GiaNhap}`}
+                min={0}
+                onChange={(e) => {
+                  setProductData({
+                    ...productData,
+                    [e.target.name]: e.target.value,
+                  });
+                  setError();
+                  setMessage();
+                }}
+                readOnly={status === "View" ? true : false}
+                class="w-full py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
+              />
+            </div>
           </div>
-          
         </div>
-              {error &&<p className="block text-sm text-center text-red-900 ">{error}</p>}
+        {error && (
+          <p className="block text-sm text-center text-red-900 ">{error}</p>
+        )}
+        {message && (
+          <p className="block text-sm text-center text-green-900 ">{message}</p>
+        )}
         {status !== "View" ? (
           <div class="w-full px-8 mt-3 pb-2 flex items-center justify-center">
             <button

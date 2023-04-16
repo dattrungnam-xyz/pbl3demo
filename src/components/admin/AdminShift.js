@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getDataOnlyAdmin } from "../../utils/fetchApi";
+import ShiftModal from "./ShiftModal";
 
 const AdminShift = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
   const [dataState, setDataState] = useState("Thống kê ca làm");
   const [date, setDate] = useState();
+  const [modal, setModal] = useState(false);
   const [shiftData, setShiftData] = useState([]);
+  // const [shiftDataModal, setShiftDataModal] = useState({});
+  const [staffData, setStaffData] = useState([]);
+  const [staffDataModal, setStaffDataModal] = useState({});
+
   useEffect(() => {
     const d = new Date("2023-04-12");
 
@@ -16,9 +22,22 @@ const AdminShift = () => {
       getDataOnlyAdmin("http://localhost:8080/v1/shift/", user.token).then(
         (res) => {
           setShiftData(res);
+          console.log(res);
         }
       );
-  }, []);
+
+    user.type === "admin" &&
+      getDataOnlyAdmin("http://localhost:8080/v1/staff/", user.token).then(
+        (res) => {
+          console.log(res);
+          setStaffData(
+            res.filter((item) => {
+              return item.LoaiNhanVien;
+            })
+          );
+        }
+      );
+  }, [modal]);
 
   return (
     <div className="flex flex-col w-full max-w-[80vw] p-4">
@@ -26,8 +45,8 @@ const AdminShift = () => {
         <div className="flex gap-4">
           <button
             type="button"
-            onClick={()=>{
-              setDataState("Thống kê ca làm")
+            onClick={() => {
+              setDataState("Thống kê ca làm");
             }}
             className="h-full py-2 px-6 bg-gray-400 flex justify-center items-center text-white"
           >
@@ -40,10 +59,10 @@ const AdminShift = () => {
             type="button"
             className="h-full py-2 px-6 bg-green-600 flex justify-center items-center text-white"
             onClick={() => {
-              setDataState("Chỉnh sửa ca làm")
+              setDataState("Chỉnh sửa ca làm");
             }}
           >
-            <box-icon name='pencil' type='solid' color='#ffffff' ></box-icon>
+            <box-icon name="pencil" type="solid" color="#ffffff"></box-icon>
             Chỉnh Sửa Ca Làm
           </button>
         </div>
@@ -106,7 +125,11 @@ const AdminShift = () => {
                     <div className=" border-x items-center py-3 px-2 text-center flex flex-col justify-center hover:bg-gray-100 ">
                       {shiftData
                         .filter((item) => {
-                          return +item.Thu === date && item.Ca === 1 && item.AnCaLam === 0;
+                          return (
+                            +item.Thu === date &&
+                            item.Ca === 1 &&
+                            item.AnCaLam === 0
+                          );
                         })
                         .map((item) => {
                           return <div>{item.inforStaff[0].HoTen}</div>;
@@ -115,7 +138,11 @@ const AdminShift = () => {
                     <div className="border-x items-center py-3 px-2 text-center flex flex-col justify-center hover:bg-gray-100 ">
                       {shiftData
                         .filter((item) => {
-                          return +item.Thu === date && item.Ca === 2 && item.AnCaLam === 0;
+                          return (
+                            +item.Thu === date &&
+                            item.Ca === 2 &&
+                            item.AnCaLam === 0
+                          );
                         })
                         .map((item) => {
                           return <div>{item.inforStaff[0].HoTen}</div>;
@@ -124,7 +151,11 @@ const AdminShift = () => {
                     <div className="border-x py-3 px-2 text-center flex items-center flex-col justify-center hover:bg-gray-100">
                       {shiftData
                         .filter((item) => {
-                          return +item.Thu === date && item.Ca === 3 && item.AnCaLam === 0;
+                          return (
+                            +item.Thu === date &&
+                            item.Ca === 3 &&
+                            item.AnCaLam === 0
+                          );
                         })
                         .map((item) => {
                           return <div>{item.inforStaff[0].HoTen}</div>;
@@ -136,7 +167,67 @@ const AdminShift = () => {
             </div>
           </>
         )}
+        {dataState === "Chỉnh sửa ca làm" && (
+          <div className="w-full  font-sans overflow-hidden">
+            <div className="w-full ">
+              <div className="w-full grid grid-cols-5">
+                <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3 ">
+                  ID
+                </div>
+                <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
+                  Họ Tên
+                </div>
+                <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
+                  Số Điện Thoại
+                </div>
+
+                <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
+                  Loại Nhân Viên
+                </div>
+                <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3"></div>
+              </div>
+              <div className="w-full max-h-[65vh] overflow-y-auto">
+                {staffData?.map((item) => {
+                  return (
+                    <div
+                      key={item.IdNhanVien}
+                      className="w-full grid grid-cols-5 h-[70px] border-b border-gray-200 hover:bg-gray-100"
+                    >
+                      <div className=" items-center py-3 px-2 text-center flex justify-center">
+                        {item.IdNhanVien}
+                      </div>
+                      <div className=" items-center py-3 px-2  flex justify-center text-center ">
+                        {item.HoTen}
+                      </div>
+                      <div className=" py-3 px-2 text-center flex items-center justify-center">
+                        {item.SoDienThoai}
+                      </div>
+
+                      <div className=" py-3 px-2 text-center flex items-center justify-center">
+                        {item.LoaiNhanVien === "1" ? "Thợ cắt tóc" : "Kế toán"}
+                      </div>
+                      <div className=" py-3 px-2 text-center flex items-center justify-center">
+                        <div
+                          onClick={() => {
+                            setStaffDataModal(item);
+                            setModal(true);
+                          }}
+                          className="w-4 mr-2 transform hover:text-purple-500 scale hover:scale-110"
+                        >
+                          <box-icon type="solid" name="calendar"></box-icon>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
+      {modal && (
+        <ShiftModal shiftData={shiftData} setModal={setModal} staffDataModal={staffDataModal} />
+      )}
     </div>
   );
 };

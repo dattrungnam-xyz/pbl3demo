@@ -15,9 +15,8 @@ const UserNavbar = () => {
     dispatch(logOut());
 
     navigate("/");
-    
-    window.location.reload(false);
 
+    window.location.reload(false);
   };
 
   return (
@@ -69,24 +68,32 @@ const UserNavbar = () => {
                 >
                   Dịch vụ
                 </Link>
+
                 <Link
                   to="/Booking"
                   className="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
                 >
                   Đặt lịch
                 </Link>
+
                 {user ? (
                   <>
                     <div className=" relative group p-1 ml-4 flex justify-center  items-center  cursor-pointer hover:bg-gray-200 rounded">
-                      {user.avatar?<img
-                        className="rounded-full border w-[30px] h-[30px]"
-                        src={user.avatar}
-                        alt=" "
-                      />:<img
-                      className="rounded-full border w-[30px] h-[30px]"
-                      src={"https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg"}
-                      alt=" "
-                    />}
+                      {user.avatar ? (
+                        <img
+                          className="rounded-full border w-[30px] h-[30px]"
+                          src={user.avatar}
+                          alt=" "
+                        />
+                      ) : (
+                        <img
+                          className="rounded-full border w-[30px] h-[30px]"
+                          src={
+                            "https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg"
+                          }
+                          alt=" "
+                        />
+                      )}
                       <p className="text-gray-900 ml-2">{user.name}</p>
                       <div className="ml-2">
                         <box-icon
@@ -98,15 +105,38 @@ const UserNavbar = () => {
                       </div>
 
                       <div className="absolute w-[220px] top-[100%] right-0 hidden translate-y-[4px]  bg-white border border-gray-300 group-hover:block before:block before:absolute before:w-[103%] before:h-[6px] before:translate-y-[-6px] before:translate-x-[-2px] before:bg-transparent rounded">
-                        <Link to={`/User/${user.id}`} className="py-2 px-4 w-full h-full block hover:bg-gray-200 text-gray-900 ">
-                          Chỉnh sửa thông tin
-                        </Link>
-                        <Link to={`/BookingInfor/${user.id}`} className="w-full h-full block py-2 px-4 hover:bg-gray-200 text-gray-900">
-                          Lịch đặt của tôi
-                        </Link>
-                        <div className="py-2 px-4 hover:bg-gray-200 text-gray-900">
-                          Đánh giá dịch vụ
-                        </div>
+                        {user.type === "admin" && (
+                          <Link
+                            to={`/Admin`}
+                            className="py-2 px-4 w-full h-full block hover:bg-gray-200 text-gray-900 "
+                          >
+                            Quản lý
+                          </Link>
+                        )}
+                        {
+                          <Link
+                            to={`/User/${user.id}`}
+                            className="py-2 px-4 w-full h-full block hover:bg-gray-200 text-gray-900 "
+                          >
+                            Chỉnh sửa thông tin
+                          </Link>
+                        }
+                        {user.type !== "admin" && (
+                          <Link
+                            to={`/BookingInfor/${user.id}`}
+                            className="w-full h-full block py-2 px-4 hover:bg-gray-200 text-gray-900"
+                          >
+                            Lịch đặt của tôi
+                          </Link>
+                        )}
+                        {user.type === "staff" && (
+                          <Link
+                            to={`/Rate`}
+                            className="w-full h-full block py-2 px-4 hover:bg-gray-200 text-gray-900"
+                          >
+                            Đánh giá về tôi
+                          </Link>
+                        )}
                         <div
                           onClick={handleLogOut}
                           className="py-2 px-4 hover:bg-gray-200 text-gray-900"

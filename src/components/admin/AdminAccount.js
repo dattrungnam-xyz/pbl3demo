@@ -9,6 +9,9 @@ const AdminAccount = () => {
   const [modal, setModal] = useState(false);
   const [modalStatus, setModalStatus] = useState();
   const [filter, setFilter] = useState();
+
+  const [usernameFilter, setUsernameFilter] = useState();
+
   const user = useSelector((state) => state.auth.login.currentUser);
 
   useEffect(() => {
@@ -77,6 +80,10 @@ const AdminAccount = () => {
                 type="text"
                 placeholder="search...."
                 className="h-full w-[250px] border-[2px] border-gray-200 rounded-xl outline-none p-2 "
+                onChange={(e) => {
+                  setUsernameFilter(e.target.value);
+                }}
+                value={usernameFilter}
               />
             </div>
             <div className="flex items-center justify-end"></div>
@@ -96,82 +103,97 @@ const AdminAccount = () => {
               <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3"></div>
             </div>
             <div className="w-full max-h-[65vh] overflow-y-auto">
-              {data.map((item) => {
-                return (
-                  <div
-                    key={item.IdTaiKhoan}
-                    className="w-full grid grid-cols-4 h-[70px] border-b border-gray-200 hover:bg-gray-100"
-                  >
-                    <div className=" items-center py-3 px-2 text-center flex justify-center">
-                      {item.IdTaiKhoan}
-                    </div>
-
-                    <div className=" py-3 px-2 text-center flex items-center justify-center">
-                      {item.TenDangNhap}
-                    </div>
-
-                    <div className=" py-3 px-2 text-center flex items-center justify-center">
-                      {item.LoaiTaiKhoan}
-                    </div>
-                    <div className=" py-3 px-2 text-center flex items-center justify-center">
-                      <div
-                        onClick={() => {
-                          setModal(true);
-                          setModalStatus("View");
-                          setIdAccount(item.IdTaiKhoan)
-                        }}
-                        className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                          />
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                          />
-                        </svg>
+              {data
+                .filter((item) => {
+                  if (usernameFilter) {
+                    return item.TenDangNhap.toLowerCase().includes(usernameFilter.toLowerCase());
+                  } else {
+                    return item;
+                  }
+                })
+                .map((item) => {
+                  return (
+                    <div
+                      key={item.IdTaiKhoan}
+                      className="w-full grid grid-cols-4 h-[70px] border-b border-gray-200 hover:bg-gray-100"
+                    >
+                      <div className=" items-center py-3 px-2 text-center flex justify-center">
+                        {item.IdTaiKhoan}
                       </div>
-                      <div
-                        onClick={() => {
-                          setModal(true);
-                          setModalStatus("Edit");
-                          setIdAccount(item.IdTaiKhoan)
 
-                        }}
-                        className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
+                      <div className=" py-3 px-2 text-center flex items-center justify-center">
+                        {item.TenDangNhap}
+                      </div>
+
+                      <div className=" py-3 px-2 text-center flex items-center justify-center">
+                        {item.LoaiTaiKhoan}
+                      </div>
+                      <div className=" py-3 px-2 text-center flex items-center justify-center">
+                        <div
+                          onClick={() => {
+                            setModal(true);
+                            setModalStatus("View");
+                            setIdAccount(item.IdTaiKhoan);
+                          }}
+                          className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
                         >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                          />
-                        </svg>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                            />
+                          </svg>
+                        </div>
+                        <div
+                          onClick={() => {
+                            setModal(true);
+                            setModalStatus("Edit");
+                            setIdAccount(item.IdTaiKhoan);
+                          }}
+                          className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                            />
+                          </svg>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
           </div>
-          {modal && <AccountModal data={data} id={idAccount} status={modalStatus} setModal={setModal} setModalStatus={setModalStatus}/>}
+          {modal && (
+            <AccountModal
+              data={data}
+              id={idAccount}
+              status={modalStatus}
+              setModal={setModal}
+              setModalStatus={setModalStatus}
+            />
+          )}
         </div>
       ) : (
         <></>

@@ -10,8 +10,8 @@ const AccountModal = ({data,id,status,setModal,setModalStatus}) => {
     setAccountInfor(IdData[0])
   },[])
 
-  const handleSubmit = ()=>{
-
+  const handleSubmit = (e)=>{
+      e.preventDefault()
   }
   
   return (
@@ -24,6 +24,7 @@ const AccountModal = ({data,id,status,setModal,setModalStatus}) => {
         onClick={(e) => {
           e.stopPropagation();
         }}
+        onSubmit={handleSubmit}
         className={`w-[400px] flex flex-col ${status==="View" ? 'bg-gray-200':'bg-gray-200'} rounded relative border border-black `}
       >
         <div
@@ -56,7 +57,7 @@ const AccountModal = ({data,id,status,setModal,setModalStatus}) => {
                 onChange={(e) => {
                   setAccountInfor({
                     ...accountInfor,
-                    [e.target.name]: e.target.value,
+                    [e.target.name]: e.target.value.trimStart().trimEnd(),
                   });
                 }}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
@@ -75,7 +76,7 @@ const AccountModal = ({data,id,status,setModal,setModalStatus}) => {
                 onChange={(e) => {
                   setAccountInfor({
                     ...accountInfor,
-                    [e.target.name]: e.target.value,
+                    [e.target.name]: e.target.value.trimStart().trimEnd(),
                   });
                 }}
                 readOnly={status === "View" ? true : false}
@@ -95,7 +96,7 @@ const AccountModal = ({data,id,status,setModal,setModalStatus}) => {
                 onChange={(e) => {
                   setAccountInfor({
                     ...accountInfor,
-                    [e.target.name]: e.target.value,
+                    [e.target.name]: e.target.value.trimStart().trimEnd(),
                   });
                 }}
                 readOnly={status === "View" ? true : false}
@@ -115,7 +116,7 @@ const AccountModal = ({data,id,status,setModal,setModalStatus}) => {
                 onChange={(e) => {
                   setAccountInfor({
                     ...accountInfor,
-                    [e.target.name]: e.target.value,
+                    [e.target.name]: e.target.value.trimStart().trimEnd(),
                   });
                 }}
                 readOnly={status === "View" ? true : false}
