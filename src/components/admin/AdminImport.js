@@ -54,7 +54,7 @@ const AdminImport = () => {
           <div className="w-full ">
             <div className="w-full grid grid-cols-3">
               <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3 ">
-                ID Đơn Nhập
+                STT
               </div>
               <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
                 Ngày Nhập
@@ -63,14 +63,14 @@ const AdminImport = () => {
               <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3"></div>
             </div>
             <div className="w-full max-h-[65vh] overflow-y-auto">
-              {importProductData?.map((item) => {
+              {importProductData?.map((item,index) => {
                 return (
                   <div
                     key={item.IdDonNhap}
                     className="w-full grid grid-cols-3 h-[70px] border-b border-gray-200 hover:bg-gray-100"
                   >
                     <div className=" items-center py-3 px-2 text-center flex justify-center">
-                      {item.IdDonNhap}
+                      {index}
                     </div>
 
                     <div className=" py-3 px-2 text-center flex items-center justify-center">

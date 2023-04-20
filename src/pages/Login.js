@@ -22,7 +22,7 @@ const Login = () => {
     e.preventDefault();
 
     // loginUser(account,dispatch,navigate)
-    if(account.username && account.password){
+    if(account.username.trim() && account.password){
 
       try {
         await fetch("http://localhost:8080/v1/auth/login", {
@@ -55,13 +55,15 @@ const Login = () => {
     }
     else{
       setLoginError("Nhập thiếu thông tin");
+      account.username && setLoginError("Tên đăng nhập phải chứa kí tự khác khoảng trắng")
     }
  
   };
   const handleChange = (e) => {
+    setLoginError()
     setAccount({
       ...account,
-      [e.target.name]: e.target.value.trimStart().trimEnd(),
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -81,7 +83,7 @@ const Login = () => {
 
             <div class="w-3/4 mb-4">
               <label className="ml-4 " for="username">
-                Tên đăng nhập
+                Tên đăng nhập <span className="text-[red]">*</span>
               </label>
               
               <input
@@ -96,7 +98,7 @@ const Login = () => {
 
             <div class="w-3/4 mb-4 relative">
               <label className="ml-4 " for="password">
-                Mật khẩu
+                Mật khẩu <span className="text-[red]">*</span>
               </label>
               {showPassWord ? (
                 <input

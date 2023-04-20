@@ -20,7 +20,9 @@ const BookingInforModal = ({
     MoTaNV: "",
   });
   const [rateError, setRateError] = useState();
-
+  useEffect(()=>{
+    console.log(dataRemove)
+  })
 
   const handleSubmitRate = async (e) => {
     e.preventDefault();
@@ -57,6 +59,7 @@ const BookingInforModal = ({
         const data = res.data.filter((item) => {
           return item.IdLich === idLich;
         });
+        console.log(res)
         setData(data);
       });
     user?.type === "staff" &&
@@ -70,7 +73,7 @@ const BookingInforModal = ({
         setData(data);
       });
 
-    getDataWithToken(
+      idLich&& getDataWithToken(
       `http://localhost:8080/v1/service/schedule/${idLich}`,
       user.token
     ).then((res) => {
@@ -282,7 +285,7 @@ const BookingInforModal = ({
                 <div>
                   <div class="w-full px-4 mb-3">
                     <label className="ml-4 " for="SoSaoNV">
-                      Chất lượng Nhân Viên:
+                      Chất lượng Nhân Viên<span className="text-[red]">*</span> :
                     </label>
 
                     <div className="ml-4 mt-1">
@@ -355,7 +358,7 @@ const BookingInforModal = ({
                     />
                   </div>
                   <div class="w-full px-4 mb-3">
-                    <label className="ml-4 ">Chất lượng Dịch Vụ:</label>
+                    <label className="ml-4 ">Chất lượng Dịch Vụ<span className="text-[red]">*</span> :</label>
 
                     <div className="ml-4 mt-1">
                       <box-icon

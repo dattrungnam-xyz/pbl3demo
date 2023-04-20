@@ -14,6 +14,10 @@ const EditBooking = () => {
   const [booking, setBooking] = useState({});
   const [countServiceBooking, setCountServiceBooking] = useState(0);
 
+  const [preBooking,setPreBooking] = useState([])
+
+
+
   const [availableStaff, setAvailableStaff] = useState([]);
 
   const [timeDisplay, setTimeDisplay] = useState([]);
@@ -32,6 +36,7 @@ const EditBooking = () => {
   const [serviceSelectedError, setServiceSelectedError] = useState();
   const [response, setResponse] = useState();
 
+  
   const handleSubmit = async () => {
     const datebooking = new Date(date);
 
@@ -52,8 +57,9 @@ const EditBooking = () => {
     })?.GioCat;
 
     // submit logic
+    console.log(countServiceBooking)
 
-    countServiceBooking
+    countServiceBooking>0
       ? setServiceSelectedError("")
       : setServiceSelectedError("Vui lòng chọn dịch vụ");
 
@@ -89,7 +95,15 @@ const EditBooking = () => {
         TongThoiGianCat: totalTimeCutHair,
       };
       console.log(JSON.stringify(dataBooking));
-      await fetch("http://localhost:8080/v1/booking", {
+
+      user &&  IdNhanVienSelected &&
+      countServiceBooking>0 &&
+      !(
+        +today.getTime() === +datebooking.getTime() &&
+        +hoursCutHair?.split(":")[0] < now.getHours() - 1
+      ) &&
+      !(+today.getTime() > +datebooking.getTime()) &&
+      (await fetch("http://localhost:8080/v1/booking", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -103,7 +117,35 @@ const EditBooking = () => {
           if (res.message) {
             setHasBooking(true);
           }
-        });
+        }));
+
+
+      user &&  IdNhanVienSelected &&
+      countServiceBooking>0 &&
+      !(
+        +today.getTime() === +datebooking.getTime() &&
+        +hoursCutHair?.split(":")[0] < now.getHours() - 1
+      ) &&
+      !(+today.getTime() > +datebooking.getTime()) &&await fetch("http://localhost:8080/v1/booking/remove", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          token: `${user.token}`,
+        },
+        body: JSON.stringify({
+          IdLich: id,
+          IdNhanVien: preBooking[0].IdNhanVien,
+          NgayCat: preBooking[0].NgayCat.slice(0, 10),
+          IdGioCat: preBooking[0].IdGioCat,
+          TongThoiGian: preBooking[0].TongThoiGian,
+        }),
+      }).then((res)=>{
+        res.ok && setResponse(pre => {return {...pre, message:"Cập nhật lịch đặt thành công"}})
+      });
+  
+
+
+      
     }
   };
 
@@ -174,6 +216,7 @@ const EditBooking = () => {
           user.token
         ).then((res) => {
           console.log(res);
+        
 
           res.forEach((item) => {
         
@@ -183,11 +226,21 @@ const EditBooking = () => {
               return it.TenDichVu === item.TenDichVu;
             })?.ThoiGian;
             setTotalTimeCutHair((pre) => pre + time);
+            setCountServiceBooking(pre => pre + 1)
           });
-          console.log("--")
-          console.log(booking)
+       
         });
       });
+
+
+      user && getDataWithToken(
+        `http://localhost:8080/v1/booking/infor/${id}`,
+        user.token
+      ).then((res) => {
+        setPreBooking(res)
+      }
+        )
+     
   }, []);
 
   useEffect(() => {
@@ -204,22 +257,7 @@ const EditBooking = () => {
       setTimeDisplay(data);
     });
   }, [ca]);
-  useEffect(() => {
-    // getDataWithToken(
-    //   `http://localhost:8080/v1/service/schedule/${id}`,
-    //   user.token
-    // ).then((res) => {
-    //   console.log(res);
-    //   service &&
-    //     res.forEach((item) => {
-    //       setBooking({ ...booking, [item.TenDichVu]: true });
-    //       const time = service.find((it) => {
-    //         return it.TenDichVu === item.TenDichVu;
-    //       })?.ThoiGian;
-    //       setTotalTimeCutHair((pre) => pre + time);
-    //     });
-    // });
-  }, []);
+
   return (
     <>
       <UserNavbar />
@@ -228,7 +266,7 @@ const EditBooking = () => {
         <div className="w-full h-full max-sm:pt-4 pt-12 max-sm:pb-4 pb-8 md:px-10 px-4 flex flex-row max-sm:flex-col  ">
           <div className="w-1/2 max-sm:w-full">
             <div className="w-3/4 mb-4 ">
-              <label className="ml-4 ">Chọn ngày cắt</label>
+              <label className="ml-4 ">Chọn ngày cắt <span className="text-[red]">*</span></label>
               <div>
                 <input
                   className="w-full py-3 mt-2 pl-7 pr-3 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
@@ -242,7 +280,7 @@ const EditBooking = () => {
             </div>
 
             <div className="w-3/4 mb-4 relative">
-              <label className="ml-4 ">Chọn buổi</label>
+              <label className="ml-4 ">Chọn buổi <span className="text-[red]">*</span></label>
               {/* <div className="absolute right-0 top-[50%] translate-y-1 -translate-x-[10px] ">
                 <box-icon name="chevron-down"></box-icon>
               </div> */}
@@ -263,7 +301,7 @@ const EditBooking = () => {
               </select>
             </div>
             <div className="w-3/4 mb-4 relative">
-              <label className="ml-4 ">Chọn giờ cắt</label>
+              <label className="ml-4 ">Chọn giờ cắt <span className="text-[red]">*</span></label>
               {/* <div className="absolute right-0 top-[50%] translate-y-1 -translate-x-[10px] ">
                 <box-icon name="chevron-down"></box-icon>
               </div> */}
@@ -291,7 +329,7 @@ const EditBooking = () => {
             <div className="w-3/4 mb-4 relative">
               <label onClick = {()=>{
                     console.log(booking)
-              }} className="ml-4 ">Chọn thợ cắt tóc</label>
+              }} className="ml-4 ">Chọn thợ cắt tóc <span className="text-[red]">*</span></label>
 
               {/* <div className="absolute right-0 top-[50%] translate-y-1 -translate-x-[10px] ">
                 <box-icon name="chevron-down"></box-icon>
@@ -325,7 +363,7 @@ const EditBooking = () => {
           </div>
           <div className="w-1/2 max-sm:w-full ">
             <div className="w-full ">
-              <label className="ml-4 ">Chọn dịch vụ</label>
+              <label className="ml-4 ">Chọn dịch vụ <span className="text-[red]">*</span></label>
               <div className="grid grid-cols-2  gap-2 h-[160px] mt-2">
                 {service &&
                   service
@@ -368,7 +406,7 @@ const EditBooking = () => {
               </div>
             </div>
             <div className="w-full mt-4 ">
-              <label className="ml-4 ">Chọn dịch vụ phụ</label>
+              <label className="ml-4 ">Chọn dịch vụ phụ <span className="text-[red]">*</span></label>
               <div className="grid grid-cols-2 gap-2 h-[160px] mt-2">
                 {service &&
                   service

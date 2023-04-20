@@ -61,7 +61,7 @@ const AdminProducts = () => {
               <div className="w-full ">
                 <div className="w-full grid grid-cols-6">
                   <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3 ">
-                    ID
+                    STT
                   </div>
                   <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
                     Tên Sản Phẩm
@@ -79,14 +79,14 @@ const AdminProducts = () => {
                   <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3"></div>
                 </div>
                 <div className="w-full max-h-[65vh] overflow-y-auto">
-                  {productData?.map((item) => {
+                  {productData?.map((item,index) => {
                     return (
                       <div
                         key={item.IdSanPham}
                         className="w-full grid grid-cols-6 h-[70px] border-b border-gray-200 hover:bg-gray-100"
                       >
                         <div className=" items-center py-3 px-2 text-center flex justify-center">
-                          {item.IdSanPham}
+                          {index}
                         </div>
                         <div className=" items-center py-3 px-2 text-center flex justify-center ">
                           {item.TenSanPham}

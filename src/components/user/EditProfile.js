@@ -116,7 +116,7 @@ const EditProfile = () => {
               </div>
               <div className="flex items-center justify-center">
                 <div className="min-w-[160px] max-md:min-w-[140px] font-medium">
-                  Họ tên:
+                  Họ tên<span className="text-[red]">*</span> :
                 </div>
                 <input
                   className=" py-2 pl-8 pr-8 mb-2 bg-white  rounded-2xl ring-1 outline-blue-500"
@@ -127,7 +127,7 @@ const EditProfile = () => {
               </div>
               <div className="flex items-center justify-center">
                 <div className="min-w-[160px] max-md:min-w-[140px]  font-medium">
-                  Số điện thoại:
+                  Số điện thoại<span className="text-[red]">*</span> :
                 </div>
                 <input
                   type="number"

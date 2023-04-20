@@ -12,6 +12,7 @@ const AccountModal = ({data,id,status,setModal,setModalStatus}) => {
 
   const handleSubmit = (e)=>{
       e.preventDefault()
+      
   }
   
   return (
@@ -41,10 +42,23 @@ const AccountModal = ({data,id,status,setModal,setModalStatus}) => {
         </div>
         <div className="grid grid-cols-1 pb-1">
           <div>
+          <div class="w-full px-4 mb-3">
+                  <label className="ml-4 ">Thợ Cắt Tóc</label>
+                  <div className="flex gap-2 items-center justify-start py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl  hover:ring-1 ">
+                    <img
+                      className="w-[20px] h-[20px] rounded-full border "
+                      src={
+                        accountInfor.Avatar
+                          ? accountInfor.Avatar
+                          : "https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg"
+                      }
+                      alt=""
+                    />
+                    <p>{accountInfor?.Infor?.HoTen}</p>
+                  </div>
+                </div>
             <div class="w-full px-4 mb-3">
-              <label onClick={()=>{
-                console.log(accountInfor)
-              }} className="ml-4 " for="TenDangNhap">
+              <label  className="ml-4 " for="TenDangNhap">
                 Tên Đăng Nhập
               </label>
 
@@ -74,13 +88,13 @@ const AccountModal = ({data,id,status,setModal,setModalStatus}) => {
                 id="MatKhau"
                 value={`${accountInfor.MatKhau}`}
                 onChange={(e) => {
-                  setAccountInfor({
-                    ...accountInfor,
-                    [e.target.name]: e.target.value.trimStart().trimEnd(),
-                  });
+                  // setAccountInfor({
+                  //   ...accountInfor,
+                  //   [e.target.name]: e.target.value.trimStart().trimEnd(),
+                  // });
                 }}
-                readOnly={status === "View" ? true : false}
-                class="w-full py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
+                readOnly
+                class="w-full cursor-default py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
               />
             </div>
             <div class="w-full px-4 mb-3">

@@ -107,7 +107,7 @@ const ServiceModal = ({ status, id, handleModal }) => {
           <div>
             <div class="w-full px-4 mb-3">
               <label className="ml-4 " for="TenDichVu">
-                Tên Dịch Vụ
+                Tên Dịch Vụ <span className="text-[red]">*</span>
               </label>
 
               <input
@@ -129,7 +129,7 @@ const ServiceModal = ({ status, id, handleModal }) => {
             </div>
             <div class="w-full px-4 mb-3">
               <label className="ml-4 " for="LoaiDichVu">
-                Loại dịch vụ
+                Loại dịch vụ <span className="text-[red]">*</span>
               </label>
 
               <select
@@ -183,7 +183,7 @@ const ServiceModal = ({ status, id, handleModal }) => {
             </div>
             <div class="w-full px-4 mb-3">
               <label className="ml-4 " for="GiaTien">
-                Giá tiền
+                Giá tiền <span className="text-[red]">*</span>
               </label>
 
               <input
@@ -206,7 +206,7 @@ const ServiceModal = ({ status, id, handleModal }) => {
             </div>
             <div class="w-full px-4 mb-3">
               <label className="ml-4 " for="ThoiGian">
-                Thời gian hoàn thành
+                Thời gian hoàn thành <span className="text-[red]">*</span>
               </label>
 
               <input

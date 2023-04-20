@@ -54,7 +54,7 @@ const UserBookingInfor = () => {
             return item;
           }
         });
-        //console.log(data);
+        console.log(data);
         setData(data);
       });
     user?.type === "staff" &&
@@ -73,7 +73,7 @@ const UserBookingInfor = () => {
             return item;
           }
         });
-       // console.log(data);
+        console.log(data);
         setData(data);
       });
   }, [modal, filter]);
@@ -166,7 +166,7 @@ const UserBookingInfor = () => {
                       {item.GioCat}
                     </div>
                     <div className=" py-3 px-2 text-center flex items-center justify-center">
-                      {user?.type === "user" && !handleFilterDay(item.NgayCat) &&(
+                      {user?.type === "user"&& !item.DaDanhGia && !handleFilterDay(item.NgayCat) &&(
                         <div
                           onClick={() => {
                             setModalStatus("Rate");
@@ -184,7 +184,7 @@ const UserBookingInfor = () => {
                           ></box-icon>
                         </div>
                       )}
-                       {user?.type === "user" && handleFilterDay(item.NgayCat) &&(
+                       {user?.type === "user"  && handleFilterDay(item.NgayCat) &&(
                         <Link to={`/EditBooking/${item.IdLich}`}
                           onClick={() => {
                             // setModalStatus("Rate");

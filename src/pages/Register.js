@@ -17,6 +17,8 @@ const Register = () => {
   const check = () => {};
   const handleSubmit = async (e) => {
     const reg = RegExp("^[0-9]+$");
+    let pattern = /\s/g;
+
     // console.log(account);
     e.preventDefault();
     if (
@@ -26,6 +28,9 @@ const Register = () => {
       reg.test(account.phone) &&
       account.phone.length <= 11 &&
       account.phone.length > 9
+      &&!account.password.match(pattern)
+      &&!account.username.match(pattern)
+
     ) {
       try {
         await fetch("http://localhost:8080/v1/auth/register", {
@@ -56,6 +61,8 @@ const Register = () => {
       !reg.test(account.phone) &&
         setRegisterError("Sai định dạng số điện thoại");
       !account.name.trim() && setRegisterError("Sai định dạng họ tên");
+      account.password.match(pattern)&& setRegisterError("Mật khẩu không được chứa kí tự khoảng trắng")
+      account.username.match(pattern)&& setRegisterError("Tên đăng nhập không được chứa kí tự khoảng trắng")
     }
 
     (!account.password ||
@@ -87,7 +94,7 @@ const Register = () => {
 
             <div class="w-3/4 mb-3">
               <label className="ml-4 " for="username">
-                Tên đăng nhập
+                Tên đăng nhập <span className="text-[red]">*</span>
               </label>
 
               <input
@@ -99,7 +106,7 @@ const Register = () => {
                   setRegisterError();
                   setAccount({
                     ...account,
-                    [e.target.name]: e.target.value.trimStart().trimEnd(),
+                    [e.target.name]: e.target.value,
                   });
                 }}
                 class="w-full py-3 pl-8 pr-10 mt-2 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
@@ -108,7 +115,7 @@ const Register = () => {
 
             <div class="w-3/4 mb-3 relative">
               <label className="ml-4 " for="password">
-                Mật khẩu
+                Mật khẩu <span className="text-[red]">*</span>
               </label>
               {showPassWord ? (
                 <input
@@ -120,7 +127,7 @@ const Register = () => {
                     setRegisterError();
                     setAccount({
                       ...account,
-                      [e.target.name]: e.target.value.trimStart().trimEnd(),
+                      [e.target.name]: e.target.value,
                     });
                   }}
                   class="w-full py-3 pl-8 pr-10 mt-2 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
@@ -135,7 +142,7 @@ const Register = () => {
                     setRegisterError();
                     setAccount({
                       ...account,
-                      [e.target.name]: e.target.value.trimStart().trimEnd(),
+                      [e.target.name]: e.target.value,
                     });
                   }}
                   class="w-full py-3 pl-8 pr-10 mt-2 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
@@ -157,7 +164,7 @@ const Register = () => {
 
             <div class="w-3/4 mb-3">
               <label className="ml-4 " for="name">
-                Họ tên
+                Họ tên <span className="text-[red]">*</span>
               </label>
               <input
                 type="text"
@@ -170,7 +177,7 @@ const Register = () => {
             </div>
             <div class="w-3/4 mb-3">
               <label className="ml-4 " for="phone">
-                Số điện thoại
+                Số điện thoại <span className="text-[red]">*</span>
               </label>
               <input
                 type="tel"

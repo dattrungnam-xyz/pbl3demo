@@ -171,7 +171,7 @@ const ImportProductModal = ({ status, data, setModal }) => {
             )}
             <div class="w-full px-4 mb-3">
               <label className="ml-4 " for="TenDichVu">
-                Ngày Nhập
+                Ngày Nhập <span className="text-[red]">*</span>
               </label>
 
               {status !== "Add" && (
@@ -203,7 +203,7 @@ const ImportProductModal = ({ status, data, setModal }) => {
           <div>
             <div class="w-full px-4 mb-3">
               <label className="ml-4 " for="Avatar">
-                Đơn Hàng
+                Đơn Hàng <span className="text-[red]">*</span>
               </label>
               <div className="py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500">
                 {productData?.map((item, index) => {

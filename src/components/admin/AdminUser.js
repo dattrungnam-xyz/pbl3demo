@@ -38,7 +38,7 @@ const AdminUser = () => {
           <div className="w-full ">
             <div className="w-full grid grid-cols-4">
               <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3 ">
-                ID
+                STT
               </div>
               <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
                 Họ Tên
@@ -60,14 +60,14 @@ const AdminUser = () => {
                     return item;
                   }
                 })
-                ?.map((item) => {
+                ?.map((item,index) => {
                   return (
                     <div
                       key={item.IdKhachHang}
                       className="w-full grid grid-cols-4 h-[70px] border-b border-gray-200 hover:bg-gray-100"
                     >
                       <div className=" py-3 px-2 text-center flex items-center justify-center">
-                        {item.IdKhachHang}
+                        {index}
                       </div>
                       <div className=" items-center py-3 px-2 text-center flex justify-center">
                         {item.HoTen}

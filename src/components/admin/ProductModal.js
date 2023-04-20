@@ -109,8 +109,8 @@ const ProductModal = ({ status, id, handleModal }) => {
           <div>
             <div class="w-full px-4 mb-3">
               <label className="ml-4 " for="TenSanPham">
-                Tên Sản Phẩm
-              </label>
+                Tên Sản Phẩm <span className="text-[red]">*</span>
+              </label> 
 
               <input
                 type="text"
@@ -131,7 +131,7 @@ const ProductModal = ({ status, id, handleModal }) => {
             </div>
             <div class="w-full px-4 mb-3">
               <label className="ml-4 " for="GiaBan">
-                Giá Bán
+                Giá Bán <span className="text-[red]">*</span>
               </label>
 
               <input
@@ -154,7 +154,7 @@ const ProductModal = ({ status, id, handleModal }) => {
             </div>
             <div class="w-full px-4 mb-3">
               <label className="ml-4 " for="GiaNhap">
-                Giá nhập
+                Giá nhập <span className="text-[red]">*</span>
               </label>
 
               <input

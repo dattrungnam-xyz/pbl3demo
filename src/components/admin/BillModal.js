@@ -27,7 +27,7 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
 
     const dateCreateBill = `${now.getFullYear()}-${monthtemp}-${datetemp}`;
 
-    status === "Add Empty" &&
+    status === "Add Empty" && !error &&
       productData.some((item) => {
         return item.SoLuong > 0;
       }) &&
@@ -63,13 +63,13 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
       // !res.ok && setError("Error")
       }));
 
-    status === "Add Empty" &&
+    status === "Add Empty" && 
       !productData.some((item) => {
         return item.SoLuong > 0;
       }) &&
       setError("Không được để trống sản phẩm bán kèm");
 
-    status === "Add" &&
+    status === "Add" && !error &&
       (await fetch(`http://localhost:8080/v1/bill/`, {
         method: "post",
         headers: {
@@ -98,6 +98,8 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
          setModal(false);
         
       }));
+
+
   };
   const handleProductCost = () => {
     setProductCost(0);
@@ -243,7 +245,7 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                   </label>
 
                   <div class="w-full h-[140px] grid grid-cols-1 overflow-y-auto overflow-hidden py-2 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500">
-                    {data?.detailBill?.map((item, index) => {
+                    {data?.detailBill?.filter((item)=>{return item.SoLuong>0}).map((item, index) => {
                       return (
                         <div key={index} className="grid grid-cols-2 mb-1">
                           <div>{item.TenSanPham}</div>
@@ -281,6 +283,7 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
 
                   <div class="w-full h-[300px] grid grid-cols-1 overflow-y-auto overflow-hidden py-2 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500">
                     {productData?.map((item, index) => {
+                      console.log(productData)
                       return (
                         <div key={index} className="grid grid-cols-2 mb-1">
                           <div className="flex items-center">
@@ -300,6 +303,11 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                                 setError();
                                 setMessage();
                                 handleProductCost();
+
+                                if(+e.target.value + item?.SoLuongDaBan.SoLuongDaBan  > item.SoLuongNhap.SoLuongNhap)
+                                {
+                                  setError(`Số lượng ${item.TenSanPham} còn tối đa ${item.SoLuongNhap.SoLuongNhap - item?.SoLuongDaBan.SoLuongDaBan }`)
+                                }
                               }}
                               type="number"
                             />
@@ -429,6 +437,11 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                               //   (pre) => pre + e.target.value * item.GiaBan
                               // );
                               handleProductCost();
+
+                              if(+e.target.value + item?.SoLuongDaBan.SoLuongDaBan  > item.SoLuongNhap.SoLuongNhap)
+                                {
+                                  setError(`Số lượng ${item.TenSanPham} còn tối đa ${item.SoLuongNhap.SoLuongNhap - item?.SoLuongDaBan.SoLuongDaBan }`)
+                                }
                             }}
                             type="number"
                           />{" "}

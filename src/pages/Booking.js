@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserNavbar } from "../components";
 import { getData } from "../utils/fetchApi";
 
 const Booking = () => {
+  const navigate = useNavigate();
+
   const user = useSelector((state) => state.auth.login.currentUser);
   const [hasBooking, setHasBooking] = useState(false);
 
@@ -31,7 +33,9 @@ const Booking = () => {
   const [response, setResponse] = useState();
 
   const handleSubmit = async () => {
- 
+
+    !user && navigate("/Login")
+
     const datebooking = new Date(date);
 
     const now = new Date();
@@ -45,7 +49,6 @@ const Booking = () => {
     const today = new Date(`${now.getFullYear()}-${monthtemp}-${datetemp}`);
 
     const dayBooking = `${now.getFullYear()}-${monthtemp}-${datetemp}`;
-
 
     const hoursCutHair = timeDisplay.find((item) => {
       return item.IdGioCat === +timeCutHair;
@@ -88,22 +91,30 @@ const Booking = () => {
         ThuNgay: thu,
         TongThoiGianCat: totalTimeCutHair,
       };
-      console.log(JSON.stringify(dataBooking));
-      await fetch("http://localhost:8080/v1/booking", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          token: `${user.token}`,
-        },
-        body: JSON.stringify(dataBooking),
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          setResponse(res);
-          if (res.message) {
-            setHasBooking(true);
-          }
-        });
+   //   console.log(JSON.stringify(dataBooking));
+
+    user &&  IdNhanVienSelected &&
+        countServiceBooking &&
+        !(
+          +today.getTime() === +datebooking.getTime() &&
+          +hoursCutHair?.split(":")[0] < now.getHours() - 1
+        ) &&
+        !(+today.getTime() > +datebooking.getTime()) &&
+        (await fetch("http://localhost:8080/v1/booking", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            token: `${user.token}`,
+          },
+          body: JSON.stringify(dataBooking),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            setResponse(res);
+            if (res.message) {
+              setHasBooking(true);
+            }
+          }));
     }
   };
 
@@ -190,7 +201,7 @@ const Booking = () => {
         <div className="w-full h-full max-sm:pt-4 pt-12 max-sm:pb-4 pb-8 md:px-10 px-4 flex flex-row max-sm:flex-col  ">
           <div className="w-1/2 max-sm:w-full">
             <div className="w-3/4 mb-4 ">
-              <label className="ml-4 ">Chọn ngày cắt</label>
+              <label className="ml-4 ">Chọn ngày cắt <span className="text-[red]">*</span></label>
               <div>
                 <input
                   className="w-full py-3 mt-2 pl-7 pr-3 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
@@ -204,7 +215,7 @@ const Booking = () => {
             </div>
 
             <div className="w-3/4 mb-4 relative">
-              <label className="ml-4 ">Chọn buổi</label>
+              <label className="ml-4 ">Chọn buổi <span className="text-[red]">*</span></label>
               {/* <div className="absolute right-0 top-[50%] translate-y-1 -translate-x-[10px] ">
                 <box-icon name="chevron-down"></box-icon>
               </div> */}
@@ -225,7 +236,7 @@ const Booking = () => {
               </select>
             </div>
             <div className="w-3/4 mb-4 relative">
-              <label className="ml-4 ">Chọn giờ cắt</label>
+              <label className="ml-4 ">Chọn giờ cắt <span className="text-[red]">*</span></label>
               {/* <div className="absolute right-0 top-[50%] translate-y-1 -translate-x-[10px] ">
                 <box-icon name="chevron-down"></box-icon>
               </div> */}
@@ -251,7 +262,7 @@ const Booking = () => {
               </select>
             </div>
             <div className="w-3/4 mb-4 relative">
-              <label className="ml-4 ">Chọn thợ cắt tóc</label>
+              <label className="ml-4 ">Chọn thợ cắt tóc <span className="text-[red]">*</span></label>
 
               {/* <div className="absolute right-0 top-[50%] translate-y-1 -translate-x-[10px] ">
                 <box-icon name="chevron-down"></box-icon>
@@ -285,7 +296,7 @@ const Booking = () => {
           </div>
           <div className="w-1/2 max-sm:w-full ">
             <div className="w-full ">
-              <label className="ml-4 ">Chọn dịch vụ</label>
+              <label className="ml-4 ">Chọn dịch vụ <span className="text-[red]">*</span></label>
               <div className="grid grid-cols-2  gap-2 h-[160px] mt-2">
                 {service &&
                   service
@@ -328,7 +339,7 @@ const Booking = () => {
               </div>
             </div>
             <div className="w-full mt-4 ">
-              <label className="ml-4 ">Chọn dịch vụ phụ</label>
+              <label className="ml-4 ">Chọn dịch vụ phụ <span className="text-[red]">*</span></label>
               <div className="grid grid-cols-2 gap-2 h-[160px] mt-2">
                 {service &&
                   service

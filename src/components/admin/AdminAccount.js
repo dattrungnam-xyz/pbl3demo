@@ -90,9 +90,12 @@ const AdminAccount = () => {
           </div>
 
           <div className="w-full ">
-            <div className="w-full grid grid-cols-4">
+            <div className="w-full grid grid-cols-5">
               <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3 ">
-                Id
+                STT
+              </div>
+              <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3 ">
+                Họ tên
               </div>
               <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
                 Tên Đăng Nhập
@@ -111,16 +114,20 @@ const AdminAccount = () => {
                     return item;
                   }
                 })
-                .map((item) => {
+                .map((item,index) => {
                   return (
                     <div
                       key={item.IdTaiKhoan}
-                      className="w-full grid grid-cols-4 h-[70px] border-b border-gray-200 hover:bg-gray-100"
+                      className="w-full grid grid-cols-5 h-[70px] border-b border-gray-200 hover:bg-gray-100"
                     >
                       <div className=" items-center py-3 px-2 text-center flex justify-center">
-                        {item.IdTaiKhoan}
+                        {index}
                       </div>
-
+                      <div className=" items-center py-3 px-2 text-center flex justify-center">
+                        <img className="w-[20px] h-[20px] rounded-full mr-2" src={item.Avatar || "https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg"} alt="" />
+                        
+                        {item.Infor.HoTen}
+                      </div>
                       <div className=" py-3 px-2 text-center flex items-center justify-center">
                         {item.TenDangNhap}
                       </div>
@@ -157,7 +164,7 @@ const AdminAccount = () => {
                             />
                           </svg>
                         </div>
-                        <div
+                        {/* <div
                           onClick={() => {
                             setModal(true);
                             setModalStatus("Edit");
@@ -178,7 +185,7 @@ const AdminAccount = () => {
                               d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                             />
                           </svg>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   );
