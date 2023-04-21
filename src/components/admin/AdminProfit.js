@@ -1,26 +1,58 @@
 import React, { useState, useEffect } from "react";
 import LineChart from "../LineChart";
-import { UserData } from "../../assets/Data";
-const AdminProfit = () => {
-  const [userData, setUserData] = useState({
-    labels: UserData.map((data) => data.year),
-    datasets: [
-      {
-        label: "Doanh Thu",
-        data: UserData.map((data) => data.userGain),
-        backgroundColor: [
-          "rgba(75,192,192,1)",
-          "#ecf0f1",
-          "#50AF95",
-          "#f3ba2f",
-          "#2a71d0",
-        ],
-        borderColor: "black",
-        borderWidth: 2,
-      },
-    ],
-  });
+import { getDataOnlyAdmin } from "../../utils/fetchApi";
+import { useSelector } from "react-redux";
 
+const AdminProfit = () => {
+  const user = useSelector((state) => state.auth.login.currentUser);
+  const [billData,setBillData] = useState()
+
+  const [importData,setImportData] = useState()
+
+  const [chartData, setChartData] = useState();
+  useEffect(() => {
+    user.type === "admin" &&
+      getDataOnlyAdmin("http://localhost:8080/v1/bill/profit", user.token).then(
+        (res) => {
+          console.log(res);
+          setBillData(res)
+          setChartData({
+            labels: res.map((data) => data.NgayTaoHoaDon.slice(0,10)),
+            datasets: [
+              {
+                label: "Thu Vào",
+                data: res.map((data) => data.DoanhThu),
+                backgroundColor: ["#2a71d0"],
+                borderColor: "gray",
+                borderWidth: 2,
+              },
+    
+            ],
+          })
+        }
+      );
+      user.type === "admin" &&
+      getDataOnlyAdmin("http://localhost:8080/v1/bill/profit", user.token).then(
+        (res) => {
+          console.log(res);
+          setBillData(res)
+          // setChartData({
+          //   labels: res.map((data) => data.NgayTaoHoaDon.slice(0,10)),
+          //   datasets: [
+          //     {
+          //       label: "Thu Vào",
+          //       data: res.map((data) => data.DoanhThu),
+          //       backgroundColor: ["#2a71d0"],
+          //       borderColor: "gray",
+          //       borderWidth: 2,
+          //     },
+    
+          //   ],
+          // })
+        }
+      );
+        
+  }, []);
   return (
     <div className="flex flex-col w-full max-w-[80vw] p-4">
       {/* <div className="w-full py-4 grid grid-cols-3">
@@ -63,7 +95,7 @@ const AdminProfit = () => {
 
       <div className="w-full flex items-center justify-center font-sans overflow-hidden">
         <div className="w-[90%] ">
-          <LineChart chartData={userData} />
+          {chartData && <LineChart chartData={chartData} />}
         </div>
       </div>
     </div>

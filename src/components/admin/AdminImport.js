@@ -59,8 +59,8 @@ const AdminImport = () => {
               <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
                 Ngày Nhập
               </div>
-
               <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3"></div>
+           
             </div>
             <div className="w-full max-h-[65vh] overflow-y-auto">
               {importProductData?.map((item,index) => {

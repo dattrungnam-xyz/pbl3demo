@@ -103,7 +103,7 @@ const AdminService = () => {
                     Tên Dịch Vụ
                   </div>
                   <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
-                    Giá Tiền
+                    Giá Tiền (VND)
                   </div>
 
                   <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
@@ -133,7 +133,7 @@ const AdminService = () => {
                           {item.TenDichVu}
                         </div>
                         <div className=" py-3 px-2 text-center flex items-center justify-center">
-                          {item.GiaTien}
+                          {item.GiaTien.toLocaleString()}
                         </div>
 
                         <div className=" py-3 px-2 text-center flex items-center justify-center">

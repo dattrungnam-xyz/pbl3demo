@@ -60,7 +60,7 @@ const AdminSidebar = ({ active, setActive }) => {
         >
           <box-icon color="#ffffff" name="signal-5"></box-icon>
 
-          <div className="text-base pl-2  ">Doanh thu</div>
+          <div className="text-base pl-2  ">Thống kê thu nhập</div>
         </div>
 
         <div

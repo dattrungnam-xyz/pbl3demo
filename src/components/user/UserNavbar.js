@@ -113,14 +113,14 @@ const UserNavbar = () => {
                             Quản lý
                           </Link>
                         )}
-                        {
+                        {user.type !== "admin" && (
                           <Link
                             to={`/User/${user.id}`}
                             className="py-2 px-4 w-full h-full block hover:bg-gray-200 text-gray-900 "
                           >
                             Chỉnh sửa thông tin
                           </Link>
-                        }
+                        )}
                         {user.type !== "admin" && (
                           <Link
                             to={`/BookingInfor/${user.id}`}
@@ -137,6 +137,14 @@ const UserNavbar = () => {
                             Đánh giá về tôi
                           </Link>
                         )}
+                        {
+                          <Link
+                            to={`/ChangePassword/${user.id}`}
+                            className="w-full h-full block py-2 px-4 hover:bg-gray-200 text-gray-900"
+                          >
+                            Đổi mật khẩu
+                          </Link>
+                        }
                         <div
                           onClick={handleLogOut}
                           className="py-2 px-4 hover:bg-gray-200 text-gray-900"

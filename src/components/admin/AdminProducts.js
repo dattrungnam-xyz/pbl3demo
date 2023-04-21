@@ -67,11 +67,11 @@ const AdminProducts = () => {
                     Tên Sản Phẩm
                   </div>
                   <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
-                    Giá Bán
+                    Giá Bán (VND)
                   </div>
 
                   <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
-                    Giá Nhập
+                    Giá Nhập (VND)
                   </div>
                   <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
                     Số Lượng Còn Lại
@@ -92,11 +92,11 @@ const AdminProducts = () => {
                           {item.TenSanPham}
                         </div>
                         <div className=" py-3 px-2 text-center flex items-center justify-center">
-                          {item.GiaBan}
+                          {item.GiaBan.toLocaleString()} 
                         </div>
 
                         <div className=" py-3 px-2 text-center flex items-center justify-center">
-                          {item.GiaNhap}
+                          {item.GiaNhap.toLocaleString()} 
                         </div>
 
                         {!item.SoLuongNhap && (

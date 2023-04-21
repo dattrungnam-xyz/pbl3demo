@@ -12,12 +12,15 @@ const ImportProductModal = ({ status, data, setModal }) => {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
+  const [totalPrice, setTotalPrice] = useState(0);
+ 
   useEffect(() => {
     status !== "Add" && setDateImportProduct(data.NgayNhap);
 
     status === "Add" &&
       getDataWithToken("http://localhost:8080/v1/product/", user.token).then(
         (res) => {
+          console.log(res);
           setProductData(
             res.map((item) => {
               return { ...item, SoLuong: 0 };
@@ -31,7 +34,13 @@ const ImportProductModal = ({ status, data, setModal }) => {
         `http://localhost:8080/v1/import/${data.IdDonNhap}`,
         user.token
       ).then((res) => {
-        //console.log(res);
+        console.log(res);
+
+        let temp = 0;
+        res.forEach((item) => {
+          return (temp += item.SoLuong * item.GiaNhap);
+        });
+        setTotalPrice(temp);
         setProductData(res);
       });
   }, []);
@@ -59,31 +68,29 @@ const ImportProductModal = ({ status, data, setModal }) => {
             [...productData],
           ]),
         }).then((res) => {
-          console.log(res)
-          res.ok && setMessage("Updated successfully")
-          !res.ok && setError("Error")
+          console.log(res);
+          res.ok && setMessage("Updated successfully");
+          !res.ok && setError("Error");
           //setModal(false);
         }));
 
       status === "Add" &&
-        
-      (await fetch(`http://localhost:8080/v1/import/`, {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          token: `${user.token}`,
-        },
-        body: JSON.stringify([
-          { dateImportProduct: dateImportProduct },
-          [...productData ],
-         ]),
-      }).then((res) => {
-        console.log(res)
-        res.ok && setMessage("Add successfully")
-          !res.ok && setError("Error")
-       // setModal(false);
-      }));
-    
+        (await fetch(`http://localhost:8080/v1/import/`, {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            token: `${user.token}`,
+          },
+          body: JSON.stringify([
+            { dateImportProduct: dateImportProduct },
+            [...productData],
+          ]),
+        }).then((res) => {
+          console.log(res);
+          res.ok && setMessage("Add successfully");
+          !res.ok && setError("Error");
+          // setModal(false);
+        }));
     } else {
       setError("Số lượng sản phẩm phải lớn hơn 0.");
       !dateImportProduct && setError("Vui lòng chọn ngày nhập.");
@@ -143,7 +150,7 @@ const ImportProductModal = ({ status, data, setModal }) => {
           e.stopPropagation();
         }}
         onSubmit={handleSubmit}
-        className="w-[700px] flex flex-col bg-gray-200 rounded relative border border-black "
+        className="w-[900px] flex flex-col bg-gray-200 rounded relative border border-black "
       >
         <div
           onClick={() => {
@@ -182,8 +189,8 @@ const ImportProductModal = ({ status, data, setModal }) => {
                   value={dateImportProduct.slice(0, 10)}
                   onChange={(e) => {
                     setDateImportProduct(e.target.value);
-                    setError()
-                    setMessage()
+                    setError();
+                    setMessage();
                   }}
                 />
               )}
@@ -193,8 +200,8 @@ const ImportProductModal = ({ status, data, setModal }) => {
                   class="w-full py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500"
                   onChange={(e) => {
                     setDateImportProduct(e.target.value);
-                    setError()
-                    setMessage()
+                    setError();
+                    setMessage();
                   }}
                 />
               )}
@@ -209,61 +216,96 @@ const ImportProductModal = ({ status, data, setModal }) => {
                 {productData?.map((item, index) => {
                   return (
                     <>
-                      <div className="grid grid-cols-2 justify-center item-center my-2">
-                        <div className="flex items-center justify-center">
-                          <p className="w-full block text-center ">
-                            {item.TenSanPham}
-                          </p>
+                      {status !== "View" && (
+                        <div className="flex flex-wrap justify-center item-center my-2">
+                          <div className="w-[40%] flex items-center justify-center">
+                            <p className="w-full block text-center ">
+                              {item.TenSanPham}:
+                            </p>
+                          </div>
+                          {status === "Add" && (<div className="w-[60%]">
+                            <input
+                              name={item.IdSanPham}
+                              className="border p-2 outline-blue-500 rounded-lg w-[120px]"
+                              value={item.SoLuong}
+                              min={0}
+                              onChange={(e) => {
+                                const temp = [...productData];
+                                const preQuantity = temp[index].SoLuong;
+
+                                temp[index].SoLuong = +e.target.value;
+
+                                setTotalPrice(
+                                  (pre) =>
+                                    pre +
+                                    (+e.target.value - preQuantity) *
+                                      item.GiaNhap
+                                );
+                                setProductData(temp);
+                                setError();
+                                setMessage();
+                                //item.SoLuong = e.target.value
+                              }}
+                              type="number"
+                            /> * {item.GiaNhap.toLocaleString()}</div>
+                          )}
+
+                          {status === "Edit" && (
+                            <div className="w-[60%]">
+
+                            <input
+                              name={item.IdSanPham}
+                              className="border p-2 outline-blue-500 rounded-lg w-[120px] "
+                              value={item.SoLuong}
+                              min={0}
+                              onChange={(e) => {
+                                const temp = [...productData];
+                                const preQuantity = temp[index].SoLuong;
+
+                                temp[index].SoLuong = +e.target.value;
+                                setTotalPrice(
+                                  (pre) =>
+                                    pre +
+                                    (+e.target.value - preQuantity) *
+                                      item.GiaNhap
+                                );
+                                setProductData(temp);
+                                setError();
+                                setMessage();
+                                //item.SoLuong = e.target.value
+                              }}
+                              type="number"
+                            /> * {item.GiaNhap.toLocaleString()}
+                            </div>
+                          )
+                          }
                         </div>
-                        {status === "Add" && (
-                          <input
-                            name={item.IdSanPham}
-                            className="border p-2 outline-blue-500 rounded-lg"
-                            value={item.SoLuong}
-                            min={0}
-                            onChange={(e) => {
-                              const temp = [...productData];
-                              temp[index].SoLuong = +e.target.value;
-                              setProductData(temp);
-                              setError();
-                              setMessage()
-                              //item.SoLuong = e.target.value
-                            }}
-                            type="number"
-                          />
-                        )}
-                        {status === "View" && (
-                          <input
-                            name={item.IdSanPham}
-                            className="border p-2 outline-blue-500 rounded-lg"
-                            value={item.SoLuong}
-                            onChange={() => {}}
-                            readOnly
-                            type="number"
-                          />
-                        )}
-                        {status === "Edit" && (
-                          <input
-                            name={item.IdSanPham}
-                            className="border p-2 outline-blue-500 rounded-lg"
-                            value={item.SoLuong}
-                            min={0}
-                            onChange={(e) => {
-                              const temp = [...productData];
-                              temp[index].SoLuong = +e.target.value;
-                              setProductData(temp);
-                              setError();
-                              setMessage()
-                              //item.SoLuong = e.target.value
-                            }}
-                            type="number"
-                          />
-                        )}
-                      </div>
+                      )}
+                      {status === "View" && item.SoLuong > 0 && (
+                        <div className="flex flex-wrap justify-center item-center my-2">
+                          <div className="flex w-[40%] items-center justify-center">
+                            <p className="w-full block text-center ">
+                              {item.TenSanPham}:
+                            </p>
+                          </div>
+
+                          {<div  className="w-[60%]">
+                            <input
+                              name={item.IdSanPham}
+                              className="border p-2 outline-blue-500 rounded-lg w-[120px]"
+                              value={item.SoLuong}
+                              onChange={() => {}}
+                              readOnly
+                              type="number"
+                            /> * {item.GiaNhap.toLocaleString()} 
+                         </div> }
+                        </div>
+                      )}
                     </>
                   );
                 })}{" "}
               </div>
+              <div className="mt-2 ml-4">Tổng Tiền: {totalPrice.toLocaleString()} VND</div>
             </div>
           </div>
         </div>

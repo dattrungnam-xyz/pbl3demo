@@ -213,13 +213,13 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                       return (
                         <div key={index} className="grid grid-cols-2 mb-1">
                           <div>{item.TenDichVu}</div>
-                          <div>{item.GiaTien}</div>
+                          <div>{item.GiaTien.toLocaleString()}</div>
                         </div>
                       );
                     })}
                     <div className="grid grid-cols-2 border-t">
                       <div>Tổng:</div>
-                      <div>{serviceCost} VND</div>
+                      <div>{serviceCost.toLocaleString()} VND</div>
                     </div>
                   </div>
                 </div>
@@ -250,14 +250,14 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                         <div key={index} className="grid grid-cols-2 mb-1">
                           <div>{item.TenSanPham}</div>
                           <div>
-                            {item.SoLuong} * {item.GiaBan}
+                            {item.SoLuong} * {item.GiaBan.toLocaleString()}
                           </div>
                         </div>
                       );
                     })}
                     <div className="grid grid-cols-2 border-t">
                       <div>Tổng:</div>
-                      <div>{productCost} VND</div>
+                      <div>{productCost.toLocaleString()} VND</div>
                     </div>
                   </div>
                 </div>
@@ -267,7 +267,7 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
               <div></div>
               <div className="pl-12">
                 {" "}
-                Tổng Hóa Đơn: {productCost + serviceCost} VND
+                Tổng Hóa Đơn: {(productCost + serviceCost).toLocaleString()} VND
               </div>
             </div>
           </>
@@ -311,7 +311,7 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                               }}
                               type="number"
                             />
-                            * {item.GiaBan}</> : "Hết Hàng"
+                            * {item.GiaBan.toLocaleString()}</> : "Hết Hàng"
                            } 
                           </div>
                         </div>
@@ -319,7 +319,7 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                     })}
                     <div className="grid grid-cols-2 border-t">
                       <div className=" pt-4">Tổng:</div>
-                      <div className=" pt-4 px-2">{productCost} VND</div>
+                      <div className=" pt-4 px-2">{productCost.toLocaleString()} VND</div>
                     </div>
                   </div>
                 </div>
@@ -329,7 +329,7 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
               <div></div>
               <div className="pl-12">
                 {" "}
-                Tổng Hóa Đơn: {productCost + serviceCost} VND
+                Tổng Hóa Đơn: {(productCost + serviceCost).toLocaleString()} VND
               </div>
             </div>
           </>
@@ -371,13 +371,13 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                       return (
                         <div key={index} className="grid grid-cols-2 mb-1">
                           <div>{item.TenDichVu}</div>
-                          <div>{item.GiaTien}</div>
+                          <div>{item.GiaTien.toLocaleString()}</div>
                         </div>
                       );
                     })}
                     <div className="grid grid-cols-2 border-t">
                       <div className="pt-4">Tổng:</div>
-                      <div className="pt-4">{serviceCost} VND</div>
+                      <div className="pt-4">{serviceCost.toLocaleString()} VND</div>
                     </div>
                   </div>
                 </div>
@@ -445,7 +445,7 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                             }}
                             type="number"
                           />{" "}
-                          * {item.GiaBan} </> : "Hết Hàng"
+                          * {item.GiaBan.toLocaleString()} </> : "Hết Hàng"
                            }
                             
                           </div>
@@ -454,7 +454,7 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                     })}
                     <div className="grid grid-cols-2 border-t">
                       <div className="pt-4 ">Tổng:</div>
-                      <div className="pt-4 px-4">{productCost} VND</div>
+                      <div className="pt-4 px-4">{productCost.toLocaleString()} VND</div>
                     </div>
                   </div>
                 </div>
@@ -464,7 +464,7 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
               <div></div>
               <div className="pl-12">
                 {" "}
-                Tổng Hóa Đơn: {productCost + serviceCost} VND
+                Tổng Hóa Đơn: {(productCost + serviceCost).toLocaleString()} VND
               </div>
             </div>
           </div>

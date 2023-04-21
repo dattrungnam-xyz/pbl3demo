@@ -2,7 +2,7 @@ import {BrowserRouter,Routes,Route, Navigate} from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
-import {Home, Login,Register,Admin,Staff,Service,Booking,User,UserBookingInfor, RateService, Rate,EditBooking} from './pages';
+import {Home, Login,Register,Admin,Staff,Service,Booking,User,UserBookingInfor, RateService, Rate,EditBooking, ChangePassword} from './pages';
 
 
 function App() {
@@ -24,6 +24,7 @@ function App() {
       <Route path="/BookingInfor/:id" element={<UserBookingInfor/>}/>
       <Route path="/Rate" element={<Rate/>}/>
       <Route path="/EditBooking/:id" element={<EditBooking/>}/>
+      <Route path="/ChangePassWord/:id" element={<ChangePassword/>}/>
       
     </Routes>
 

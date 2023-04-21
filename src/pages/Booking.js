@@ -34,7 +34,7 @@ const Booking = () => {
 
   const handleSubmit = async () => {
 
-    !user && navigate("/Login")
+    
 
     const datebooking = new Date(date);
 
@@ -196,7 +196,7 @@ const Booking = () => {
   return (
     <>
       <UserNavbar />
-      {/* {user ? ( */}
+      {user ? (
       <div className="bg-gray-10 mt-[62px] items-center justify-center  overflow-y-auto">
         <div className="w-full h-full max-sm:pt-4 pt-12 max-sm:pb-4 pb-8 md:px-10 px-4 flex flex-row max-sm:flex-col  ">
           <div className="w-1/2 max-sm:w-full">
@@ -416,13 +416,13 @@ const Booking = () => {
           </button>
         </div>
       </div>
-      {/* ) : (
+       ) : (
          <>
            <div className="w-full h-screen pt-[60px] flex items-center justify-center">
              <p>Vui lòng <Link to={"/Login"} className="text-md font-semibold underline">Đăng nhập</Link> để thực hiện chức năng này</p>
            </div>
          </>
-      )} */}
+      )} 
     </>
   );
 };

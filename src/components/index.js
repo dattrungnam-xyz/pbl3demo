@@ -13,7 +13,7 @@ import {
   AdminBill,
   AdminProfit,
   AdminRate,
-  AdminShift
+  AdminShift,
 } from "./admin";
 import {
   EditProfile,
@@ -25,6 +25,7 @@ import {
   SubNavbar,
   Footer,
   BookingInforModal,
+  Password,
 } from "./user";
 
 export {
@@ -42,7 +43,7 @@ export {
   AdminBill,
   AdminProfit,
   AdminRate,
-  AdminShift
+  AdminShift,
 };
 export {
   EditProfile,
@@ -54,4 +55,5 @@ export {
   SubNavbar,
   Footer,
   BookingInforModal,
+  Password,
 };

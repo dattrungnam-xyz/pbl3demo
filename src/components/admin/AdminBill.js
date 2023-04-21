@@ -98,7 +98,7 @@ const AdminBill = () => {
                 </div>
 
                 <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
-                  Tổng Tiền
+                  Tổng Tiền (VND)
                 </div>
                 <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3"></div>
               </div>
@@ -120,7 +120,7 @@ const AdminBill = () => {
                       </div>
 
                       <div className=" py-3 px-2 text-center flex items-center justify-center">
-                        {item.TongTien}
+                        {item.TongTien.toLocaleString()}
                       </div>
                       <div className=" py-3 px-2 text-center flex items-center justify-center">
                         <div
