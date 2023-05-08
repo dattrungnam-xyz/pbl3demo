@@ -6,7 +6,7 @@ import ShiftModal from "./ShiftModal";
 const AdminShift = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
   const [dataState, setDataState] = useState("Thống kê ca làm");
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(7);
   const [modal, setModal] = useState(false);
   const [shiftData, setShiftData] = useState([]);
   // const [shiftDataModal, setShiftDataModal] = useState({});
@@ -16,7 +16,7 @@ const AdminShift = () => {
   useEffect(() => {
     const d = new Date("2023-04-12");
 
-    setDate(+d.getDay());
+    // setDate(+d.getDay());
 
     user.type === "admin" &&
       getDataOnlyAdmin("http://localhost:8080/v1/shift/", user.token).then(
@@ -83,6 +83,9 @@ const AdminShift = () => {
                 }}
                 className="w-full py-3 mt-2 pl-7 pr-3 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
               >
+                <option selected={date === 7 ? true : false} value="7">
+                  Tất cả
+                </option>
                 <option selected={date === 1 ? true : false} value="1">
                   Thứ 2
                 </option>
@@ -106,65 +109,139 @@ const AdminShift = () => {
                 </option>
               </select>
             </div>
-
-            <div className="w-full max-w-[80vw]  font-sans overflow-hidden">
-              <div className="w-full ">
-                <div className="w-full grid grid-cols-3">
-                  <div className="bg-gray-300 border-r text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3 ">
-                    Sáng (7:00-12:00)
-                  </div>
-                  <div className="bg-gray-300 border-r text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
-                    Chiều (13:30 - 19:00)
-                  </div>
-                  <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
-                    Tối (20:00 - 22:30)
-                  </div>
-                </div>
-                <div className="w-full max-h-[60vh] overflow-y-auto">
-                  <div className="w-full grid grid-cols-3  border-b border-gray-200 ">
-                    <div className=" border-x items-center py-3 px-2 text-center flex flex-col justify-center hover:bg-gray-100 ">
-                      {shiftData
-                        .filter((item) => {
-                          return (
-                            +item.Thu === date &&
-                            item.Ca === 1 &&
-                            item.AnCaLam === 0
-                          );
-                        })
-                        .map((item) => {
-                          return <div>{item.inforStaff[0].HoTen}</div>;
-                        })}
+            {date !== 7 && (
+              <div className="w-full max-w-[80vw]  font-sans overflow-hidden">
+                <div className="w-full ">
+                  <div className="w-full grid grid-cols-3">
+                    <div className="bg-gray-300 border-r text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3 ">
+                      Sáng (7:00-12:00)
                     </div>
-                    <div className="border-x items-center py-3 px-2 text-center flex flex-col justify-center hover:bg-gray-100 ">
-                      {shiftData
-                        .filter((item) => {
-                          return (
-                            +item.Thu === date &&
-                            item.Ca === 2 &&
-                            item.AnCaLam === 0
-                          );
-                        })
-                        .map((item) => {
-                          return <div>{item.inforStaff[0].HoTen}</div>;
-                        })}
+                    <div className="bg-gray-300 border-r text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
+                      Chiều (13:30 - 19:00)
                     </div>
-                    <div className="border-x py-3 px-2 text-center flex items-center flex-col justify-center hover:bg-gray-100">
-                      {shiftData
-                        .filter((item) => {
-                          return (
-                            +item.Thu === date &&
-                            item.Ca === 3 &&
-                            item.AnCaLam === 0
-                          );
-                        })
-                        .map((item) => {
-                          return <div>{item.inforStaff[0].HoTen}</div>;
-                        })}
+                    <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
+                      Tối (20:00 - 22:30)
+                    </div>
+                  </div>
+                  <div className="w-full max-h-[60vh] overflow-y-auto">
+                    <div className="w-full grid grid-cols-3  border-b border-gray-200 ">
+                      <div className=" border-x items-center py-3 px-2 text-center flex flex-col justify-center hover:bg-gray-100 ">
+                        {shiftData
+                          .filter((item) => {
+                            return (
+                              +item.Thu === date &&
+                              item.Ca === 1 &&
+                              item.AnCaLam === 0
+                            );
+                          })
+                          .map((item) => {
+                            return <div>{item.inforStaff[0].HoTen}</div>;
+                          })}
+                      </div>
+                      <div className="border-x items-center py-3 px-2 text-center flex flex-col justify-center hover:bg-gray-100 ">
+                        {shiftData
+                          .filter((item) => {
+                            return (
+                              +item.Thu === date &&
+                              item.Ca === 2 &&
+                              item.AnCaLam === 0
+                            );
+                          })
+                          .map((item) => {
+                            return <div>{item.inforStaff[0].HoTen}</div>;
+                          })}
+                      </div>
+                      <div className="border-x py-3 px-2 text-center flex items-center flex-col justify-center hover:bg-gray-100">
+                        {shiftData
+                          .filter((item) => {
+                            return (
+                              +item.Thu === date &&
+                              item.Ca === 3 &&
+                              item.AnCaLam === 0
+                            );
+                          })
+                          .map((item) => {
+                            return <div>{item.inforStaff[0].HoTen}</div>;
+                          })}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
+
+            {date === 7 && (
+              <div className="w-full max-w-[80vw]  font-sans overflow-hidden">
+                <div className="w-full ">
+                  <div className="w-full grid grid-cols-4">
+                    <div className="bg-gray-300 border-r text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3 ">
+                      Thứ
+                    </div>
+                    <div className="bg-gray-300 border-r text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3 ">
+                      Sáng (7:00-12:00)
+                    </div>
+                    <div className="bg-gray-300 border-r text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
+                      Chiều (13:30 - 19:00)
+                    </div>
+                    <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3">
+                      Tối (20:00 - 22:30)
+                    </div>
+                  </div>
+                  <div className="w-full max-h-[50vh] overflow-y-auto">
+                    {Array.from(Array(7).keys()).map((date) => {
+                      return (
+                        <>
+                          <div className="w-full grid grid-cols-4  border-b border-gray-200 ">
+                            <div className=" border-x items-center py-3 px-2 text-center flex flex-col justify-center hover:bg-gray-100 ">
+                              {date === 0 ? "Chủ Nhật" : `Thứ ${date+1}`}
+                            </div>
+                            <div className=" border-x items-center py-3 px-2 text-center flex flex-col justify-center hover:bg-gray-100 ">
+                              {shiftData
+                                .filter((item) => {
+                                  return (
+                                    +item.Thu === date &&
+                                    item.Ca === 1 &&
+                                    item.AnCaLam === 0
+                                  );
+                                })
+                                .map((item) => {
+                                  return <div>{item.inforStaff[0].HoTen}</div>;
+                                })}
+                            </div>
+                            <div className="border-x items-center py-3 px-2 text-center flex flex-col justify-center hover:bg-gray-100 ">
+                              {shiftData
+                                .filter((item) => {
+                                  return (
+                                    +item.Thu === date &&
+                                    item.Ca === 2 &&
+                                    item.AnCaLam === 0
+                                  );
+                                })
+                                .map((item) => {
+                                  return <div>{item.inforStaff[0].HoTen}</div>;
+                                })}
+                            </div>
+                            <div className="border-x py-3 px-2 text-center flex items-center flex-col justify-center hover:bg-gray-100">
+                              {shiftData
+                                .filter((item) => {
+                                  return (
+                                    +item.Thu === date &&
+                                    item.Ca === 3 &&
+                                    item.AnCaLam === 0
+                                  );
+                                })
+                                .map((item) => {
+                                  return <div>{item.inforStaff[0].HoTen}</div>;
+                                })}
+                            </div>
+                          </div>
+                        </>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
           </>
         )}
         {dataState === "Chỉnh sửa ca làm" && (
@@ -226,7 +303,11 @@ const AdminShift = () => {
         )}
       </div>
       {modal && (
-        <ShiftModal shiftData={shiftData} setModal={setModal} staffDataModal={staffDataModal} />
+        <ShiftModal
+          shiftData={shiftData}
+          setModal={setModal}
+          staffDataModal={staffDataModal}
+        />
       )}
     </div>
   );

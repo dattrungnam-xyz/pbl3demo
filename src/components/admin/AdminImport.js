@@ -18,7 +18,7 @@ const AdminImport = () => {
     user.type === "admin" &&
       getDataOnlyAdmin("http://localhost:8080/v1/import/", user.token).then(
         (res) => {
-         // console.log(res);
+          console.log(res);
           setImportProductData(res);
         }
       );

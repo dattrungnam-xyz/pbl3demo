@@ -32,7 +32,7 @@ const AdminBooking = () => {
                 setFilter(e.target.value);
               }}
               type="text"
-              placeholder="search...."
+              placeholder="search họ tên...."
               className="h-full w-[250px] border-[2px] border-gray-200 rounded-xl outline-none p-2 "
             />
           </div>
@@ -66,8 +66,7 @@ const AdminBooking = () => {
                       ) ||
                       item.HoTenNV.toLowerCase().includes(
                         filter.toLowerCase()
-                      ) ||
-                      item.IdLich.toString().includes(filter)
+                      ) 
                     );
                   } else {
                     return item;

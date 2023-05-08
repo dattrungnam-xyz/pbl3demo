@@ -5,6 +5,7 @@ import ProductModal from "./ProductModal";
 
 const AdminProducts = () => {
   const [productData, setProductData] = useState();
+  const [search, setSearch] = useState("");
 
   const [modal, setModal] = useState(false);
   const [modalStatus, setModalStatus] = useState();
@@ -38,7 +39,11 @@ const AdminProducts = () => {
               <div className="flex items-center justify-center">
                 <input
                   type="text"
-                  placeholder="search...."
+                  value={search}
+                  onChange={(e)=>{
+                    setSearch(e.target.value);
+                  }}
+                  placeholder="search tên sản phẩm...."
                   className="h-full w-[250px] border-[2px] border-gray-200 rounded-xl outline-none p-2 "
                 />
               </div>
@@ -79,7 +84,9 @@ const AdminProducts = () => {
                   <div className="bg-gray-300 text-gray-600 uppercase text-sm leading-normal text-center font-bold py-3"></div>
                 </div>
                 <div className="w-full max-h-[65vh] overflow-y-auto">
-                  {productData?.map((item,index) => {
+                  {productData?.filter((item)=>{
+                      return item.TenSanPham.toLowerCase().includes(search?.toLowerCase()) 
+                  })?.map((item,index) => {
                     return (
                       <div
                         key={item.IdSanPham}

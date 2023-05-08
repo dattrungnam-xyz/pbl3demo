@@ -18,6 +18,7 @@ const AdminAccount = () => {
     user &&
       getDataOnlyAdmin("http://localhost:8080/v1/account/", user.token).then(
         (res) => {
+          console.log(res)
           setData(
             res.filter((item) => {
               if (filter) return item.LoaiTaiKhoan === filter;
@@ -78,7 +79,7 @@ const AdminAccount = () => {
             <div className="flex items-center justify-center">
               <input
                 type="text"
-                placeholder="search...."
+                placeholder="search họ tên...."
                 className="h-full w-[250px] border-[2px] border-gray-200 rounded-xl outline-none p-2 "
                 onChange={(e) => {
                   setUsernameFilter(e.target.value);
@@ -109,7 +110,7 @@ const AdminAccount = () => {
               {data
                 .filter((item) => {
                   if (usernameFilter) {
-                    return item.TenDangNhap.toLowerCase().includes(usernameFilter.toLowerCase());
+                    return item.Infor.HoTen.toLowerCase().includes(usernameFilter.toLowerCase());
                   } else {
                     return item;
                   }

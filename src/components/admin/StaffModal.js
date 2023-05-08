@@ -437,7 +437,7 @@ const StaffModal = ({ status, setModal, data, IdNhanVien }) => {
         {error && (
           <p className=" block text-center text-sm text-red-900 ">{error}</p>
         )}
-        {message && (
+        {message && !error &&(
           <p className=" block text-center text-sm text-green-900 ">
             {message}
           </p>

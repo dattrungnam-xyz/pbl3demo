@@ -25,7 +25,7 @@ const AdminRate = () => {
       <div className="flex flex-col w-full max-w-[80vw] p-4">
         <div className="w-full py-4 grid grid-cols-3">
           <div className="flex gap-4"></div>
-          <div className="flex items-center justify-center">
+          <div className="flex invisible  items-center justify-center">
             <input
             value={filter}
             onChange={(e)=>{
