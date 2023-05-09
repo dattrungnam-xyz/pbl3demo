@@ -13,7 +13,7 @@ const BarberCard = ({index,image,name}) => {
         {name}
         </p>
        
-        <p className=" my-4 underline cursor-pointer"> Xem chi tiết</p>
+        {/* <p className=" my-4 underline cursor-pointer"> Xem chi tiết</p> */}
       </div>
     </div>
   );

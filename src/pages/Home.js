@@ -18,10 +18,13 @@ const Home = () => {
   const [service, setService] = useState([]);
   useEffect(() => {
     getData("http://localhost:8080/v1/staff/barber").then((res) => {
-      setBarBer(res);
+      console.log(res)
+      setBarBer(res.filter(item=> item.An===0));
     });
     getData("http://localhost:8080/v1/service").then((res) => {
-      setService(res);
+      setService(res.filter(item=> item.An===0));
+      console.log(res)
+
     });
   }, []);
   return (
@@ -110,9 +113,6 @@ const Home = () => {
         <HairGallery />
         {/* //  <Carousel /> */}
       </section>
-      <Link to="/Admin" className="bg-red-700">
-        abcd
-      </Link>
 
       
       <Footer />

@@ -128,7 +128,7 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
         (res) => {
           console.log(res)
           setProductData(
-            res.map((item) => {
+            res.filter(item => item.An ===0).map((item) => {
               return { ...item, SoLuong: 0 };
             })
           );
@@ -152,7 +152,7 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
           console.log(res)
           setProductData(
           
-            res.map((item) => {
+            res.filter(item => item.An ===0).map((item) => {
               return { ...item, SoLuong: 0 };
             })
           );

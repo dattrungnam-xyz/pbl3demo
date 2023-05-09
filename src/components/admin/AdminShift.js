@@ -53,35 +53,19 @@ const AdminShift = () => {
             Thống Kê Ca Làm
           </button>
         </div>
-        <div className="flex items-center justify-center"></div>
-        <div className="flex items-center justify-end">
-          <button
-            type="button"
-            className="h-full py-2 px-6 bg-green-600 flex justify-center items-center text-white"
-            onClick={() => {
-              setDataState("Chỉnh sửa ca làm");
-            }}
-          >
-            <box-icon name="pencil" type="solid" color="#ffffff"></box-icon>
-            Chỉnh Sửa Ca Làm
-          </button>
-        </div>
-      </div>
-
-      <div className="w-full  font-sans overflow-hidden">
-        {dataState === "Thống kê ca làm" && (
-          <>
-            <div className="w-3/4 mb-4 relative max-w-[200px] ml-1">
-              <label className="ml-4 ">Chọn Thứ Ngày</label>
+        <div className="flex items-center justify-center">
+          {dataState === "Thống kê ca làm" && (
+            <div className="w-full  relative   flex gap-3 items-center justify-center">
+              <label className="">Chọn Thứ Ngày:</label>
               {/* <div className="absolute right-0 top-[50%] translate-y-1 -translate-x-[10px] ">
-                <box-icon name="chevron-down"></box-icon>
-              </div> */}
+     <box-icon name="chevron-down"></box-icon>
+   </div> */}
 
               <select
                 onChange={(e) => {
                   setDate(+e.target.value);
                 }}
-                className="w-full py-3 mt-2 pl-7 pr-3 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
+                className=" py-2 pl-7 pr-3 bg-slate-200  rounded-2xl hover:ring-1 outline-blue-500"
               >
                 <option selected={date === 7 ? true : false} value="7">
                   Tất cả
@@ -109,6 +93,25 @@ const AdminShift = () => {
                 </option>
               </select>
             </div>
+          )}
+        </div>
+        <div className="flex items-center justify-end">
+          <button
+            type="button"
+            className="h-full py-2 px-6 bg-green-600 flex justify-center items-center text-white"
+            onClick={() => {
+              setDataState("Chỉnh sửa ca làm");
+            }}
+          >
+            <box-icon name="pencil" type="solid" color="#ffffff"></box-icon>
+            Chỉnh Sửa Ca Làm
+          </button>
+        </div>
+      </div>
+
+      <div className="w-full  font-sans overflow-hidden">
+        {dataState === "Thống kê ca làm" && (
+          <>
             {date !== 7 && (
               <div className="w-full max-w-[80vw]  font-sans overflow-hidden">
                 <div className="w-full ">
@@ -193,7 +196,7 @@ const AdminShift = () => {
                         <>
                           <div className="w-full grid grid-cols-4  border-b border-gray-200 ">
                             <div className=" border-x items-center py-3 px-2 text-center flex flex-col justify-center hover:bg-gray-100 ">
-                              {date === 0 ? "Chủ Nhật" : `Thứ ${date+1}`}
+                              {date === 0 ? "Chủ Nhật" : `Thứ ${date + 1}`}
                             </div>
                             <div className=" border-x items-center py-3 px-2 text-center flex flex-col justify-center hover:bg-gray-100 ">
                               {shiftData

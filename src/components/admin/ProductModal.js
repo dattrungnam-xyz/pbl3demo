@@ -80,8 +80,80 @@ const ProductModal = ({ status, id, handleModal }) => {
       }
     } catch (error) {}
   };
+  const handleRemoveProduct = async () =>{
+    (await fetch(`http://localhost:8080/v1/product/${id}`, {
+            method: "delete",
+            headers: {
+              "Content-Type": "application/json",
+              token: `${user.token}`,
+            },
+           
+          })
+            .then((res) => {
+              res.ok && handleModal()
+            })
+            );
+  }
   return (
-    <div
+    <>
+     {status === "Remove" && (
+        <div >
+          
+          <div
+            onClick={() => {
+             handleModal()
+            }}
+            className=" fixed top-0 right-0 left-0 bottom-0 bg-black/10 z-50 flex items-center justify-center"
+          >
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              className="border border-gray w-[200px] h-[180px] bg-gray-300 relative"
+            >
+              <div
+                onClick={() => {
+                 handleModal()
+                }}
+                className=" absolute top-0 right-0 font-bold text-xl w-[25px] h-[30px] bg-red-400 rounded-tr text-white text-center"
+              >
+                x
+              </div>
+              <div
+                className=" mt-6 text-md font-semibold
+             p-4"
+              >
+                Bạn có chắc chắn xóa sản phẩm này không. 
+              </div>
+
+              <div className=" px-4 py-2 flex justify-between">
+                <button
+                  onClick={()=>{
+
+                   handleRemoveProduct();
+                  }}
+                  className="py-2 px-5 bg-red-400 rounded"
+                >
+                  Xóa
+                </button>
+                <button
+                  onClick={(e) => {
+                   handleModal()
+                  }}
+                  false
+                  className="py-2 px-5  bg-blue-400 rounded"
+                >
+                  Hủy
+                </button>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      )}
+    {
+      status !== "Remove" && <>
+      <div
       onClick={() => {
         handleModal();
       }}
@@ -198,6 +270,10 @@ const ProductModal = ({ status, id, handleModal }) => {
         )}
       </form>
     </div>
+      </>
+    }
+    </>
+   
   );
 };
 

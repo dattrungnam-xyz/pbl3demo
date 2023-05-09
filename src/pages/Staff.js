@@ -39,7 +39,7 @@ const StaffCard = ({ data, active }) => {
                 <div className=" flex flex-col flex-1 items-center justify-center text-white  border-white border-[4px] py-8 px-8 max-lg:px-6 max-lg:py-6 min-w-[360px]">
                   <p className="font-bold text-2xl mb-2 ">{item.HoTen}</p>
                   <p className="py-2 text-lg text-white">{item.SoDienThoai}</p>
-                  <p className="py-2 text-lg">Tổng số khách</p>
+                  
                   <p className="py-2 text-lg">
                     Cắt tóc chuyên nghiệp với giá 50.000 VND Tại Barber
                     Shop, các bạn sẽ được tư vấn tạo kiểu tóc phù hợp với khuôn
@@ -104,9 +104,9 @@ const Staff = () => {
   const [active, setActive] = useState();
   useEffect(() => {
     getData("http://localhost:8080/v1/staff/barber").then((res) => {
-      setData(res);
-      
-      setActive(res[0].HoTen);
+      setData(res.filter(item => item.An===0));
+      console.log(res)
+      setActive(res.filter(item => item.An===0)[0].HoTen);
     });
   }, []);
   return (

@@ -29,11 +29,11 @@ const AdminImport = () => {
         <div className="w-full py-4 grid grid-cols-3">
           <div className="flex gap-4"></div>
           <div className="flex items-center justify-center">
-            <input
+            {/* <input
               type="text"
               placeholder="search...."
               className="h-full w-[250px] border-[2px] border-gray-200 rounded-xl outline-none p-2 "
-            />
+            /> */}
           </div>
           <div className="flex items-center justify-end">
             <button

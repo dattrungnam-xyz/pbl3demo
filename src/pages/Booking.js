@@ -169,13 +169,19 @@ const Booking = () => {
       getData(
         `http://localhost:8080/v1/staff/barbernotbusy/${timeCutHair}&${thu}&${ca}&${date}`
       ).then((res) => {
-        setAvailableStaff(res);
+        console.log("---")
+        console.log(res)
+        console.log("---")
+
+        setAvailableStaff(res.filter(item => item.An ===0));
       });
   }, [timeCutHair, ca, date, thu, IdNhanVienSelected]);
 
   useEffect(() => {
     getData("http://localhost:8080/v1/service").then((res) => {
-      setService(res);
+      //console.log(res)
+      
+      setService(res.filter(item =>{ return item.An === 0}));
     });
   }, []);
 

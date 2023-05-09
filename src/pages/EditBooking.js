@@ -200,14 +200,14 @@ const EditBooking = () => {
       getData(
         `http://localhost:8080/v1/staff/barbernotbusy/${timeCutHair}&${thu}&${ca}&${date}`
       ).then((res) => {
-        setAvailableStaff(res);
+        setAvailableStaff(res.filter(item => item.An ===0));
       });
   }, [timeCutHair, ca, date, thu, IdNhanVienSelected]);
 
   useEffect(() => {
     getData("http://localhost:8080/v1/service")
       .then((res) => {
-        setService(res);
+        setService(res.filter(item =>{ return item.An === 0}));
         return res;
       })
       .then((serviceRes) => {

@@ -22,7 +22,7 @@ const ImportProductModal = ({ status, data, setModal }) => {
         (res) => {
           console.log(res);
           setProductData(
-            res.map((item) => {
+            res.filter(item => item.An ===0).map((item) => {
               return { ...item, SoLuong: 0 };
             })
           );
@@ -212,7 +212,7 @@ const ImportProductModal = ({ status, data, setModal }) => {
               <label className="ml-4 " for="Avatar">
                 Đơn Hàng <span className="text-[red]">*</span>
               </label>
-              <div className="py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1 outline-blue-500">
+              <div className="py-3 pl-8 pr-10 mt-2 bg-white  rounded-2xl hover:ring-1  h-[320px] overflow-y-auto outline-blue-500">
                 {productData?.map((item, index) => {
                   return (
                     <>
