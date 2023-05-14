@@ -39,7 +39,7 @@ const ServiceCard = ({image,key,name,description}) => {
       </p>
 
       <p className="mt-4 text-lg text-white underline cursor-pointer">
-        Xem chi tiết.
+        {/* Xem chi tiết. */}
       </p>
     </div>
     // </div>
