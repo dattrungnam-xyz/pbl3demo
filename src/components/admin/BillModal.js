@@ -26,6 +26,11 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
         : now.getDate();
 
     const dateCreateBill = `${now.getFullYear()}-${monthtemp}-${datetemp}`;
+    status === "Add Empty" && 
+    !productData.some((item) => {
+      return item.SoLuong > 0;
+    }) &&
+    setError("Không được để trống sản phẩm bán kèm");
 
     status === "Add Empty" && !error &&
       productData.some((item) => {
@@ -63,11 +68,7 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
       // !res.ok && setError("Error")
       }));
 
-    status === "Add Empty" && 
-      !productData.some((item) => {
-        return item.SoLuong > 0;
-      }) &&
-      setError("Không được để trống sản phẩm bán kèm");
+
 
     status === "Add" && !error &&
       (await fetch(`http://localhost:8080/v1/bill/`, {
@@ -99,7 +100,15 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
         
       }));
 
-
+      // console.log([
+      //   {
+      //     NgayTaoHoaDon: dateCreateBill,
+      //     IdLich: IdLich,
+      //     TongTien: productCost + serviceCost,
+      //     GioTaoHoaDon: `${now.getHours()}:${now.getMinutes()}`,
+      //   },
+      //   { productData: productData },
+      // ])
   };
   const handleProductCost = () => {
     setProductCost(0);
@@ -109,6 +118,9 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
     });
   };
 
+  useEffect(()=>{
+    console.log(data)
+  })
   useEffect(() => {
     setServiceCost(0);
     setProductCost(0);

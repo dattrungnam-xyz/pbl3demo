@@ -21,6 +21,7 @@ const AdminBill = () => {
       getDataOnlyAdmin("http://localhost:8080/v1/bill/", user.token).then(
         (res) => {
           setBillData(res);
+          console.log(res)
         }
       );
     user.type === "admin" &&

@@ -27,15 +27,15 @@ const ServiceModal = ({ status, id, handleModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(serviceData);
-    try {
+    //console.log(serviceData);
+    
       if (
         !serviceData.TenDichVu.trim() ||
-        !serviceData.ThoiGian.trim() ||
+        !serviceData.ThoiGian ||
         !serviceData.GiaTien.trim()
       ) {
         !serviceData.TenDichVu.trim() && setError("Sai định dạng dịch vụ");
-        !serviceData.ThoiGian.trim() && setError("Sai định dạng thời gian");
+        !serviceData.ThoiGian && setError("Sai định dạng thời gian");
         !serviceData.GiaTien.trim() && setError("Sai định dạng giá tiền");
         (!serviceData.TenDichVu ||
           !serviceData.ThoiGian ||
@@ -43,7 +43,9 @@ const ServiceModal = ({ status, id, handleModal }) => {
           setError(
             "Không được để trống Tên dịch vụ, Thời gian hoàn thành, Giá tiền"
           );
+          console.log("aaaaa")
       } else {
+        console.log("bbbbbb")
         status === "Add" && 
           (await fetch("http://localhost:8080/v1/service/", {
             method: "post",
@@ -78,7 +80,7 @@ const ServiceModal = ({ status, id, handleModal }) => {
             }));
         //handleModal()
       }
-    } catch (error) {}
+   
   };
   const handleRemoveService = async () =>{
     (await fetch(`http://localhost:8080/v1/service/${id}`, {
@@ -175,7 +177,7 @@ const ServiceModal = ({ status, id, handleModal }) => {
             x
           </div>
           <div className="text-xl font-bold mt-5 text-center mb-5">
-            Thêm Dịch Vụ
+            {status} Dịch Vụ
           </div>
           <div className="grid grid-cols-2">
             <div>
