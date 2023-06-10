@@ -19,11 +19,20 @@ const Register = () => {
     const reg = RegExp("^[0-9]+$");
     let pattern = /\s/g;
 
-    // console.log(account);
+     console.log(
+       account.username &&
+      account.password.length > 6 &&
+      account.name.trim() &&
+      reg.test(account.phone) &&
+      account.phone.length <= 11 &&
+      account.phone.length > 9
+      &&!account.password.match(pattern)
+        &&!account.username.match(pattern)
+       );
     e.preventDefault();
     if (
       account.username &&
-      account.password.length > 6 &&
+      account.password.length >= 6 &&
       account.name.trim() &&
       reg.test(account.phone) &&
       account.phone.length <= 11 &&
@@ -42,6 +51,7 @@ const Register = () => {
         })
           .then((res) => res.json())
           .then((res) => {
+            console.log(res)
             if (res.error !== "") {
               setRegisterError(res.error);
             } else {

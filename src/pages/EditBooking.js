@@ -291,6 +291,7 @@ const EditBooking = () => {
                   setCa(e.target.value);
                   e.target.value === "2" && setTimeCutHair(22);
                   e.target.value === "3" && setTimeCutHair(45);
+                  setDateTimeError("")
                 }}
               >
                 <option selected value="1">
@@ -466,7 +467,7 @@ const EditBooking = () => {
         </div>
         {response && (
           <div
-            className={`w-full text-center text-sm ${
+            className={`w-full text-center -translate-y-4 text-sm ${
               response.message ? "text-green-900" : "text-red-900"
             } `}
           >

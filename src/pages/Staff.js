@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getData } from "../utils/fetchApi";
 import { UserNavbar } from "../components";
+import {staff} from "../assets/Staff"
 const StaffCard = ({ data, active }) => {
+  
   return (
     <>
       {data
@@ -41,10 +43,7 @@ const StaffCard = ({ data, active }) => {
                   <p className="py-2 text-lg text-white">{item.SoDienThoai}</p>
                   
                   <p className="py-2 text-lg">
-                    Cắt tóc chuyên nghiệp với giá 50.000 VND Tại Barber
-                    Shop, các bạn sẽ được tư vấn tạo kiểu tóc phù hợp với khuôn
-                    mặt bởi các barber giàu kinh nghiệm và thân thiện, mang đến
-                    trải nghiệm dịch vụ chuyên nghiệp mà vẫn ấm cúng.
+                    {staff[Math.floor(Math.random()*3)].description}.
                   </p>
                 </div>
               </div>

@@ -302,8 +302,10 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                             {item.TenSanPham}:
                           </div>
                           <div>
-                           { item.SoLuongNhap ?
-                            <>  <input
+                           { (item.SoLuongNhap) ?
+                            <>  
+                            
+                            <input
                               name={item.IdSanPham}
                               className="border p-2 outline-blue-500 rounded-lg"
                               value={item.SoLuong}
@@ -323,7 +325,10 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                               }}
                               type="number"
                             />
-                            * {item.GiaBan.toLocaleString()}</> : "Hết Hàng"
+                            * {item.GiaBan.toLocaleString()}
+                            </> : <p className=" py-1">
+                          Hết Hàng
+                          </p>
                            } 
                           </div>
                         </div>
@@ -432,7 +437,7 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                           </div>
                           <div>
 
-                          { item.SoLuongNhap ?
+                          { (item.SoLuongNhap )?
                             <> <input
                             name={item.IdSanPham}
                             className="border p-2 outline-blue-500 rounded-lg w-[60px]"
@@ -457,7 +462,9 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                             }}
                             type="number"
                           />{" "}
-                          * {item.GiaBan.toLocaleString()} </> : "Hết Hàng"
+                          * {item.GiaBan.toLocaleString()} </> : <p className=" py-1">
+                          Hết Hàng
+                          </p>
                            }
                             
                           </div>
