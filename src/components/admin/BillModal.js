@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getDataWithToken } from "../../utils/fetchApi";
+import { jsPDF } from "jspdf";
 
 const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
   const user = useSelector((state) => state.auth.login.currentUser);
@@ -124,6 +125,7 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
   useEffect(() => {
     setServiceCost(0);
     setProductCost(0);
+    status === "View" && console.log(data)
     status === "View" &&
       data?.detailService?.map((item) => {
         setServiceCost((pre) => pre + item.GiaTien);
@@ -171,6 +173,65 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
         }
       );
   }, []);
+  function removeVietnameseTones(str) {
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+    str = str.replace(/Đ/g, "D");
+   
+    str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
+   
+    str = str.replace(/ + /g, " ");
+    str = str.trim();
+    
+    str = str.replace(
+      /!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g,
+      " "
+    );
+    return str;
+  }
+  const handleExportBill = (data)=>{
+    console.log(data)
+    const doc = new jsPDF({ filters: ["ASCIIHexEncode"] });
+    
+    doc.setFontSize(20)
+    doc.text("HOA DON", 90, 10);
+    doc.setFontSize(13)
+    doc.text(`Ngay tao hoa don: ${data.NgayTaoHoaDon.slice(0,10)}`,10,20)
+    doc.text(`Gio tao hoa don:  ${data.GioTaoHoaDon.slice(11, 19)}`, 10, 30);
+    doc.text(`Dich vu:`, 10, 40);
+    let y = 40;
+    doc.setFontSize(10);
+    data?.detailService?.map((item)=>{
+      doc.text(`${removeVietnameseTones(item?.TenDichVu)}`, 40, y);
+      doc.text(`${item?.GiaTien.toLocaleString()}`, 90, y);
+      y+=10
+    })
+     doc.setFontSize(13);
+     doc.text(`San pham:`, 10, y);
+     doc.setFontSize(10);
+    data?.detailBill?.filter((item)=>{
+        return item.SoLuong >0
+    }).map((item) => {
+      doc.text(`${removeVietnameseTones(item?.TenSanPham)}`, 40, y);
+      doc.text(`${item?.GiaBan.toLocaleString()} * ${item?.SoLuong}`, 90, y);
+      y += 10;
+    });
+    y+=10
+    doc.setFontSize(13);
+    doc.text(`Tong tien:  ${data.TongTien.toLocaleString()}`, 10, y);
+    doc.save("bill.pdf");
+  }
   return (
     <div
       onClick={(e) => {
@@ -257,16 +318,20 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                   </label>
 
                   <div class="w-full h-[140px] grid grid-cols-1 overflow-y-auto overflow-hidden py-2 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500">
-                    {data?.detailBill?.filter((item)=>{return item.SoLuong>0}).map((item, index) => {
-                      return (
-                        <div key={index} className="grid grid-cols-2 mb-1">
-                          <div>{item.TenSanPham}</div>
-                          <div>
-                            {item.SoLuong} * {item.GiaBan.toLocaleString()}
+                    {data?.detailBill
+                      ?.filter((item) => {
+                        return item.SoLuong > 0;
+                      })
+                      .map((item, index) => {
+                        return (
+                          <div key={index} className="grid grid-cols-2 mb-1">
+                            <div>{item.TenSanPham}</div>
+                            <div>
+                              {item.SoLuong} * {item.GiaBan.toLocaleString()}
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
                     <div className="grid grid-cols-2 border-t">
                       <div>Tổng:</div>
                       <div>{productCost.toLocaleString()} VND</div>
@@ -295,48 +360,59 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
 
                   <div class="w-full h-[300px] grid grid-cols-1 overflow-y-auto overflow-hidden py-2 pl-8 pr-10 mt-2 bg-white rounded-2xl hover:ring-1 outline-blue-500">
                     {productData?.map((item, index) => {
-                      console.log(productData)
+                      console.log(productData);
                       return (
                         <div key={index} className="grid grid-cols-2 mb-1">
                           <div className="flex items-center">
                             {item.TenSanPham}:
                           </div>
                           <div>
-                           { (item.SoLuongNhap) ?
-                            <>  
-                            
-                            <input
-                              name={item.IdSanPham}
-                              className="border p-2 outline-blue-500 rounded-lg"
-                              value={item.SoLuong}
-                              min={0}
-                              onChange={(e) => {
-                                const temp = [...productData];
-                                temp[index].SoLuong = +e.target.value;
-                                setProductData(temp);
-                                setError();
-                                setMessage();
-                                handleProductCost();
+                            {item.SoLuongNhap ? (
+                              <>
+                                <input
+                                  name={item.IdSanPham}
+                                  className="border p-2 outline-blue-500 rounded-lg"
+                                  value={item.SoLuong}
+                                  min={0}
+                                  onChange={(e) => {
+                                    const temp = [...productData];
+                                    temp[index].SoLuong = +e.target.value;
+                                    setProductData(temp);
+                                    setError();
+                                    setMessage();
+                                    handleProductCost();
 
-                                if(+e.target.value + item?.SoLuongDaBan.SoLuongDaBan  > item.SoLuongNhap.SoLuongNhap)
-                                {
-                                  setError(`Số lượng ${item.TenSanPham} còn tối đa ${item.SoLuongNhap.SoLuongNhap - item?.SoLuongDaBan.SoLuongDaBan }`)
-                                }
-                              }}
-                              type="number"
-                            />
-                            * {item.GiaBan.toLocaleString()}
-                            </> : <p className=" py-1">
-                          Hết Hàng
-                          </p>
-                           } 
+                                    if (
+                                      +e.target.value +
+                                        item?.SoLuongDaBan.SoLuongDaBan >
+                                      item.SoLuongNhap.SoLuongNhap
+                                    ) {
+                                      setError(
+                                        `Số lượng ${
+                                          item.TenSanPham
+                                        } còn tối đa ${
+                                          item.SoLuongNhap.SoLuongNhap -
+                                          item?.SoLuongDaBan.SoLuongDaBan
+                                        }`
+                                      );
+                                    }
+                                  }}
+                                  type="number"
+                                />
+                                * {item.GiaBan.toLocaleString()}
+                              </>
+                            ) : (
+                              <p className=" py-1">Hết Hàng</p>
+                            )}
                           </div>
                         </div>
                       );
                     })}
                     <div className="grid grid-cols-2 border-t">
                       <div className=" pt-4">Tổng:</div>
-                      <div className=" pt-4 px-2">{productCost.toLocaleString()} VND</div>
+                      <div className=" pt-4 px-2">
+                        {productCost.toLocaleString()} VND
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -394,7 +470,9 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                     })}
                     <div className="grid grid-cols-2 border-t">
                       <div className="pt-4">Tổng:</div>
-                      <div className="pt-4">{serviceCost.toLocaleString()} VND</div>
+                      <div className="pt-4">
+                        {serviceCost.toLocaleString()} VND
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -436,44 +514,57 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
                             {item.TenSanPham}:
                           </div>
                           <div>
+                            {item.SoLuongNhap ? (
+                              <>
+                                {" "}
+                                <input
+                                  name={item.IdSanPham}
+                                  className="border p-2 outline-blue-500 rounded-lg w-[60px]"
+                                  value={item.SoLuong}
+                                  min={0}
+                                  onChange={(e) => {
+                                    const temp = [...productData];
 
-                          { (item.SoLuongNhap )?
-                            <> <input
-                            name={item.IdSanPham}
-                            className="border p-2 outline-blue-500 rounded-lg w-[60px]"
-                            value={item.SoLuong}
-                            min={0}
-                            onChange={(e) => {
-                              const temp = [...productData];
+                                    temp[index].SoLuong = +e.target.value;
+                                    setProductData(temp);
+                                    setError();
+                                    setMessage();
+                                    // setProductCost(
+                                    //   (pre) => pre + e.target.value * item.GiaBan
+                                    // );
+                                    handleProductCost();
 
-                              temp[index].SoLuong = +e.target.value;
-                              setProductData(temp);
-                              setError();
-                              setMessage()
-                              // setProductCost(
-                              //   (pre) => pre + e.target.value * item.GiaBan
-                              // );
-                              handleProductCost();
-
-                              if(+e.target.value + item?.SoLuongDaBan.SoLuongDaBan  > item.SoLuongNhap.SoLuongNhap)
-                                {
-                                  setError(`Số lượng ${item.TenSanPham} còn tối đa ${item.SoLuongNhap.SoLuongNhap - item?.SoLuongDaBan.SoLuongDaBan }`)
-                                }
-                            }}
-                            type="number"
-                          />{" "}
-                          * {item.GiaBan.toLocaleString()} </> : <p className=" py-1">
-                          Hết Hàng
-                          </p>
-                           }
-                            
+                                    if (
+                                      +e.target.value +
+                                        item?.SoLuongDaBan.SoLuongDaBan >
+                                      item.SoLuongNhap.SoLuongNhap
+                                    ) {
+                                      setError(
+                                        `Số lượng ${
+                                          item.TenSanPham
+                                        } còn tối đa ${
+                                          item.SoLuongNhap.SoLuongNhap -
+                                          item?.SoLuongDaBan.SoLuongDaBan
+                                        }`
+                                      );
+                                    }
+                                  }}
+                                  type="number"
+                                />{" "}
+                                * {item.GiaBan.toLocaleString()}{" "}
+                              </>
+                            ) : (
+                              <p className=" py-1">Hết Hàng</p>
+                            )}
                           </div>
                         </div>
                       );
                     })}
                     <div className="grid grid-cols-2 border-t">
                       <div className="pt-4 ">Tổng:</div>
-                      <div className="pt-4 px-4">{productCost.toLocaleString()} VND</div>
+                      <div className="pt-4 px-4">
+                        {productCost.toLocaleString()} VND
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -492,7 +583,9 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
           <p className=" block text-center text-sm text-red-900 ">{error}</p>
         )}
         {message && (
-          <p className=" block text-center text-sm text-green-900 ">{message}</p>
+          <p className=" block text-center text-sm text-green-900 ">
+            {message}
+          </p>
         )}
         {status !== "View" && (
           <div class="w-full px-8 mt-3 pb-2 flex items-center justify-center">
@@ -501,6 +594,16 @@ const BillModal = ({ status, setModal, data, IdLich, lichDatData }) => {
               class=" py-2 bg-[#194284] w-1/2 rounded-2xl text-blue-50 text-[20px] font-semibold hover:opacity-75"
             >
               Lưu
+            </button>
+          </div>
+        )}
+        {status === "View" && (
+          <div class="w-full px-8 mt-3 pb-2 flex items-center justify-center">
+            <button
+              onClick={()=>{handleExportBill(data)}}
+              class=" py-2 bg-[#194284] w-1/2 rounded-2xl text-blue-50 text-[20px] font-semibold hover:opacity-75"
+            >
+              Xuất hóa đơn
             </button>
           </div>
         )}
