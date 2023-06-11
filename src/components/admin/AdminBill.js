@@ -48,22 +48,22 @@ const AdminBill = () => {
               onClick={() => {
                 setDataStatus("Thống kê");
               }}
-              className="h-full py-2 px-6 bg-gray-400 flex justify-center items-center text-white"
+              className="h-full py-2 px-6 bg-gray-400 flex justify-center items-center text-white rounded"
             >
               Thống kê
             </button>
           </div>
           <div className="flex items-center justify-center">
-            <input
+            {/* <input
               type="text"
               placeholder="search...."
               className="h-full w-[250px] border-[2px] border-gray-200 rounded-xl outline-none p-2 "
-            />
+            /> */}
           </div>
           <div className="flex items-center justify-end gap-2">
             <button
               type="button"
-              className="h-full py-2 px-6 bg-green-600 flex justify-center items-center text-white"
+              className="h-full py-2 px-6 bg-green-600 flex justify-center items-center text-white rounded"
               onClick={() => {
                 setDataStatus("Theo lịch đặt");
               }}
@@ -73,7 +73,7 @@ const AdminBill = () => {
             </button>
             <button
               type="button"
-              className="h-full py-2 px-6 bg-green-600 flex justify-center items-center text-white"
+              className="h-full py-2 px-6 bg-green-600 flex justify-center items-center text-white rounded"
               onClick={() => {
                 setModalStatus("Add Empty");
                 setModal(true);

@@ -340,6 +340,7 @@ const EditBooking = () => {
                 placeholder="Thợ cắt tóc"
                 onChange={(e) => {
                   setIdNhanVienSelected(e.target.value);
+                  setDateTimeError("")
                 }}
               >
                 <option value="" selected disabled hidden>

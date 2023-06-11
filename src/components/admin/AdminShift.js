@@ -48,7 +48,7 @@ const AdminShift = () => {
             onClick={() => {
               setDataState("Thống kê ca làm");
             }}
-            className="h-full py-2 px-6 bg-gray-400 flex justify-center items-center text-white"
+            className="h-full py-2 px-6 bg-gray-400 flex justify-center items-center text-white rounded"
           >
             Thống Kê Ca Làm
           </button>
@@ -98,7 +98,7 @@ const AdminShift = () => {
         <div className="flex items-center justify-end">
           <button
             type="button"
-            className="h-full py-2 px-6 bg-green-600 flex justify-center items-center text-white"
+            className="h-full py-2 px-6 bg-green-600 flex justify-center items-center text-white rounded"
             onClick={() => {
               setDataState("Chỉnh sửa ca làm");
             }}

@@ -37,6 +37,20 @@ const UserBookingInfor = () => {
 
     return date.getTime() >= now.getTime();
   };
+  const handleFilterToDay = (NgayCat) => {
+    const date = new Date(NgayCat.slice(0, 10));
+    const now = new Date();
+    const month = now.getMonth() + 1;
+    const monthtemp = month.toString().length == "1" ? "0" + month : month;
+
+    const datetemp =
+      now.getDate().toString().length == "1"
+        ? "0" + now.getDate()
+        : now.getDate();
+    const today = new Date(`${now.getFullYear()}-${monthtemp}-${datetemp}`);
+
+    return date.getTime() == today.getTime();
+  };
   useEffect(() => {
     user?.type === "user" &&
       getDataWithToken(
@@ -50,7 +64,10 @@ const UserBookingInfor = () => {
             return !handleFilterDay(item.NgayCat);
           } else if (filter === "Chưa cắt") {
             return handleFilterDay(item.NgayCat);
-          } else {
+          } else if (filter === "Ngày hôm nay") {
+            return  handleFilterToDay(item.NgayCat);
+          }
+          else{
             return item;
           }
         });
@@ -69,6 +86,8 @@ const UserBookingInfor = () => {
             return !handleFilterDay(item.NgayCat);
           } else if (filter === "Chưa cắt") {
             return handleFilterDay(item.NgayCat);
+          } else if (filter === "Ngày hôm nay") {
+            return handleFilterToDay(item.NgayCat);
           } else {
             return item;
           }
@@ -89,7 +108,9 @@ const UserBookingInfor = () => {
                   setFilter("All");
                 }}
                 type="button"
-                className="h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white hover:opacity-90"
+                className={`h-full py-2 px-2 rounded bg-gray-400 flex justify-center items-center text-white hover:opacity-90 ${
+                  filter === "All" && "bg-gray-500"
+                }`}
               >
                 All
               </button>
@@ -98,7 +119,9 @@ const UserBookingInfor = () => {
                   setFilter("Đã cắt");
                 }}
                 type="button"
-                className="h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white hover:opacity-90"
+                className={`h-full py-2 px-2 rounded bg-gray-400 flex justify-center items-center text-white hover:opacity-90 ${
+                  filter === "Đã cắt" && "bg-gray-500"
+                }`}
               >
                 Đã cắt
               </button>
@@ -107,9 +130,22 @@ const UserBookingInfor = () => {
                   setFilter("Chưa cắt");
                 }}
                 type="button"
-                className="h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white hover:opacity-90"
+                className={`h-full py-2 px-2 rounded bg-gray-400 flex justify-center items-center text-white hover:opacity-90 ${
+                  filter === "Chưa cắt" && "bg-gray-500"
+                }`}
               >
                 Chưa cắt
+              </button>
+              <button
+                onClick={() => {
+                  setFilter("Ngày hôm nay");
+                }}
+                type="button"
+                className={`h-full py-2 px-2 rounded bg-gray-400 flex justify-center items-center text-white hover:opacity-90 ${
+                  filter === "Ngày hôm nay" && "bg-gray-500"
+                }`}
+              >
+                Ngày hôm nay
               </button>
             </div>
             <div className="flex items-center justify-center">
@@ -153,7 +189,11 @@ const UserBookingInfor = () => {
                     <div className=" py-3 px-2 text-center flex items-center justify-center">
                       <img
                         className="w-[20px] h-[20px] rounded-full mr-2"
-                        src={item.Avatar}
+                        src={
+                          item.Avatar
+                            ? item.Avatar
+                            : "https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg"
+                        }
                         alt=""
                       />
                       {item.HoTen}
@@ -166,49 +206,53 @@ const UserBookingInfor = () => {
                       {item.GioCat}
                     </div>
                     <div className=" py-3 px-2 text-center flex items-center justify-center">
-                      {user?.type === "user"&& !item.DaDanhGia && !handleFilterDay(item.NgayCat) &&(
-                        <div
-                          onClick={() => {
-                            setModalStatus("Rate");
-                            setId(item.IdLich);
-                            setHasRate(item.DaDanhGia);
+                      {user?.type === "user" &&
+                        !item.DaDanhGia &&
+                        !handleFilterDay(item.NgayCat) && (
+                          <div
+                            onClick={() => {
+                              setModalStatus("Rate");
+                              setId(item.IdLich);
+                              setHasRate(item.DaDanhGia);
 
-                            setModal(true);
-                          }}
-                          className="w-4 mr-2 transform  hover:scale-110"
-                        >
-                          <box-icon
-                            size={"xs"}
-                            type="solid"
-                            name="calendar-minus"
-                          ></box-icon>
-                        </div>
-                      )}
-                       {user?.type === "user"  && handleFilterDay(item.NgayCat) &&(
-                        <Link to={`/EditBooking/${item.IdLich}`}
-                          onClick={() => {
-                            // setModalStatus("Rate");
-                            // setId(item.IdLich);
-                            // setHasRate(item.DaDanhGia);
-                            // setModal(true);
-                          }}
-                          className="w-4 mr-2 transform  hover:scale-110"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
+                              setModal(true);
+                            }}
+                            className="w-4 mr-2 transform  hover:scale-110"
                           >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                            />
-                          </svg>
-                        </Link>
-                      )}
+                            <box-icon
+                              size={"xs"}
+                              type="solid"
+                              name="calendar-minus"
+                            ></box-icon>
+                          </div>
+                        )}
+                      {user?.type === "user" &&
+                        handleFilterDay(item.NgayCat) && (
+                          <Link
+                            to={`/EditBooking/${item.IdLich}`}
+                            onClick={() => {
+                              // setModalStatus("Rate");
+                              // setId(item.IdLich);
+                              // setHasRate(item.DaDanhGia);
+                              // setModal(true);
+                            }}
+                            className="w-4 mr-2 transform  hover:scale-110"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                              />
+                            </svg>
+                          </Link>
+                        )}
                       <div
                         onClick={() => {
                           setModalStatus("View");
@@ -237,36 +281,37 @@ const UserBookingInfor = () => {
                           />
                         </svg>
                       </div>
-                      {user?.type === "user" && handleFilterDay(item.NgayCat) &&(
-                        <div
-                          onClick={() => {
-                            setModalStatus("Remove");
-                            setDataRemove({
-                              IdLich: item.IdLich,
-                              IdNhanVien: item.IdNhanVien,
-                              NgayCat: item.NgayCat.slice(0, 10),
-                              IdGioCat: item.IdGioCat,
-                              TongThoiGian: item.TongThoiGian,
-                            });
-                            setModal(true);
-                          }}
-                          class="w-4 mr-2 transform  hover:scale-110"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
+                      {user?.type === "user" &&
+                        handleFilterDay(item.NgayCat) && (
+                          <div
+                            onClick={() => {
+                              setModalStatus("Remove");
+                              setDataRemove({
+                                IdLich: item.IdLich,
+                                IdNhanVien: item.IdNhanVien,
+                                NgayCat: item.NgayCat.slice(0, 10),
+                                IdGioCat: item.IdGioCat,
+                                TongThoiGian: item.TongThoiGian,
+                              });
+                              setModal(true);
+                            }}
+                            class="w-4 mr-2 transform  hover:scale-110"
                           >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                            />
-                          </svg>
-                        </div>
-                      )}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                              />
+                            </svg>
+                          </div>
+                        )}
                     </div>
                   </div>
                 );

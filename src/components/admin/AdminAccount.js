@@ -40,7 +40,7 @@ const AdminAccount = () => {
                   setFilter();
                 }}
                 type="button"
-                className="h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white"
+                className={`h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white rounded ${!filter && "bg-gray-500"}`}
               >
                 <box-icon name="user" color="#ffffff"></box-icon>
                 All
@@ -50,7 +50,7 @@ const AdminAccount = () => {
                   setFilter("staff");
                 }}
                 type="button"
-                className="h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white"
+                className={`h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white rounded ${filter === "staff" && "bg-gray-500"}`}
               >
                 <box-icon name="user" color="#ffffff"></box-icon>
                 staff
@@ -60,7 +60,7 @@ const AdminAccount = () => {
                   setFilter("admin");
                 }}
                 type="button"
-                className="h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white"
+                className={`h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white rounded ${filter === "admin" && "bg-gray-500"}`}
               >
                 <box-icon name="user" color="#ffffff"></box-icon>
                 admin
@@ -70,7 +70,7 @@ const AdminAccount = () => {
                   setFilter("user");
                 }}
                 type="button"
-                className="h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white"
+                className={`h-full py-2 px-2 bg-gray-400 flex justify-center items-center text-white rounded ${filter=== "user" &&"bg-gray-500"}`}
               >
                 <box-icon name="user" color="#ffffff"></box-icon>
                 user

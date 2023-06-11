@@ -38,7 +38,7 @@ const AdminImport = () => {
           <div className="flex items-center justify-end">
             <button
               type="button"
-              className="h-full py-2 px-6 bg-green-600 flex justify-center items-center text-white"
+              className="h-full py-2 px-6 bg-green-600 flex justify-center items-center text-white rounded"
               onClick={() => {
                 setModalStatus("Add");
                 setModal(true);
